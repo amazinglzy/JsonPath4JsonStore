@@ -43,6 +43,10 @@ generateGrammarSource {
     arguments += ["-package", "jp4js.parser"]
 }
 
+run {
+  standardInput = System.in
+}
+
 task grun(type: JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'org.antlr.v4.runtime.misc.TestRig'

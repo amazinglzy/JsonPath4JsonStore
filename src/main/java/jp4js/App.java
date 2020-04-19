@@ -21,12 +21,15 @@ public class App {
         while (true) {
             System.out.print("> ");
             String cmd = scan.nextLine();
+            if (cmd.equals("quit")) break;
             CharStream s = CharStreams.fromString(cmd);
-            // HelloLexer lexer = new HelloLexer(s);
-            // CommonTokenStream tokens = new CommonTokenStream(lexer);
-            // HelloParser parser = new HelloParser(tokens);
+            JsonPathLexer lexer = new JsonPathLexer(s);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            JsonPathParser parser = new JsonPathParser(tokens);
+            ParseTree tree = parser.json_basic_path_expr();
+            System.out.println(tree.toStringTree());
         }
-
+        scan.close();
     }
 
     public static void main(String[] args) {
