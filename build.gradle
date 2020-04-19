@@ -30,7 +30,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // Use Antlr4 to parse JsonPath
-    antlr 'org.antlr:antlr4:4.5'
+    antlr 'org.antlr:antlr4:4.7'
 }
 
 application {
@@ -39,5 +39,13 @@ application {
 }
 
 generateGrammarSource {
-    outputDirectory = file("${project.projectDir}/src/main/java/jp4js/parser/")
+    outputDirectory = file("${project.projectDir}/src/main/java")
+    arguments += ["-package", "jp4js.parser"]
+}
+
+task grun(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'org.antlr.v4.runtime.misc.TestRig'
+  standardInput = System.in
+  standardOutput = System.out
 }

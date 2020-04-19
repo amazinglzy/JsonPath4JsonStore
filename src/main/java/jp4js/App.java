@@ -3,13 +3,34 @@
  */
 package jp4js;
 
+import java.util.Scanner;
+
+import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.*;
+
+import jp4js.parser.*;
+
 
 public class App {
     public String getGreeting() {
         return "Hello world.";
     }
 
+    public void run() {
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            System.out.print("> ");
+            String cmd = scan.nextLine();
+            CharStream s = CharStreams.fromString(cmd);
+            // HelloLexer lexer = new HelloLexer(s);
+            // CommonTokenStream tokens = new CommonTokenStream(lexer);
+            // HelloParser parser = new HelloParser(tokens);
+        }
+
+    }
+
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        App app = new App();
+        app.run();
     }
 }
