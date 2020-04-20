@@ -30,6 +30,8 @@ build
 
 # Ignore Vscode Environment
 .vscode
+.idea
+.DS_Store
 
 # Ignore Output binary
 bin
