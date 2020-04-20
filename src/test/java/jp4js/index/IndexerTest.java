@@ -1,10 +1,8 @@
 package jp4js.index;
 
 import jp4js.utils.Configuration;
-import jp4js.index.node.ArrayNode;
 import jp4js.index.node.NodeFactory;
 import jp4js.index.node.NodeIterator;
-import jp4js.index.node.ObjectNode;
 // import jp4js.path.ArrayIndexOperation;
 import org.junit.Test;
 
