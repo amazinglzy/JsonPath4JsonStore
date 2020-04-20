@@ -29,6 +29,11 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 
+    // Assertion
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
+
+
     // Use Antlr4 to parse JsonPath
     antlr 'org.antlr:antlr4:4.7'
 
