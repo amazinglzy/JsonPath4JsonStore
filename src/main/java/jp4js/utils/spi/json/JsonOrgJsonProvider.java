@@ -73,7 +73,9 @@ public class JsonOrgJsonProvider extends AbstractJsonProvider {
     @Override
     public Object getArrayIndex(Object obj, int idx) {
         try {
-            return toJsonArray(obj).get(idx);
+            JSONArray array = toJsonArray(obj);
+            if (idx >= array.length()) return UNDEFINED;
+            return array.get(idx);
         } catch (JSONException e) {
             throw new JsonPathException(e);
         }

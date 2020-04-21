@@ -40,7 +40,9 @@ public abstract class AbstractJsonProvider implements JsonProvider {
      * @return the entry at the given index
      */
     public Object getArrayIndex(Object obj, int idx) {
-        return ((List) obj).get(idx);
+        List array = (List)obj;
+        if (idx >= array.size()) return UNDEFINED;
+        return array.get(idx);
     }
 
     public final Object getArrayIndex(Object obj, int idx, boolean unwrap){

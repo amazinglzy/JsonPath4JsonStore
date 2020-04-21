@@ -1,6 +1,5 @@
 package jp4js.index.node;
 
-import jp4js.index.IndexContext;
 import jp4js.utils.Utils;
 import java.util.List;
 import java.util.LinkedList;
@@ -23,7 +22,7 @@ public class ArrayNode extends Node {
 
 
     public interface ArraySelections {
-        List<Integer> select(IndexContext indexContext);
+        List<Integer> select();
     }
 
     public static class ArrayIndex implements ArraySelections {
@@ -34,7 +33,7 @@ public class ArrayNode extends Node {
         }
 
         @Override
-        public List<Integer> select(IndexContext indexContext) {
+        public List<Integer> select() {
             int indexCopy = this.index;
             return new LinkedList<>() {{ add(indexCopy); }};
         }
@@ -51,7 +50,7 @@ public class ArrayNode extends Node {
         }
 
         @Override
-        public List<Integer> select(IndexContext indexContext) {
+        public List<Integer> select() {
             return new LinkedList<>() {{
                 for (int i = from; i < to; i++) {
                     add(i);
@@ -68,10 +67,10 @@ public class ArrayNode extends Node {
         }
 
         @Override
-        public List<Integer> select(IndexContext indexContext) {
+        public List<Integer> select() {
             return new LinkedList<>() {{
                 for (ArraySelections selection: selections) {
-                    addAll(selection.select(indexContext));
+                    addAll(selection.select());
                 }
             }};
         }

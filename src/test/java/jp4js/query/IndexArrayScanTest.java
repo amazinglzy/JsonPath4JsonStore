@@ -60,7 +60,7 @@ public class IndexArrayScanTest {
     @Test
     public void testArrayIndexSelection() {
         ArrayIndex index = new ArrayIndex(1);
-        List<Integer> sels = index.select(basic01);
+        List<Integer> sels = index.select();
         
         assertThat(sels.size()).isEqualTo(1);
         assertThat(sels.get(0)).isEqualTo(1);
@@ -69,7 +69,7 @@ public class IndexArrayScanTest {
     @Test
     public void testArraySliceSelection() {
         ArraySlice slice = new ArraySlice(1, 3);
-        List<Integer> sels = slice.select(basic01);
+        List<Integer> sels = slice.select();
 
         assertThat(sels.size()).isEqualTo(2);
         assertThat(sels.get(0)).isEqualTo(1);
@@ -86,7 +86,7 @@ public class IndexArrayScanTest {
                 add(new ArrayIndex(2));
             }}
         );
-        List<Integer> sels = operation.select(basic01);
+        List<Integer> sels = operation.select();
         assertThat(sels.size()).isEqualTo(7);
         assertThat(sels.get(0)).isEqualTo(1);
         assertThat(sels.get(1)).isEqualTo(10);

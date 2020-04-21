@@ -145,7 +145,9 @@ public class GsonJsonProvider extends AbstractJsonProvider {
 
     @Override
     public Object getArrayIndex(final Object obj, final int idx) {
-        return toJsonArray(obj).get(idx);
+        JsonArray array = toJsonArray(obj);
+        if (idx >= array.size()) return UNDEFINED;
+        return array.get(idx);
     }
 
     @Override

@@ -124,7 +124,9 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider {
 
     @Override
     public Object getArrayIndex(Object obj, int idx) {
-        return toJsonArray(obj).get(idx);
+        ArrayNode array = toJsonArray(obj);
+        if (idx >= array.size()) return UNDEFINED;
+        return array.get(idx);
     }
 
     @Override

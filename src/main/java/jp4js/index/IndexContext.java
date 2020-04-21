@@ -56,7 +56,7 @@ public class IndexContext {
     }
 
     public NodeIterator openArray(ArraySelections selections) {
-        List<Integer> indicies = selections.select(this);
+        List<Integer> indicies = selections.select();
         if (indicies.size() == 0) return new SingleNodeIterator(new LinkedList<>());
         else {
             NodeIterator iter = null;
