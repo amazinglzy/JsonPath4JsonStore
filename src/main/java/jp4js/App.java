@@ -26,7 +26,7 @@ public class App {
             JsonPathLexer lexer = new JsonPathLexer(s);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             JsonPathParser parser = new JsonPathParser(tokens);
-            ParseTree tree = parser.json_basic_path_expr();
+            ParseTree tree = parser.jsonBasicPathExpr();
             System.out.println(tree.toStringTree());
         }
         scan.close();

@@ -16,97 +16,97 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_basic_path_expr(JsonPathParser.Json_basic_path_exprContext ctx) { }
+	@Override public void enterJsonBasicPathExpr(JsonPathParser.JsonBasicPathExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_basic_path_expr(JsonPathParser.Json_basic_path_exprContext ctx) { }
+	@Override public void exitJsonBasicPathExpr(JsonPathParser.JsonBasicPathExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_absolute_path_expr(JsonPathParser.Json_absolute_path_exprContext ctx) { }
+	@Override public void enterJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_absolute_path_expr(JsonPathParser.Json_absolute_path_exprContext ctx) { }
+	@Override public void exitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_nonfunction_steps(JsonPathParser.Json_nonfunction_stepsContext ctx) { }
+	@Override public void enterJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_nonfunction_steps(JsonPathParser.Json_nonfunction_stepsContext ctx) { }
+	@Override public void exitJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_object_step(JsonPathParser.Json_object_stepContext ctx) { }
+	@Override public void enterJsonObjectStep(JsonPathParser.JsonObjectStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_object_step(JsonPathParser.Json_object_stepContext ctx) { }
+	@Override public void exitJsonObjectStep(JsonPathParser.JsonObjectStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_descendent_step(JsonPathParser.Json_descendent_stepContext ctx) { }
+	@Override public void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_descendent_step(JsonPathParser.Json_descendent_stepContext ctx) { }
+	@Override public void exitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_array_step(JsonPathParser.Json_array_stepContext ctx) { }
+	@Override public void enterJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_array_step(JsonPathParser.Json_array_stepContext ctx) { }
+	@Override public void exitJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_field_name(JsonPathParser.Json_field_nameContext ctx) { }
+	@Override public void enterJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_field_name(JsonPathParser.Json_field_nameContext ctx) { }
+	@Override public void exitJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJson_array_range(JsonPathParser.Json_array_rangeContext ctx) { }
+	@Override public void enterJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJson_array_range(JsonPathParser.Json_array_rangeContext ctx) { }
+	@Override public void exitJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

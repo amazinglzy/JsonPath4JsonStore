@@ -8,83 +8,83 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface JsonPathListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_basic_path_expr}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonBasicPathExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_basic_path_expr(JsonPathParser.Json_basic_path_exprContext ctx);
+	void enterJsonBasicPathExpr(JsonPathParser.JsonBasicPathExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_basic_path_expr}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonBasicPathExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_basic_path_expr(JsonPathParser.Json_basic_path_exprContext ctx);
+	void exitJsonBasicPathExpr(JsonPathParser.JsonBasicPathExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_absolute_path_expr}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonAbsolutePathExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_absolute_path_expr(JsonPathParser.Json_absolute_path_exprContext ctx);
+	void enterJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_absolute_path_expr}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonAbsolutePathExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_absolute_path_expr(JsonPathParser.Json_absolute_path_exprContext ctx);
+	void exitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_nonfunction_steps}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonNonfunctionSteps}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_nonfunction_steps(JsonPathParser.Json_nonfunction_stepsContext ctx);
+	void enterJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_nonfunction_steps}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonNonfunctionSteps}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_nonfunction_steps(JsonPathParser.Json_nonfunction_stepsContext ctx);
+	void exitJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_object_step}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonObjectStep}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_object_step(JsonPathParser.Json_object_stepContext ctx);
+	void enterJsonObjectStep(JsonPathParser.JsonObjectStepContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_object_step}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonObjectStep}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_object_step(JsonPathParser.Json_object_stepContext ctx);
+	void exitJsonObjectStep(JsonPathParser.JsonObjectStepContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_descendent_step}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonDescendentStep}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_descendent_step(JsonPathParser.Json_descendent_stepContext ctx);
+	void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_descendent_step}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonDescendentStep}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_descendent_step(JsonPathParser.Json_descendent_stepContext ctx);
+	void exitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_array_step}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonArrayStep}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_array_step(JsonPathParser.Json_array_stepContext ctx);
+	void enterJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_array_step}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonArrayStep}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_array_step(JsonPathParser.Json_array_stepContext ctx);
+	void exitJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_field_name}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonFieldName}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_field_name(JsonPathParser.Json_field_nameContext ctx);
+	void enterJsonFieldName(JsonPathParser.JsonFieldNameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_field_name}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonFieldName}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_field_name(JsonPathParser.Json_field_nameContext ctx);
+	void exitJsonFieldName(JsonPathParser.JsonFieldNameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#json_array_range}.
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonArrayRange}.
 	 * @param ctx the parse tree
 	 */
-	void enterJson_array_range(JsonPathParser.Json_array_rangeContext ctx);
+	void enterJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#json_array_range}.
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonArrayRange}.
 	 * @param ctx the parse tree
 	 */
-	void exitJson_array_range(JsonPathParser.Json_array_rangeContext ctx);
+	void exitJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx);
 }

@@ -21,13 +21,12 @@ public class JsonPathParser extends Parser {
 		NATRUAL_INTEGER=9, IDENTIFIER=10, WILDCARD=11, DIGIT=12, POSITIVEDIGIT=13, 
 		LETTER=14, WS=15;
 	public static final int
-		RULE_json_basic_path_expr = 0, RULE_json_absolute_path_expr = 1, RULE_json_nonfunction_steps = 2, 
-		RULE_json_object_step = 3, RULE_json_descendent_step = 4, RULE_json_array_step = 5, 
-		RULE_json_field_name = 6, RULE_json_array_range = 7;
+		RULE_jsonBasicPathExpr = 0, RULE_jsonAbsolutePathExpr = 1, RULE_jsonNonfunctionSteps = 2, 
+		RULE_jsonObjectStep = 3, RULE_jsonDescendentStep = 4, RULE_jsonArrayStep = 5, 
+		RULE_jsonFieldName = 6, RULE_jsonArrayRange = 7;
 	public static final String[] ruleNames = {
-		"json_basic_path_expr", "json_absolute_path_expr", "json_nonfunction_steps", 
-		"json_object_step", "json_descendent_step", "json_array_step", "json_field_name", 
-		"json_array_range"
+		"jsonBasicPathExpr", "jsonAbsolutePathExpr", "jsonNonfunctionSteps", "jsonObjectStep", 
+		"jsonDescendentStep", "jsonArrayStep", "jsonFieldName", "jsonArrayRange"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -87,32 +86,32 @@ public class JsonPathParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class Json_basic_path_exprContext extends ParserRuleContext {
-		public Json_absolute_path_exprContext json_absolute_path_expr() {
-			return getRuleContext(Json_absolute_path_exprContext.class,0);
+	public static class JsonBasicPathExprContext extends ParserRuleContext {
+		public JsonAbsolutePathExprContext jsonAbsolutePathExpr() {
+			return getRuleContext(JsonAbsolutePathExprContext.class,0);
 		}
-		public Json_basic_path_exprContext(ParserRuleContext parent, int invokingState) {
+		public JsonBasicPathExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_basic_path_expr; }
+		@Override public int getRuleIndex() { return RULE_jsonBasicPathExpr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_basic_path_expr(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonBasicPathExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_basic_path_expr(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonBasicPathExpr(this);
 		}
 	}
 
-	public final Json_basic_path_exprContext json_basic_path_expr() throws RecognitionException {
-		Json_basic_path_exprContext _localctx = new Json_basic_path_exprContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_json_basic_path_expr);
+	public final JsonBasicPathExprContext jsonBasicPathExpr() throws RecognitionException {
+		JsonBasicPathExprContext _localctx = new JsonBasicPathExprContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_jsonBasicPathExpr);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(16);
-			json_absolute_path_expr();
+			jsonAbsolutePathExpr();
 			}
 		}
 		catch (RecognitionException re) {
@@ -126,34 +125,34 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_absolute_path_exprContext extends ParserRuleContext {
-		public Json_nonfunction_stepsContext json_nonfunction_steps() {
-			return getRuleContext(Json_nonfunction_stepsContext.class,0);
+	public static class JsonAbsolutePathExprContext extends ParserRuleContext {
+		public JsonNonfunctionStepsContext jsonNonfunctionSteps() {
+			return getRuleContext(JsonNonfunctionStepsContext.class,0);
 		}
-		public Json_absolute_path_exprContext(ParserRuleContext parent, int invokingState) {
+		public JsonAbsolutePathExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_absolute_path_expr; }
+		@Override public int getRuleIndex() { return RULE_jsonAbsolutePathExpr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_absolute_path_expr(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonAbsolutePathExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_absolute_path_expr(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonAbsolutePathExpr(this);
 		}
 	}
 
-	public final Json_absolute_path_exprContext json_absolute_path_expr() throws RecognitionException {
-		Json_absolute_path_exprContext _localctx = new Json_absolute_path_exprContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_json_absolute_path_expr);
+	public final JsonAbsolutePathExprContext jsonAbsolutePathExpr() throws RecognitionException {
+		JsonAbsolutePathExprContext _localctx = new JsonAbsolutePathExprContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_jsonAbsolutePathExpr);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(18);
 			match(T__0);
 			setState(19);
-			json_nonfunction_steps();
+			jsonNonfunctionSteps();
 			}
 		}
 		catch (RecognitionException re) {
@@ -167,42 +166,42 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_nonfunction_stepsContext extends ParserRuleContext {
-		public List<Json_object_stepContext> json_object_step() {
-			return getRuleContexts(Json_object_stepContext.class);
+	public static class JsonNonfunctionStepsContext extends ParserRuleContext {
+		public List<JsonObjectStepContext> jsonObjectStep() {
+			return getRuleContexts(JsonObjectStepContext.class);
 		}
-		public Json_object_stepContext json_object_step(int i) {
-			return getRuleContext(Json_object_stepContext.class,i);
+		public JsonObjectStepContext jsonObjectStep(int i) {
+			return getRuleContext(JsonObjectStepContext.class,i);
 		}
-		public List<Json_array_stepContext> json_array_step() {
-			return getRuleContexts(Json_array_stepContext.class);
+		public List<JsonArrayStepContext> jsonArrayStep() {
+			return getRuleContexts(JsonArrayStepContext.class);
 		}
-		public Json_array_stepContext json_array_step(int i) {
-			return getRuleContext(Json_array_stepContext.class,i);
+		public JsonArrayStepContext jsonArrayStep(int i) {
+			return getRuleContext(JsonArrayStepContext.class,i);
 		}
-		public List<Json_descendent_stepContext> json_descendent_step() {
-			return getRuleContexts(Json_descendent_stepContext.class);
+		public List<JsonDescendentStepContext> jsonDescendentStep() {
+			return getRuleContexts(JsonDescendentStepContext.class);
 		}
-		public Json_descendent_stepContext json_descendent_step(int i) {
-			return getRuleContext(Json_descendent_stepContext.class,i);
+		public JsonDescendentStepContext jsonDescendentStep(int i) {
+			return getRuleContext(JsonDescendentStepContext.class,i);
 		}
-		public Json_nonfunction_stepsContext(ParserRuleContext parent, int invokingState) {
+		public JsonNonfunctionStepsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_nonfunction_steps; }
+		@Override public int getRuleIndex() { return RULE_jsonNonfunctionSteps; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_nonfunction_steps(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonNonfunctionSteps(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_nonfunction_steps(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonNonfunctionSteps(this);
 		}
 	}
 
-	public final Json_nonfunction_stepsContext json_nonfunction_steps() throws RecognitionException {
-		Json_nonfunction_stepsContext _localctx = new Json_nonfunction_stepsContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_json_nonfunction_steps);
+	public final JsonNonfunctionStepsContext jsonNonfunctionSteps() throws RecognitionException {
+		JsonNonfunctionStepsContext _localctx = new JsonNonfunctionStepsContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_jsonNonfunctionSteps);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -218,19 +217,19 @@ public class JsonPathParser extends Parser {
 				case T__1:
 					{
 					setState(21);
-					json_object_step();
+					jsonObjectStep();
 					}
 					break;
 				case T__3:
 					{
 					setState(22);
-					json_array_step();
+					jsonArrayStep();
 					}
 					break;
 				case T__2:
 					{
 					setState(23);
-					json_descendent_step();
+					jsonDescendentStep();
 					}
 					break;
 				default:
@@ -254,28 +253,28 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_object_stepContext extends ParserRuleContext {
+	public static class JsonObjectStepContext extends ParserRuleContext {
 		public TerminalNode WILDCARD() { return getToken(JsonPathParser.WILDCARD, 0); }
-		public Json_field_nameContext json_field_name() {
-			return getRuleContext(Json_field_nameContext.class,0);
+		public JsonFieldNameContext jsonFieldName() {
+			return getRuleContext(JsonFieldNameContext.class,0);
 		}
-		public Json_object_stepContext(ParserRuleContext parent, int invokingState) {
+		public JsonObjectStepContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_object_step; }
+		@Override public int getRuleIndex() { return RULE_jsonObjectStep; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_object_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonObjectStep(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_object_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonObjectStep(this);
 		}
 	}
 
-	public final Json_object_stepContext json_object_step() throws RecognitionException {
-		Json_object_stepContext _localctx = new Json_object_stepContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_json_object_step);
+	public final JsonObjectStepContext jsonObjectStep() throws RecognitionException {
+		JsonObjectStepContext _localctx = new JsonObjectStepContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_jsonObjectStep);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -294,7 +293,7 @@ public class JsonPathParser extends Parser {
 			case IDENTIFIER:
 				{
 				setState(31);
-				json_field_name();
+				jsonFieldName();
 				}
 				break;
 			default:
@@ -313,34 +312,34 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_descendent_stepContext extends ParserRuleContext {
-		public Json_field_nameContext json_field_name() {
-			return getRuleContext(Json_field_nameContext.class,0);
+	public static class JsonDescendentStepContext extends ParserRuleContext {
+		public JsonFieldNameContext jsonFieldName() {
+			return getRuleContext(JsonFieldNameContext.class,0);
 		}
-		public Json_descendent_stepContext(ParserRuleContext parent, int invokingState) {
+		public JsonDescendentStepContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_descendent_step; }
+		@Override public int getRuleIndex() { return RULE_jsonDescendentStep; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_descendent_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonDescendentStep(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_descendent_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonDescendentStep(this);
 		}
 	}
 
-	public final Json_descendent_stepContext json_descendent_step() throws RecognitionException {
-		Json_descendent_stepContext _localctx = new Json_descendent_stepContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_json_descendent_step);
+	public final JsonDescendentStepContext jsonDescendentStep() throws RecognitionException {
+		JsonDescendentStepContext _localctx = new JsonDescendentStepContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_jsonDescendentStep);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(34);
 			match(T__2);
 			setState(35);
-			json_field_name();
+			jsonFieldName();
 			}
 		}
 		catch (RecognitionException re) {
@@ -354,35 +353,35 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_array_stepContext extends ParserRuleContext {
+	public static class JsonArrayStepContext extends ParserRuleContext {
 		public TerminalNode WILDCARD() { return getToken(JsonPathParser.WILDCARD, 0); }
 		public List<TerminalNode> NATRUAL_INTEGER() { return getTokens(JsonPathParser.NATRUAL_INTEGER); }
 		public TerminalNode NATRUAL_INTEGER(int i) {
 			return getToken(JsonPathParser.NATRUAL_INTEGER, i);
 		}
-		public List<Json_array_rangeContext> json_array_range() {
-			return getRuleContexts(Json_array_rangeContext.class);
+		public List<JsonArrayRangeContext> jsonArrayRange() {
+			return getRuleContexts(JsonArrayRangeContext.class);
 		}
-		public Json_array_rangeContext json_array_range(int i) {
-			return getRuleContext(Json_array_rangeContext.class,i);
+		public JsonArrayRangeContext jsonArrayRange(int i) {
+			return getRuleContext(JsonArrayRangeContext.class,i);
 		}
-		public Json_array_stepContext(ParserRuleContext parent, int invokingState) {
+		public JsonArrayStepContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_array_step; }
+		@Override public int getRuleIndex() { return RULE_jsonArrayStep; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_array_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayStep(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_array_step(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayStep(this);
 		}
 	}
 
-	public final Json_array_stepContext json_array_step() throws RecognitionException {
-		Json_array_stepContext _localctx = new Json_array_stepContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_json_array_step);
+	public final JsonArrayStepContext jsonArrayStep() throws RecognitionException {
+		JsonArrayStepContext _localctx = new JsonArrayStepContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_jsonArrayStep);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -413,7 +412,7 @@ public class JsonPathParser extends Parser {
 				case 2:
 					{
 					setState(40);
-					json_array_range();
+					jsonArrayRange();
 					}
 					break;
 				}
@@ -437,7 +436,7 @@ public class JsonPathParser extends Parser {
 					case 2:
 						{
 						setState(45);
-						json_array_range();
+						jsonArrayRange();
 						}
 						break;
 					}
@@ -468,26 +467,26 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_field_nameContext extends ParserRuleContext {
+	public static class JsonFieldNameContext extends ParserRuleContext {
 		public TerminalNode JSON_STRING() { return getToken(JsonPathParser.JSON_STRING, 0); }
 		public TerminalNode IDENTIFIER() { return getToken(JsonPathParser.IDENTIFIER, 0); }
-		public Json_field_nameContext(ParserRuleContext parent, int invokingState) {
+		public JsonFieldNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_field_name; }
+		@Override public int getRuleIndex() { return RULE_jsonFieldName; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_field_name(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonFieldName(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_field_name(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonFieldName(this);
 		}
 	}
 
-	public final Json_field_nameContext json_field_name() throws RecognitionException {
-		Json_field_nameContext _localctx = new Json_field_nameContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_json_field_name);
+	public final JsonFieldNameContext jsonFieldName() throws RecognitionException {
+		JsonFieldNameContext _localctx = new JsonFieldNameContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_jsonFieldName);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -515,28 +514,28 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Json_array_rangeContext extends ParserRuleContext {
+	public static class JsonArrayRangeContext extends ParserRuleContext {
 		public List<TerminalNode> NATRUAL_INTEGER() { return getTokens(JsonPathParser.NATRUAL_INTEGER); }
 		public TerminalNode NATRUAL_INTEGER(int i) {
 			return getToken(JsonPathParser.NATRUAL_INTEGER, i);
 		}
-		public Json_array_rangeContext(ParserRuleContext parent, int invokingState) {
+		public JsonArrayRangeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_json_array_range; }
+		@Override public int getRuleIndex() { return RULE_jsonArrayRange; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJson_array_range(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayRange(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJson_array_range(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayRange(this);
 		}
 	}
 
-	public final Json_array_rangeContext json_array_range() throws RecognitionException {
-		Json_array_rangeContext _localctx = new Json_array_rangeContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_json_array_range);
+	public final JsonArrayRangeContext jsonArrayRange() throws RecognitionException {
+		JsonArrayRangeContext _localctx = new JsonArrayRangeContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_jsonArrayRange);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
