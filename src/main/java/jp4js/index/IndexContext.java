@@ -4,8 +4,7 @@ import jp4js.index.node.CombinedNodeIterator;
 import jp4js.index.node.Node;
 import jp4js.index.node.NodeIterator;
 import jp4js.index.node.SingleNodeIterator;
-// import jp4js.path.ArrayIndexOperation;
-// import jp4js.path.ArraySliceOperation;
+import jp4js.index.node.ArrayNode.ArraySelections;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,39 +55,18 @@ public class IndexContext {
         return ret;
     }
 
-    // public NodeIterator openArray(ArrayIndexOperation operation) {
-    //     if (operation.isSingleIndexOperation()) return getArrayOrEmptyStream(new Long(operation.indexes().get(0)));
-    //     NodeIterator ret = new CombinedNodeIterator(
-    //             getArrayOrEmptyStream(new Long(operation.indexes().get(0))),
-    //             getArrayOrEmptyStream(new Long(operation.indexes().get(1)))
-    //     );
-    //     for (int i = 2; i < operation.indexes().size(); i++) {
-    //         ret = new CombinedNodeIterator(
-    //                 getArrayOrEmptyStream(new Long(operation.indexes().get(i))),
-    //                 ret
-    //         );
-    //     }
-    //     return ret;
-    // }
-
-    // public NodeIterator openArray(ArraySliceOperation operation) {
-    //     NodeIterator ret = null;
-    //     Long left = 0L;
-    //     if (operation.from() != null) left = new Long(operation.from());
-    //     for (Long idx: this.arraysPartitions.keySet()) {
-    //         if (idx < left) continue;
-    //         if (operation.to() != null && idx >= operation.to()) break;
-    //         if (ret == null) ret = getArrayOrEmptyStream(idx);
-    //         else {
-    //             ret = new CombinedNodeIterator(
-    //                     getArrayOrEmptyStream(idx),
-    //                     ret
-    //             );
-    //         }
-    //     }
-    //     if (ret == null) return new SingleNodeIterator(new LinkedList<Node>());
-    //     else return ret;
-    // }
+    public NodeIterator openArray(ArraySelections selections) {
+        List<Integer> indicies = selections.select(this);
+        if (indicies.size() == 0) return new SingleNodeIterator(new LinkedList<>());
+        else {
+            NodeIterator iter = null;
+            for (Integer val: indicies) {
+                if (iter == null) iter = getArrayOrEmptyStream(Long.valueOf(val));
+                else iter = new CombinedNodeIterator(iter, getArrayOrEmptyStream(Long.valueOf(val)));
+            }
+            return iter;
+        }
+    }
 
     private NodeIterator getObjectOrEmptyStream(String objectLabel) {
         LinkedList<Node> ret = this.objectsPartitions.get(objectLabel);
