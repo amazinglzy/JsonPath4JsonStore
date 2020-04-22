@@ -23,10 +23,12 @@ public class JsonPathParser extends Parser {
 	public static final int
 		RULE_jsonBasicPathExpr = 0, RULE_jsonAbsolutePathExpr = 1, RULE_jsonNonfunctionSteps = 2, 
 		RULE_jsonObjectStep = 3, RULE_jsonDescendentStep = 4, RULE_jsonArrayStep = 5, 
-		RULE_jsonFieldName = 6, RULE_jsonArrayRange = 7;
+		RULE_jsonFieldName = 6, RULE_jsonArraySelection = 7, RULE_jsonArrayIndex = 8, 
+		RULE_jsonArraySlice = 9;
 	public static final String[] ruleNames = {
 		"jsonBasicPathExpr", "jsonAbsolutePathExpr", "jsonNonfunctionSteps", "jsonObjectStep", 
-		"jsonDescendentStep", "jsonArrayStep", "jsonFieldName", "jsonArrayRange"
+		"jsonDescendentStep", "jsonArrayStep", "jsonFieldName", "jsonArraySelection", 
+		"jsonArrayIndex", "jsonArraySlice"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -110,7 +112,7 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(16);
+			setState(20);
 			jsonAbsolutePathExpr();
 			}
 		}
@@ -149,9 +151,9 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(18);
+			setState(22);
 			match(T__0);
-			setState(19);
+			setState(23);
 			jsonNonfunctionSteps();
 			}
 		}
@@ -206,29 +208,29 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
+			setState(30);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__3))) != 0)) {
 				{
-				setState(24);
+				setState(28);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case T__1:
 					{
-					setState(21);
+					setState(25);
 					jsonObjectStep();
 					}
 					break;
 				case T__3:
 					{
-					setState(22);
+					setState(26);
 					jsonArrayStep();
 					}
 					break;
 				case T__2:
 					{
-					setState(23);
+					setState(27);
 					jsonDescendentStep();
 					}
 					break;
@@ -236,7 +238,7 @@ public class JsonPathParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(28);
+				setState(32);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -278,21 +280,21 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(29);
+			setState(33);
 			match(T__1);
-			setState(32);
+			setState(36);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case WILDCARD:
 				{
-				setState(30);
+				setState(34);
 				match(WILDCARD);
 				}
 				break;
 			case JSON_STRING:
 			case IDENTIFIER:
 				{
-				setState(31);
+				setState(35);
 				jsonFieldName();
 				}
 				break;
@@ -336,9 +338,9 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(34);
+			setState(38);
 			match(T__2);
-			setState(35);
+			setState(39);
 			jsonFieldName();
 			}
 		}
@@ -355,15 +357,11 @@ public class JsonPathParser extends Parser {
 
 	public static class JsonArrayStepContext extends ParserRuleContext {
 		public TerminalNode WILDCARD() { return getToken(JsonPathParser.WILDCARD, 0); }
-		public List<TerminalNode> NATRUAL_INTEGER() { return getTokens(JsonPathParser.NATRUAL_INTEGER); }
-		public TerminalNode NATRUAL_INTEGER(int i) {
-			return getToken(JsonPathParser.NATRUAL_INTEGER, i);
+		public List<JsonArraySelectionContext> jsonArraySelection() {
+			return getRuleContexts(JsonArraySelectionContext.class);
 		}
-		public List<JsonArrayRangeContext> jsonArrayRange() {
-			return getRuleContexts(JsonArrayRangeContext.class);
-		}
-		public JsonArrayRangeContext jsonArrayRange(int i) {
-			return getRuleContext(JsonArrayRangeContext.class,i);
+		public JsonArraySelectionContext jsonArraySelection(int i) {
+			return getRuleContext(JsonArraySelectionContext.class,i);
 		}
 		public JsonArrayStepContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -386,63 +384,35 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(41);
 			match(T__3);
-			setState(53);
+			setState(51);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case WILDCARD:
 				{
-				setState(38);
+				setState(42);
 				match(WILDCARD);
 				}
 				break;
 			case NATRUAL_INTEGER:
 				{
 				{
-				setState(41);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
-				case 1:
-					{
-					setState(39);
-					match(NATRUAL_INTEGER);
-					}
-					break;
-				case 2:
-					{
-					setState(40);
-					jsonArrayRange();
-					}
-					break;
-				}
-				setState(50);
+				setState(43);
+				jsonArraySelection();
+				setState(48);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					setState(43);
+					setState(44);
 					match(T__4);
-					setState(46);
-					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
-					case 1:
-						{
-						setState(44);
-						match(NATRUAL_INTEGER);
-						}
-						break;
-					case 2:
-						{
-						setState(45);
-						jsonArrayRange();
-						}
-						break;
+					setState(45);
+					jsonArraySelection();
 					}
 					}
-					}
-					setState(52);
+					setState(50);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
@@ -452,7 +422,7 @@ public class JsonPathParser extends Parser {
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(55);
+			setState(53);
 			match(T__5);
 			}
 		}
@@ -491,7 +461,7 @@ public class JsonPathParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(57);
+			setState(55);
 			_la = _input.LA(1);
 			if ( !(_la==JSON_STRING || _la==IDENTIFIER) ) {
 			_errHandler.recoverInline(this);
@@ -514,35 +484,83 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
-	public static class JsonArrayRangeContext extends ParserRuleContext {
-		public List<TerminalNode> NATRUAL_INTEGER() { return getTokens(JsonPathParser.NATRUAL_INTEGER); }
-		public TerminalNode NATRUAL_INTEGER(int i) {
-			return getToken(JsonPathParser.NATRUAL_INTEGER, i);
+	public static class JsonArraySelectionContext extends ParserRuleContext {
+		public JsonArrayIndexContext jsonArrayIndex() {
+			return getRuleContext(JsonArrayIndexContext.class,0);
 		}
-		public JsonArrayRangeContext(ParserRuleContext parent, int invokingState) {
+		public JsonArraySliceContext jsonArraySlice() {
+			return getRuleContext(JsonArraySliceContext.class,0);
+		}
+		public JsonArraySelectionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_jsonArrayRange; }
+		@Override public int getRuleIndex() { return RULE_jsonArraySelection; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayRange(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArraySelection(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayRange(this);
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArraySelection(this);
 		}
 	}
 
-	public final JsonArrayRangeContext jsonArrayRange() throws RecognitionException {
-		JsonArrayRangeContext _localctx = new JsonArrayRangeContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_jsonArrayRange);
+	public final JsonArraySelectionContext jsonArraySelection() throws RecognitionException {
+		JsonArraySelectionContext _localctx = new JsonArraySelectionContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_jsonArraySelection);
+		try {
+			setState(59);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(57);
+				jsonArrayIndex();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(58);
+				jsonArraySlice();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class JsonArrayIndexContext extends ParserRuleContext {
+		public TerminalNode NATRUAL_INTEGER() { return getToken(JsonPathParser.NATRUAL_INTEGER, 0); }
+		public JsonArrayIndexContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_jsonArrayIndex; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayIndex(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayIndex(this);
+		}
+	}
+
+	public final JsonArrayIndexContext jsonArrayIndex() throws RecognitionException {
+		JsonArrayIndexContext _localctx = new JsonArrayIndexContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_jsonArrayIndex);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(59);
-			match(NATRUAL_INTEGER);
-			setState(60);
-			match(T__6);
 			setState(61);
 			match(NATRUAL_INTEGER);
 			}
@@ -558,24 +576,69 @@ public class JsonPathParser extends Parser {
 		return _localctx;
 	}
 
+	public static class JsonArraySliceContext extends ParserRuleContext {
+		public List<TerminalNode> NATRUAL_INTEGER() { return getTokens(JsonPathParser.NATRUAL_INTEGER); }
+		public TerminalNode NATRUAL_INTEGER(int i) {
+			return getToken(JsonPathParser.NATRUAL_INTEGER, i);
+		}
+		public JsonArraySliceContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_jsonArraySlice; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArraySlice(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArraySlice(this);
+		}
+	}
+
+	public final JsonArraySliceContext jsonArraySlice() throws RecognitionException {
+		JsonArraySliceContext _localctx = new JsonArraySliceContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_jsonArraySlice);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(63);
+			match(NATRUAL_INTEGER);
+			setState(64);
+			match(T__6);
+			setState(65);
+			match(NATRUAL_INTEGER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\21B\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\3\3\3\3\3"+
-		"\3\4\3\4\3\4\7\4\33\n\4\f\4\16\4\36\13\4\3\5\3\5\3\5\5\5#\n\5\3\6\3\6"+
-		"\3\6\3\7\3\7\3\7\3\7\5\7,\n\7\3\7\3\7\3\7\5\7\61\n\7\7\7\63\n\7\f\7\16"+
-		"\7\66\13\7\5\78\n\7\3\7\3\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\2\2\n\2\4\6\b"+
-		"\n\f\16\20\2\3\4\2\n\n\f\f\2A\2\22\3\2\2\2\4\24\3\2\2\2\6\34\3\2\2\2\b"+
-		"\37\3\2\2\2\n$\3\2\2\2\f\'\3\2\2\2\16;\3\2\2\2\20=\3\2\2\2\22\23\5\4\3"+
-		"\2\23\3\3\2\2\2\24\25\7\3\2\2\25\26\5\6\4\2\26\5\3\2\2\2\27\33\5\b\5\2"+
-		"\30\33\5\f\7\2\31\33\5\n\6\2\32\27\3\2\2\2\32\30\3\2\2\2\32\31\3\2\2\2"+
-		"\33\36\3\2\2\2\34\32\3\2\2\2\34\35\3\2\2\2\35\7\3\2\2\2\36\34\3\2\2\2"+
-		"\37\"\7\4\2\2 #\7\r\2\2!#\5\16\b\2\" \3\2\2\2\"!\3\2\2\2#\t\3\2\2\2$%"+
-		"\7\5\2\2%&\5\16\b\2&\13\3\2\2\2\'\67\7\6\2\2(8\7\r\2\2),\7\13\2\2*,\5"+
-		"\20\t\2+)\3\2\2\2+*\3\2\2\2,\64\3\2\2\2-\60\7\7\2\2.\61\7\13\2\2/\61\5"+
-		"\20\t\2\60.\3\2\2\2\60/\3\2\2\2\61\63\3\2\2\2\62-\3\2\2\2\63\66\3\2\2"+
-		"\2\64\62\3\2\2\2\64\65\3\2\2\2\658\3\2\2\2\66\64\3\2\2\2\67(\3\2\2\2\67"+
-		"+\3\2\2\289\3\2\2\29:\7\b\2\2:\r\3\2\2\2;<\t\2\2\2<\17\3\2\2\2=>\7\13"+
-		"\2\2>?\7\t\2\2?@\7\13\2\2@\21\3\2\2\2\t\32\34\"+\60\64\67";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\21F\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
+		"\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4\7\4\37\n\4\f\4\16\4\"\13\4\3\5\3\5\3\5"+
+		"\5\5\'\n\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\7\7\61\n\7\f\7\16\7\64\13\7"+
+		"\5\7\66\n\7\3\7\3\7\3\b\3\b\3\t\3\t\5\t>\n\t\3\n\3\n\3\13\3\13\3\13\3"+
+		"\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\3\4\2\n\n\f\f\2B\2\26\3\2\2\2"+
+		"\4\30\3\2\2\2\6 \3\2\2\2\b#\3\2\2\2\n(\3\2\2\2\f+\3\2\2\2\169\3\2\2\2"+
+		"\20=\3\2\2\2\22?\3\2\2\2\24A\3\2\2\2\26\27\5\4\3\2\27\3\3\2\2\2\30\31"+
+		"\7\3\2\2\31\32\5\6\4\2\32\5\3\2\2\2\33\37\5\b\5\2\34\37\5\f\7\2\35\37"+
+		"\5\n\6\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37\"\3\2\2\2 \36\3"+
+		"\2\2\2 !\3\2\2\2!\7\3\2\2\2\" \3\2\2\2#&\7\4\2\2$\'\7\r\2\2%\'\5\16\b"+
+		"\2&$\3\2\2\2&%\3\2\2\2\'\t\3\2\2\2()\7\5\2\2)*\5\16\b\2*\13\3\2\2\2+\65"+
+		"\7\6\2\2,\66\7\r\2\2-\62\5\20\t\2./\7\7\2\2/\61\5\20\t\2\60.\3\2\2\2\61"+
+		"\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65"+
+		",\3\2\2\2\65-\3\2\2\2\66\67\3\2\2\2\678\7\b\2\28\r\3\2\2\29:\t\2\2\2:"+
+		"\17\3\2\2\2;>\5\22\n\2<>\5\24\13\2=;\3\2\2\2=<\3\2\2\2>\21\3\2\2\2?@\7"+
+		"\13\2\2@\23\3\2\2\2AB\7\13\2\2BC\7\t\2\2CD\7\13\2\2D\25\3\2\2\2\b\36 "+
+		"&\62\65=";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

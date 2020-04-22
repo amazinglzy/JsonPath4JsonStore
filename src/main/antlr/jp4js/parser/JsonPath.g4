@@ -19,13 +19,19 @@ jsonObjectStep: '.' ( WILDCARD | jsonFieldName)
 jsonDescendentStep: '..' jsonFieldName
   ;
 
-jsonArrayStep: '[' (WILDCARD | ((NATRUAL_INTEGER | jsonArrayRange) (',' (NATRUAL_INTEGER| jsonArrayRange))* ) ) ']'
+jsonArrayStep: '[' (WILDCARD | (jsonArraySelection (',' jsonArraySelection)* ) ) ']'
   ;
 
-jsonFieldName: JSON_STRING | IDENTIFIER
+jsonFieldName: IDENTIFIER
   ;
 
-jsonArrayRange: NATRUAL_INTEGER ':' NATRUAL_INTEGER
+jsonArraySelection: jsonArrayIndex | jsonArraySlice
+  ;
+
+jsonArrayIndex: NATRUAL_INTEGER
+  ;
+
+jsonArraySlice: NATRUAL_INTEGER ':' NATRUAL_INTEGER
   ;
 
 JSON_STRING: '"' (~["\\])* '"';

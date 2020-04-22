@@ -100,13 +100,37 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx) { }
+	@Override public void enterJsonArraySelection(JsonPathParser.JsonArraySelectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJsonArrayRange(JsonPathParser.JsonArrayRangeContext ctx) { }
+	@Override public void exitJsonArraySelection(JsonPathParser.JsonArraySelectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonArrayIndex(JsonPathParser.JsonArrayIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonArrayIndex(JsonPathParser.JsonArrayIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonArraySlice(JsonPathParser.JsonArraySliceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonArraySlice(JsonPathParser.JsonArraySliceContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
