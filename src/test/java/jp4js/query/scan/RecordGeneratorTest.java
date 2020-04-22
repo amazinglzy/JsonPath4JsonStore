@@ -31,7 +31,7 @@ public class RecordGeneratorTest {
     @Test
     public void testStepProperties01() {
         RecordSet recordSet = new RecordSet(configuration);
-        recordSet.append(new Record("$", basic01, configuration));
+        recordSet.append(recordSet.new Record("$", basic01));
 
         RecordGenerator recordGenerator = new RecordGenerator(recordSet, configuration);
         recordGenerator.step(new LinkedList<>(){{
@@ -49,7 +49,7 @@ public class RecordGeneratorTest {
     @Test
     public void testStepArraySelections01() {
         RecordSet recordSet = new RecordSet(configuration);
-        recordSet.append(new Record("$", basic01, configuration));
+        recordSet.append(recordSet.new Record("$", basic01));
 
         RecordGenerator recordGenerator = new RecordGenerator(recordSet, configuration);
         recordGenerator.step(new LinkedList<>(){{
@@ -65,7 +65,7 @@ public class RecordGeneratorTest {
     @Test
     public void testStepWildcard01() {
         RecordSet recordSet = new RecordSet(configuration);
-        recordSet.append(new Record("$", basic01, configuration));
+        recordSet.append(recordSet.new Record("$", basic01));
 
         RecordGenerator recordGenerator = new RecordGenerator(recordSet, configuration);
         recordGenerator.stepWildcard();
@@ -80,7 +80,7 @@ public class RecordGeneratorTest {
     @Test
     public void testStepScan01() {
         RecordSet recordSet = new RecordSet(configuration);
-        recordSet.append(new Record("$", basic01, configuration));
+        recordSet.append(recordSet.new Record("$", basic01));
 
 
         RecordGenerator recordGenerator = new RecordGenerator(recordSet, configuration);

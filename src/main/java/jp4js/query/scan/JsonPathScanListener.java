@@ -30,7 +30,7 @@ public class JsonPathScanListener extends JsonPathBaseListener {
 
 	public void enterJsonBasicPathExpr(JsonPathParser.JsonBasicPathExprContext ctx) {
         RecordSet recordSet = new RecordSet(configuration);
-        recordSet.append(new Record("$", json, configuration));
+        recordSet.append(recordSet.new Record("$", json));
         this.generator = new RecordGenerator(recordSet, configuration);
     }
 

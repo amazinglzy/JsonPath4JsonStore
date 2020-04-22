@@ -8,15 +8,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class RecordSet {
-    public static class Record {
+    public class Record {
         private String path;
         private Object value;
-        private Configuration configuration;
 
-        public Record(String path, Object value, Configuration configuration) {
+        public Record(String path, Object value) {
             this.path = path;
             this.value = value;
-            this.configuration = configuration;
         }
 
         public String getPath() {
@@ -24,7 +22,7 @@ public class RecordSet {
         }
 
         public Object getValue() {
-            return this.configuration.jsonProvider().unwrap(this.value);
+            return configuration.jsonProvider().unwrap(this.value);
         }
     }
 
