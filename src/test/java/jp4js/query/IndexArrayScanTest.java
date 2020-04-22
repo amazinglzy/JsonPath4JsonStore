@@ -30,13 +30,13 @@ public class IndexArrayScanTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        // ArrayIndexOperation operation = ArrayIndexOperation.parse("1,2");
+        ArraySelections selections = new ArrayIndex(1);
 
-        // scan = new indexContext, operation, null);
-        // NodeIterator iter = scan.iterator();
+        IndexArrayScan scan = new IndexArrayScan(indexContext, selections);
+        NodeIterator iter = scan.iterator();
 
-        // assertThat(iter.hasNext()).isTrue();
-        // assertThat(iter.read().getValue()).isEqualTo(2);
+        assertThat(iter.hasNext()).isTrue();
+        assertThat(iter.read().getValue()).isEqualTo(2);
     }
 
     @Test
@@ -47,14 +47,13 @@ public class IndexArrayScanTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        // ArraySliceOperation operation = ArraySliceOperation.parse(":1");
+        ArraySelections selections = new ArraySlice(0, 3);
 
-        // scan = new indexContext, null, operation);
-        // NodeIterator iter = scan.iterator();
+        IndexArrayScan scan = new IndexArrayScan(indexContext, selections);
+        NodeIterator iter = scan.iterator();
 
-        // assertThat(iter.hasNext()).isTrue();
-        // assertThat(iter.read().getValue()).isEqualTo(1);
-
+        assertThat(iter.hasNext()).isTrue();
+        assertThat(iter.read().getValue()).isEqualTo(1);
     }
     
     @Test

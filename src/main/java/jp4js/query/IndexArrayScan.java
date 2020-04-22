@@ -6,8 +6,6 @@ import jp4js.query.PlanOperator;
 import jp4js.utils.Utils;
 import static jp4js.index.node.ArrayNode.ArraySelections;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class IndexArrayScan implements PlanOperator {
 
@@ -25,8 +23,6 @@ public class IndexArrayScan implements PlanOperator {
 
     @Override
     public NodeIterator iterator() {
-        // if (this.indexOperation != null) return this.indexContext.openArray(this.indexOperation);
-        // else return this.indexContext.openArray(this.sliceOperation);
-        return null;
+        return this.indexContext.openArray(selections);
     }
 }

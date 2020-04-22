@@ -38,7 +38,6 @@ import com.google.gson.internal.LazilyParsedNumber;
 
 public class GsonJsonProvider extends AbstractJsonProvider {
 
-    private static final JsonParser PARSER = new JsonParser();
     private final Gson gson;
 
     /**
@@ -110,14 +109,14 @@ public class GsonJsonProvider extends AbstractJsonProvider {
 
     @Override
     public Object parse(final String json) throws InvalidJsonException {
-        return PARSER.parse(json);
+        return JsonParser.parseString(json);
     }
 
     @Override
     public Object parse(final InputStream jsonStream, final String charset) throws InvalidJsonException {
 
         try {
-            return PARSER.parse(new InputStreamReader(jsonStream, charset));
+            return JsonParser.parseReader(new InputStreamReader(jsonStream, charset));
         } catch (UnsupportedEncodingException e) {
             throw new JsonPathException(e);
         }
@@ -196,7 +195,6 @@ public class GsonJsonProvider extends AbstractJsonProvider {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void removeProperty(final Object obj, final Object key) {
         if (isMap(obj)) {
             toJsonObject(obj).remove(key.toString());

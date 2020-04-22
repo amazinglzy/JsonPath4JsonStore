@@ -156,9 +156,10 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider {
 
     @Override
     public void setProperty(Object obj, Object key, Object value) {
-        if (isMap(obj))
-            toJsonObject(obj).put(key.toString(), createJsonElement(value));
-        else {
+        if (isMap(obj)) {
+            ObjectNode node = toJsonObject(obj);
+            node.set(key.toString(), createJsonElement(value));
+        } else {
             ArrayNode array = toJsonArray(obj);
             int index;
             if (key != null) {
@@ -176,7 +177,6 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider {
 
 
 
-    @SuppressWarnings("unchecked")
     public void removeProperty(Object obj, Object key) {
         if (isMap(obj))
             toJsonObject(obj).remove(key.toString());

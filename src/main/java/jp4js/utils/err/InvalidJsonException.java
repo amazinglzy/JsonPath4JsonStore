@@ -14,7 +14,7 @@
  */
 package jp4js.utils.err;
 
-@SuppressWarnings("serial")
+
 public class InvalidJsonException extends JsonPathException {
 
     /**

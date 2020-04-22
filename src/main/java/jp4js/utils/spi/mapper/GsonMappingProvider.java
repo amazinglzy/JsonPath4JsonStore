@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Callable;
 
+@SuppressWarnings("unchecked")
 public class GsonMappingProvider implements MappingProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(GsonMappingProvider.class);

@@ -291,7 +291,6 @@ public class JsonPathParser extends Parser {
 				match(WILDCARD);
 				}
 				break;
-			case JSON_STRING:
 			case IDENTIFIER:
 				{
 				setState(35);
@@ -438,7 +437,6 @@ public class JsonPathParser extends Parser {
 	}
 
 	public static class JsonFieldNameContext extends ParserRuleContext {
-		public TerminalNode JSON_STRING() { return getToken(JsonPathParser.JSON_STRING, 0); }
 		public TerminalNode IDENTIFIER() { return getToken(JsonPathParser.IDENTIFIER, 0); }
 		public JsonFieldNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -457,20 +455,11 @@ public class JsonPathParser extends Parser {
 	public final JsonFieldNameContext jsonFieldName() throws RecognitionException {
 		JsonFieldNameContext _localctx = new JsonFieldNameContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_jsonFieldName);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(55);
-			_la = _input.LA(1);
-			if ( !(_la==JSON_STRING || _la==IDENTIFIER) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -626,19 +615,18 @@ public class JsonPathParser extends Parser {
 		"\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4\7\4\37\n\4\f\4\16\4\"\13\4\3\5\3\5\3\5"+
 		"\5\5\'\n\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\7\7\61\n\7\f\7\16\7\64\13\7"+
 		"\5\7\66\n\7\3\7\3\7\3\b\3\b\3\t\3\t\5\t>\n\t\3\n\3\n\3\13\3\13\3\13\3"+
-		"\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\3\4\2\n\n\f\f\2B\2\26\3\2\2\2"+
-		"\4\30\3\2\2\2\6 \3\2\2\2\b#\3\2\2\2\n(\3\2\2\2\f+\3\2\2\2\169\3\2\2\2"+
-		"\20=\3\2\2\2\22?\3\2\2\2\24A\3\2\2\2\26\27\5\4\3\2\27\3\3\2\2\2\30\31"+
-		"\7\3\2\2\31\32\5\6\4\2\32\5\3\2\2\2\33\37\5\b\5\2\34\37\5\f\7\2\35\37"+
-		"\5\n\6\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37\"\3\2\2\2 \36\3"+
-		"\2\2\2 !\3\2\2\2!\7\3\2\2\2\" \3\2\2\2#&\7\4\2\2$\'\7\r\2\2%\'\5\16\b"+
-		"\2&$\3\2\2\2&%\3\2\2\2\'\t\3\2\2\2()\7\5\2\2)*\5\16\b\2*\13\3\2\2\2+\65"+
-		"\7\6\2\2,\66\7\r\2\2-\62\5\20\t\2./\7\7\2\2/\61\5\20\t\2\60.\3\2\2\2\61"+
-		"\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65"+
-		",\3\2\2\2\65-\3\2\2\2\66\67\3\2\2\2\678\7\b\2\28\r\3\2\2\29:\t\2\2\2:"+
-		"\17\3\2\2\2;>\5\22\n\2<>\5\24\13\2=;\3\2\2\2=<\3\2\2\2>\21\3\2\2\2?@\7"+
-		"\13\2\2@\23\3\2\2\2AB\7\13\2\2BC\7\t\2\2CD\7\13\2\2D\25\3\2\2\2\b\36 "+
-		"&\62\65=";
+		"\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\2\2B\2\26\3\2\2\2\4\30\3\2\2"+
+		"\2\6 \3\2\2\2\b#\3\2\2\2\n(\3\2\2\2\f+\3\2\2\2\169\3\2\2\2\20=\3\2\2\2"+
+		"\22?\3\2\2\2\24A\3\2\2\2\26\27\5\4\3\2\27\3\3\2\2\2\30\31\7\3\2\2\31\32"+
+		"\5\6\4\2\32\5\3\2\2\2\33\37\5\b\5\2\34\37\5\f\7\2\35\37\5\n\6\2\36\33"+
+		"\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2"+
+		"\2!\7\3\2\2\2\" \3\2\2\2#&\7\4\2\2$\'\7\r\2\2%\'\5\16\b\2&$\3\2\2\2&%"+
+		"\3\2\2\2\'\t\3\2\2\2()\7\5\2\2)*\5\16\b\2*\13\3\2\2\2+\65\7\6\2\2,\66"+
+		"\7\r\2\2-\62\5\20\t\2./\7\7\2\2/\61\5\20\t\2\60.\3\2\2\2\61\64\3\2\2\2"+
+		"\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\65,\3\2\2\2\65"+
+		"-\3\2\2\2\66\67\3\2\2\2\678\7\b\2\28\r\3\2\2\29:\7\f\2\2:\17\3\2\2\2;"+
+		">\5\22\n\2<>\5\24\13\2=;\3\2\2\2=<\3\2\2\2>\21\3\2\2\2?@\7\13\2\2@\23"+
+		"\3\2\2\2AB\7\13\2\2BC\7\t\2\2CD\7\13\2\2D\25\3\2\2\2\b\36 &\62\65=";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

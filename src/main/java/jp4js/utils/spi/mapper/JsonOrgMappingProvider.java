@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class JsonOrgMappingProvider implements MappingProvider {
     @Override
     public <T> T map(Object source, Class<T> targetType, Configuration configuration) {

@@ -14,13 +14,9 @@
  */
 package jp4js.utils;
 
-import jp4js.utils.DefaultsImpl;
 import jp4js.utils.spi.json.JsonProvider;
 import jp4js.utils.spi.mapper.MappingProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;

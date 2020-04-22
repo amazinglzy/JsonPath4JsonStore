@@ -14,7 +14,7 @@
  */
 package jp4js.utils.err;
 
-@SuppressWarnings("serial")
+
 public class InvalidCriteriaException extends JsonPathException {
     public InvalidCriteriaException() {
     }

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp4js.utils.Configuration;
 import jp4js.utils.TypeRef;
 
+@SuppressWarnings("unchecked")
 public class JacksonMappingProvider implements MappingProvider {
 
     private final ObjectMapper objectMapper;

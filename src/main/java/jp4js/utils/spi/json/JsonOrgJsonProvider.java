@@ -133,7 +133,6 @@ public class JsonOrgJsonProvider extends AbstractJsonProvider {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void removeProperty(Object obj, Object key) {
         if (isMap(obj))
             toJsonObject(obj).remove(key.toString());
