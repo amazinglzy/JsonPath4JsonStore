@@ -1,4 +1,4 @@
-// Generated from jp4js/parser/JsonPath.g4 by ANTLR 4.7
+// Generated from JsonPath.g4 by ANTLR 4.7
 package jp4js.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
