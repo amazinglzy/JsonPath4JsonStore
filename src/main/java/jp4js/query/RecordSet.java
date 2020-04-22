@@ -44,6 +44,10 @@ public class RecordSet {
         this.data.add(record);
     }
 
+    public void append(String path, Object value) {
+        this.data.add(new Record(path, value));
+    }
+
     public Iterator<Record> iterator() {
         return this.data.iterator();
     }

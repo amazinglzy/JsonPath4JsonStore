@@ -76,7 +76,7 @@ public class RecordGenerator {
         for (Integer index: indices) {
             Object val = configuration.jsonProvider().getArrayIndex(record.getValue(), index);
             if (val != JsonProvider.UNDEFINED) { // getMapValue will return reference of UNDEFINED
-                newData.append(newData.new Record(record.getPath() + "[" + String.valueOf(index) + "]", val));
+                newData.append(record.getPath() + "[" + String.valueOf(index) + "]", val);
             }
         }
     }
@@ -91,9 +91,8 @@ public class RecordGenerator {
         } else if (configuration.jsonProvider().isMap(record.getValue())) {
             for (String property: configuration.jsonProvider().getPropertyKeys(record.getValue())) {
                 newData.append(
-                    newData.new Record(
-                        record.getPath() + "." + property, 
-                        configuration.jsonProvider().getMapValue(record.getValue(), property)));
+                    record.getPath() + "." + property, 
+                    configuration.jsonProvider().getMapValue(record.getValue(), property));
             }
         }
     }
@@ -110,7 +109,7 @@ public class RecordGenerator {
             for (String property: properties) {
                 Object obj = configuration.jsonProvider().getMapValue(json, property);
                 if (obj != JsonProvider.UNDEFINED) {
-                    newData.append(newData.new Record(path + "." + property, obj));
+                    newData.append(path + "." + property, obj);
                 }
             }
 

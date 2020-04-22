@@ -2,8 +2,8 @@
 
 ## 1. Parsing the JsonPath query
 
-* [ ] write anltr file to parse the query
-* [ ] using ast to scan json documents
+* [x] write anltr file to parse the query
+* [x] using ast to scan json documents
 
 ## 2. Based on Scan
 
