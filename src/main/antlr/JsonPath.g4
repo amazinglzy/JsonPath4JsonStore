@@ -1,38 +1,24 @@
 // Define a grammar called Hello
 grammar JsonPath;
-// r  : 'hello' ID ;         // match keyword hello followed by an identifier
-// ID : [a-z]+ ;             // match lower-case identifiers
-// WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-jsonBasicPathExpr: jsonAbsolutePathExpr
-  ;
+jsonBasicPathExpr: jsonAbsolutePathExpr ;
 
-jsonAbsolutePathExpr: '$' jsonNonfunctionSteps
-  ;
+jsonAbsolutePathExpr: '$' jsonSteps ;
 
-jsonNonfunctionSteps: (jsonObjectStep | jsonArrayStep | jsonDescendentStep) *
-  ;
+jsonSteps: (jsonObjectStep | jsonArrayStep | jsonDescendentStep) * ;
 
-jsonObjectStep: '.' ( WILDCARD | jsonFieldName)
-  ;
+jsonObjectStep: '.' (jsonObjectWildcardStep | jsonObjectFieldNameStep);
+jsonObjectWildcardStep: WILDCARD ;
+jsonObjectFieldNameStep: jsonFieldName ;
+jsonDescendentStep: '..' jsonFieldName ;
+jsonFieldName: IDENTIFIER ;
 
-jsonDescendentStep: '..' jsonFieldName
-  ;
-
-jsonArrayStep: '[' (WILDCARD | (jsonArraySelection (',' jsonArraySelection)* ) ) ']'
-  ;
-
-jsonFieldName: IDENTIFIER
-  ;
-
-jsonArraySelection: jsonArrayIndex | jsonArraySlice
-  ;
-
-jsonArrayIndex: NATRUAL_INTEGER
-  ;
-
-jsonArraySlice: NATRUAL_INTEGER ':' NATRUAL_INTEGER
-  ;
+jsonArrayStep: '[' (jsonArrayWildcardStep | jsonArraySelectionsStep) ']' ;
+jsonArrayWildcardStep: WILDCARD;
+jsonArraySelectionsStep: jsonArraySelection (',' jsonArraySelection)* ;
+jsonArraySelection: jsonArrayIndex | jsonArraySlice ;
+jsonArrayIndex: NATRUAL_INTEGER ;
+jsonArraySlice: NATRUAL_INTEGER ':' NATRUAL_INTEGER ;
 
 JSON_STRING: '"' (~["\\])* '"';
 NATRUAL_INTEGER: '0' | POSITIVEDIGIT DIGIT*;

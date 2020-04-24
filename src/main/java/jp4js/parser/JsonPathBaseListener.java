@@ -40,13 +40,13 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx) { }
+	@Override public void enterJsonSteps(JsonPathParser.JsonStepsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJsonNonfunctionSteps(JsonPathParser.JsonNonfunctionStepsContext ctx) { }
+	@Override public void exitJsonSteps(JsonPathParser.JsonStepsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -64,6 +64,30 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -71,6 +95,18 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -88,13 +124,25 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
+	@Override public void enterJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJsonFieldName(JsonPathParser.JsonFieldNameContext ctx) { }
+	@Override public void exitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

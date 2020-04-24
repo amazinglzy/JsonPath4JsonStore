@@ -58,8 +58,9 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample03() {
-        Iterator<Record> iter = JsonPath.evaluate("$.phoneNumbers[0:1].type", example03, configuration);
+        Iterator<Record> iter = JsonPath.evaluate("$.phoneNumbers[0:1, 1].type", example03, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("iPhone");
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("home");
         assertThat(iter.hasNext()).isFalse();
     };
 }

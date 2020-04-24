@@ -1,5 +1,4 @@
-// Generated from JsonPath.g4 by ANTLR 4.7
-package jp4js.parser;
+// Generated from /Users/owly/Desktop/2. PieceWorks/2. Java/JsonPath4JsonStore/src/main/antlr/JsonPath.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class JsonPathParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -98,19 +97,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonBasicPathExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonBasicPathExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonBasicPathExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonBasicPathExpr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonBasicPathExprContext jsonBasicPathExpr() throws RecognitionException {
@@ -142,19 +128,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonAbsolutePathExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonAbsolutePathExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonAbsolutePathExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonAbsolutePathExpr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonAbsolutePathExprContext jsonAbsolutePathExpr() throws RecognitionException {
@@ -203,19 +176,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonSteps; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonSteps(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonSteps(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonSteps(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonStepsContext jsonSteps() throws RecognitionException {
@@ -283,19 +243,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonObjectStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonObjectStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonObjectStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonObjectStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonObjectStepContext jsonObjectStep() throws RecognitionException {
@@ -343,19 +290,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonObjectWildcardStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonObjectWildcardStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonObjectWildcardStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonObjectWildcardStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonObjectWildcardStepContext jsonObjectWildcardStep() throws RecognitionException {
@@ -387,19 +321,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonObjectFieldNameStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonObjectFieldNameStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonObjectFieldNameStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonObjectFieldNameStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonObjectFieldNameStepContext jsonObjectFieldNameStep() throws RecognitionException {
@@ -431,19 +352,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonDescendentStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonDescendentStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonDescendentStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonDescendentStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonDescendentStepContext jsonDescendentStep() throws RecognitionException {
@@ -475,19 +383,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonFieldName; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonFieldName(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonFieldName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonFieldName(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonFieldNameContext jsonFieldName() throws RecognitionException {
@@ -522,19 +417,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArrayStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArrayStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArrayStepContext jsonArrayStep() throws RecognitionException {
@@ -584,19 +466,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArrayWildcardStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayWildcardStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayWildcardStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArrayWildcardStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArrayWildcardStepContext jsonArrayWildcardStep() throws RecognitionException {
@@ -631,19 +500,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArraySelectionsStep; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArraySelectionsStep(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArraySelectionsStep(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArraySelectionsStep(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArraySelectionsStepContext jsonArraySelectionsStep() throws RecognitionException {
@@ -695,19 +551,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArraySelection; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArraySelection(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArraySelection(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArraySelection(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArraySelectionContext jsonArraySelection() throws RecognitionException {
@@ -750,19 +593,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArrayIndex; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArrayIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArrayIndex(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArrayIndex(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArrayIndexContext jsonArrayIndex() throws RecognitionException {
@@ -795,19 +625,6 @@ public class JsonPathParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_jsonArraySlice; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).enterJsonArraySlice(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JsonPathListener ) ((JsonPathListener)listener).exitJsonArraySlice(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JsonPathVisitor ) return ((JsonPathVisitor<? extends T>)visitor).visitJsonArraySlice(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final JsonArraySliceContext jsonArraySlice() throws RecognitionException {
