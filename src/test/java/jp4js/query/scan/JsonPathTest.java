@@ -3,6 +3,7 @@ package jp4js.query.scan;
 import jp4js.utils.Configuration;
 import jp4js.query.JsonData;
 import jp4js.query.RecordSet.Record;
+import jp4js.query.JsonPath;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,7 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample0101() {
-        Iterator<Record> iter = JsonPath.evaluate("$.field3[*]", example01, configuration);
+        Iterator<Record> iter = JsonPath.evaluateByScan("$.field3[*]", example01, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(1);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(2);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(3);
@@ -26,7 +27,7 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample0201() {
-        Iterator<Record> iter = JsonPath.evaluate("$.store.book[*].author", example02, configuration);
+        Iterator<Record> iter = JsonPath.evaluateByScan("$.store.book[*].author", example02, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Nigel Rees");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Evelyn Waugh");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Herman Melville");
@@ -36,7 +37,7 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample0202() {
-        Iterator<Record> iter = JsonPath.evaluate("$..author", example02, configuration);
+        Iterator<Record> iter = JsonPath.evaluateByScan("$..author", example02, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Nigel Rees");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Evelyn Waugh");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("Herman Melville");
@@ -47,7 +48,7 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample0203() {
-        Iterator<Record> iter = JsonPath.evaluate("$.store..price", example02, configuration);
+        Iterator<Record> iter = JsonPath.evaluateByScan("$.store..price", example02, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(8.95);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(12.99);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(8.99);
@@ -58,7 +59,7 @@ public class JsonPathTest {
 
     @Test
     public void testJsonPathExample03() {
-        Iterator<Record> iter = JsonPath.evaluate("$.phoneNumbers[0:1, 1].type", example03, configuration);
+        Iterator<Record> iter = JsonPath.evaluateByScan("$.phoneNumbers[0:1, 1].type", example03, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("iPhone");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("home");
         assertThat(iter.hasNext()).isFalse();
