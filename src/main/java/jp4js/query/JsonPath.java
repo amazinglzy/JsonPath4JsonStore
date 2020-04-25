@@ -3,6 +3,7 @@ package jp4js.query;
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
 import jp4js.query.scan.JsonPathScan;
+import jp4js.query.join.Concat;
 import jp4js.query.join.MergeJoin;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
@@ -12,6 +13,7 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class JsonPath {
     static public Iterator<Record> evaluateByScan(String path, Object json, Configuration configuration) {
@@ -36,7 +38,7 @@ public class JsonPath {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, parser.jsonBasicPathExpr());
 
-        PlanOperator operator = listener.operator();
-        return new NodeWrapper(operator.iterator(), new RecordSet(configuration));
+        PlanOperator op = new Concat(listener.operators());
+        return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 }

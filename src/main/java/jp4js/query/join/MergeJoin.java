@@ -1,6 +1,7 @@
 package jp4js.query.join;
 
 import jp4js.index.IndexContext;
+import jp4js.index.node.ArrayNode.ArraySelections;
 import jp4js.parser.JsonPathBaseListener;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.ArraySelectionsVisitor;
@@ -9,59 +10,66 @@ import jp4js.query.IndexPropertyScan;
 import jp4js.query.IndexTokenScan;
 import jp4js.query.PlanOperator;
 
+import java.util.List;
+import java.util.LinkedList;
+
 public class MergeJoin extends JsonPathBaseListener {
-    private PlanOperator planOp;
+    private List<PlanOperator> planOps;
     private IndexContext indexContext;
     public MergeJoin(IndexContext indexContext) {
         this.indexContext = indexContext;
-        this.planOp = null;
+        this.planOps = null;
     }
 
-    public PlanOperator operator() {
-        return this.planOp;
+    public List<PlanOperator> operators() {
+        return this.planOps;
     }
 
     @Override
     public void enterJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
-        this.planOp = new IndexPropertyScan(indexContext, "$");
+        this.planOps = new LinkedList<>(){{
+            add(new IndexPropertyScan(indexContext, "$"));
+        }};
     }
 
     @Override
     public void enterJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        this.planOp = new PCJoin(
-            this.planOp, 
-            new IndexTokenScan(indexContext)
-        );
+        this.planOps = new LinkedList<>(){{
+            for (PlanOperator op: planOps) {
+                add(new PCJoin(op, new IndexTokenScan(indexContext)));
+            }
+        }};
     }
 
     @Override
     public void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        this.planOp = new ADJoin(
-            this.planOp,
-            new IndexPropertyScan(
-                this.indexContext,
-                ctx.jsonFieldName().getText()
-            )
-        );
+        this.planOps = new LinkedList<>(){{
+            for (PlanOperator op: planOps) {
+                add(new ADJoin(op, new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())));
+            }
+        }};
     }
 
     @Override
     public void enterJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        this.planOp = new PCJoin(
-            this.planOp, 
-            new IndexTokenScan(indexContext)
-        );
+        this.planOps = new LinkedList<>() {{
+            for (PlanOperator op: planOps) {
+                add(new PCJoin(op, new IndexTokenScan(indexContext)));
+            }
+        }};
     }
 
 	@Override
     public void enterJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
         ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
-        this.planOp = new PCJoin(
-            this.planOp, 
-            new IndexArrayScan(
-                this.indexContext,
-                visitor.visit(ctx)
-            )
-        );
+        ArraySelections selections = visitor.visit(ctx);
+        List<ArraySelections> singleSelections = selections.asList();
+        this.planOps = new LinkedList<>() {{
+            for (PlanOperator op: planOps) {
+                for (ArraySelections s: singleSelections) {
+                    add(new PCJoin(op, new IndexArrayScan(indexContext, s)));
+                }
+            }
+        }};
     }
 }

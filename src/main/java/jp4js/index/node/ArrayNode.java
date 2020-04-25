@@ -23,6 +23,7 @@ public class ArrayNode extends Node {
 
     public interface ArraySelections {
         List<Integer> select();
+        List<ArraySelections> asList();
     }
 
     public static class ArrayIndex implements ArraySelections {
@@ -36,6 +37,14 @@ public class ArrayNode extends Node {
         public List<Integer> select() {
             int indexCopy = this.index;
             return new LinkedList<>() {{ add(indexCopy); }};
+        }
+
+        @Override
+        public List<ArraySelections> asList() {
+            ArraySelections toAdd = this;
+            return new LinkedList<>(){{
+                add(toAdd);
+            }};
         }
     }
 
@@ -57,6 +66,14 @@ public class ArrayNode extends Node {
                 }
             }};
         }
+
+        @Override
+        public List<ArraySelections> asList() {
+            ArraySelections toAdd = this;
+            return new LinkedList<>(){{
+                add(toAdd);
+            }};
+        }
     }
 
     public static class ArrayOperation implements ArraySelections {
@@ -72,6 +89,13 @@ public class ArrayNode extends Node {
                 for (ArraySelections selection: selections) {
                     addAll(selection.select());
                 }
+            }};
+        }
+
+        @Override
+        public List<ArraySelections> asList() {
+            return new LinkedList<>(){{
+                addAll(selections);
             }};
         }
     }
