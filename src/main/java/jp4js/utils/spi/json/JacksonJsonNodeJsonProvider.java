@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Comparator;
 
 public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider {
 
@@ -200,6 +201,13 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider {
         while (iter.hasNext()){
             keys.add(iter.next());
         }
+
+        keys.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
         return keys;
     }
 

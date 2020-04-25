@@ -32,6 +32,15 @@ public class MergeJoin extends JsonPathBaseListener {
         }};
     }
 
+    @Override 
+    public void enterJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
+        this.planOps = new LinkedList<>() {{
+            for (PlanOperator op: planOps) {
+                add(new PCJoin(op, new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())));
+            }
+        }};
+    }
+
     @Override
     public void enterJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
         this.planOps = new LinkedList<>(){{

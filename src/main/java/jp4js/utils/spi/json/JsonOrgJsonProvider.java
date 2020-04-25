@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Comparator;
 
 public class JsonOrgJsonProvider extends AbstractJsonProvider {
 
@@ -156,8 +157,13 @@ public class JsonOrgJsonProvider extends AbstractJsonProvider {
             for (int i = 0; i < jsonObject.names().length(); i++) {
                 String key = (String) jsonObject.names().get(i);
                 keys.add(key);
-
             }
+            keys.sort(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareTo(o2);
+                }
+            });
             return keys;
         } catch (JSONException e) {
             throw new JsonPathException(e);

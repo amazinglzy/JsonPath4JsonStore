@@ -1,4 +1,4 @@
-package jp4js.query;
+package jp4js;
 
 import jp4js.utils.Configuration;
 

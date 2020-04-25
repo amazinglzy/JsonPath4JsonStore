@@ -13,7 +13,6 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 public class JsonPath {
     static public Iterator<Record> evaluateByScan(String path, Object json, Configuration configuration) {

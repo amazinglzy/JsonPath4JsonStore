@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Comparator;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -218,7 +219,12 @@ public class GsonJsonProvider extends AbstractJsonProvider {
         for (Map.Entry<String, JsonElement> entry : toJsonObject(obj).entrySet()) {
             keys.add(entry.getKey());
         }
-
+        keys.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
         return keys;
     }
 
