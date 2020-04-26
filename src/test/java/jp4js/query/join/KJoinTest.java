@@ -3,7 +3,7 @@ package jp4js.query.join;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 import jp4js.query.IndexPropertyScan;
 import org.junit.Test;
 

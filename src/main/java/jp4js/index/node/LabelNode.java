@@ -1,5 +1,7 @@
 package jp4js.index.node;
 
+import java.util.Comparator;
+
 public class LabelNode implements Comparable<LabelNode> {
     private Object value;
     private Object rootDocument;
@@ -60,5 +62,14 @@ public class LabelNode implements Comparable<LabelNode> {
             return this.getFirstVisit() < o.getFirstVisit() ? -1: 1;
         }
         return 0;
+    }
+
+    public static Comparator<LabelNode> comparator() {
+        return new Comparator<LabelNode>() {
+            @Override
+            public int compare(LabelNode o1, LabelNode n2) {
+                return o1.compareTo(n2);
+            }
+        };
     }
 }

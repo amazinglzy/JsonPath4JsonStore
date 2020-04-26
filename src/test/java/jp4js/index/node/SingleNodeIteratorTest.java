@@ -1,6 +1,6 @@
 package jp4js.index.node;
 
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 
 import java.util.LinkedList;
 

@@ -1,6 +1,6 @@
 package jp4js.query.join;
 
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 import jp4js.query.PlanOperator;
 
 public class ADJoin implements PlanOperator<Item> {

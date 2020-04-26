@@ -3,7 +3,7 @@ package jp4js.index;
 
 import jp4js.index.node.NodeFactory;
 import jp4js.utils.Configuration;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 import jp4js.index.node.LabelArray.*;
 import jp4js.index.node.LabelNode;
 

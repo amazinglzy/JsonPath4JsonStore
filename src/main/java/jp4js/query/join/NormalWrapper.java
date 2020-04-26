@@ -2,7 +2,7 @@ package jp4js.query.join;
 
 import jp4js.query.PlanOperator;
 import jp4js.index.node.LabelNode;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 
 public class NormalWrapper implements PlanOperator<Item> {
     private PlanOperator<LabelNode> planOp;

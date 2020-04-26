@@ -4,7 +4,7 @@ import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
 import jp4js.index.node.LabelNode;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 import org.junit.Test;
 
 import java.util.LinkedList;

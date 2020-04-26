@@ -2,7 +2,6 @@ package jp4js.query.join;
 
 import jp4js.index.IndexContext;
 import jp4js.index.node.LabelArray.ArraySelections;
-import jp4js.index.node.LabelNode;
 import jp4js.parser.JsonPathBaseListener;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.ArraySelectionsVisitor;
@@ -14,10 +13,10 @@ import jp4js.query.PlanOperator;
 import java.util.List;
 import java.util.LinkedList;
 
-public class MergeJoin extends JsonPathBaseListener {
+public class MergeJoinD extends JsonPathBaseListener {
     private List<PlanOperator<Item>> planOps;
     private IndexContext indexContext;
-    public MergeJoin(IndexContext indexContext) {
+    public MergeJoinD(IndexContext indexContext) {
         this.indexContext = indexContext;
         this.planOps = null;
     }

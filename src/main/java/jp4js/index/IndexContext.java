@@ -1,8 +1,8 @@
 package jp4js.index;
 
-import jp4js.index.node.CombinedNodeIterator;
 import jp4js.index.node.LabelNode;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
+import jp4js.utils.iter.MIter;
 import jp4js.index.node.SingleNodeIterator;
 import jp4js.index.node.LabelArray.ArraySelections;
 
@@ -23,11 +23,11 @@ public class IndexContext {
         Iter<LabelNode> iter = null;
         for (String label: this.objectsPartitions.keySet()) {
             if (iter == null) iter = getObjectOrEmptyStream(label);
-            else iter = new CombinedNodeIterator(iter, getObjectOrEmptyStream(label));
+            else iter = new MIter<LabelNode>(iter, getObjectOrEmptyStream(label), LabelNode.comparator());
         }
         for (Long idx: this.arraysPartitions.keySet()) {
             if (iter == null) iter = getArrayOrEmptyStream(idx);
-            else iter = new CombinedNodeIterator(iter, getArrayOrEmptyStream(idx));
+            else iter = new MIter<LabelNode>(iter, getArrayOrEmptyStream(idx), LabelNode.comparator());
         }
         return iter;
     }
@@ -42,14 +42,16 @@ public class IndexContext {
 
     public Iter<LabelNode> openObject(List<String> objectLabels) {
         if (objectLabels.size() == 1) return getObjectOrEmptyStream(objectLabels.get(0));
-        Iter<LabelNode> ret = new CombinedNodeIterator(
+        Iter<LabelNode> ret = new MIter<LabelNode>(
                 getObjectOrEmptyStream(objectLabels.get(0)),
-                getObjectOrEmptyStream(objectLabels.get(1))
+                getObjectOrEmptyStream(objectLabels.get(1)),
+                LabelNode.comparator()
         );
         for (int i = 2; i < objectLabels.size(); i++) {
-            ret = new CombinedNodeIterator(
+            ret = new MIter<LabelNode>(
                     getObjectOrEmptyStream(objectLabels.get(i)),
-                    ret
+                    ret,
+                    LabelNode.comparator()
             );
         }
         return ret;
@@ -62,7 +64,7 @@ public class IndexContext {
             Iter<LabelNode> iter = null;
             for (Integer val: indicies) {
                 if (iter == null) iter = getArrayOrEmptyStream(Long.valueOf(val));
-                else iter = new CombinedNodeIterator(iter, getArrayOrEmptyStream(Long.valueOf(val)));
+                else iter = new MIter<LabelNode>(iter, getArrayOrEmptyStream(Long.valueOf(val)), LabelNode.comparator());
             }
             return iter;
         }

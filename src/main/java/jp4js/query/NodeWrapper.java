@@ -1,7 +1,7 @@
 package jp4js.query;
 
 import jp4js.index.node.LabelNode;
-import jp4js.utils.Iter;
+import jp4js.utils.iter.Iter;
 import jp4js.query.RecordSet.Record;
 
 import java.util.Iterator;

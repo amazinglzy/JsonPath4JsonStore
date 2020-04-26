@@ -4,7 +4,7 @@ import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
 import jp4js.query.scan.JsonPathScan;
 import jp4js.query.join.Concat;
-import jp4js.query.join.MergeJoin;
+import jp4js.query.join.MergeJoinD;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
@@ -27,14 +27,14 @@ public class JsonPath {
         return listener.results();
     }
 
-    static public Iterator<Record> evaluateByMergeJoin(String path, Object json, Configuration configuration) {
+    static public Iterator<Record> evaluateByMergeJoinD(String path, Object json, Configuration configuration) {
         CharStream s = CharStreams.fromString(path);
         JsonPathLexer lexer = new JsonPathLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoin listener = new MergeJoin(indexContext);
+        MergeJoinD listener = new MergeJoinD(indexContext);
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, parser.jsonBasicPathExpr());
 

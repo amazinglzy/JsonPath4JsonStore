@@ -1,4 +1,4 @@
-package jp4js.utils;
+package jp4js.utils.iter;
 
 public interface Iter<E> {
     /*
