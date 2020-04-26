@@ -38,7 +38,7 @@ public class KJoin implements PlanOperator<Item> {
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
                    if (curIter.read().getData().getLevel() == pIter.read().getData().getLevel() + this.k)
-                    this.buffer.add(curIter.read());
+                        this.buffer.add(merge(pIter.read(), curIter.read()));
                     curIter.next();
                 }
                 this.pIter.next();

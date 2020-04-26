@@ -39,6 +39,13 @@ public class PCJoin implements PlanOperator<Item> {
             this.buffer = buffer;
         }
 
+        protected Item merge(Item p, Item q) {
+            return new Item(q.getData(), new LinkedList<>(){{
+                addAll(p.getArraySelectionIndices());
+                addAll(q.getArraySelectionIndices());
+            }});
+        }
+
         protected void readBuffer() {
             if (this.buffer.size() > 0) return;
 
@@ -50,7 +57,7 @@ public class PCJoin implements PlanOperator<Item> {
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
                     if (curIter.read().getData().getLevel() == pIter.read().getData().getLevel() + 1)
-                        this.buffer.add(curIter.read());
+                        this.buffer.add(merge(pIter.read(), curIter.read()));
                     curIter.next();
                 }
                 this.pIter.next();

@@ -2,6 +2,7 @@ package jp4js.query.join;
 
 import jp4js.index.IndexContext;
 import jp4js.index.node.LabelArray.ArraySelections;
+import jp4js.index.node.LabelNode;
 import jp4js.parser.JsonPathBaseListener;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.ArraySelectionsVisitor;
@@ -21,8 +22,8 @@ public class MergeJoinS extends JsonPathBaseListener {
         this.planOp = null;
     }
 
-    public PlanOperator<Item> operator() {
-        return this.planOp;
+    public PlanOperator<LabelNode> operator() {
+        return new Reorder(this.planOp);
     }
 
     @Override
@@ -77,12 +78,11 @@ public class MergeJoinS extends JsonPathBaseListener {
         ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
         ArraySelections selections = visitor.visit(ctx);
         List<ArraySelections> singleSelections = selections.asList();
-        // this.planOp = new LinkedList<>() {{
-        //     for (PlanOperator<Item> op: planOps) {
-        //         for (ArraySelections s: singleSelections) {
-        //             add(new PCJoin(op, new NormalWrapper(new IndexArrayScan(indexContext, s))));
-        //         }
-        //     }
-        // }};
+        List<PlanOperator<Item>> planOps = new LinkedList<>(){{
+            for (ArraySelections s: singleSelections) {
+                add(new NormalWrapper(new IndexArrayScan(indexContext, s)));
+            }
+        }};
+        this.planOp = new PCJoin(this.planOp, new Collector(planOps));
     }
 }

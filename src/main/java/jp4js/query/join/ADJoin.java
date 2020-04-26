@@ -33,7 +33,7 @@ public class ADJoin implements PlanOperator<Item> {
                 while (curIter.hasNext() && curIter.read().getData().getFirstVisit() < pIter.read().getData().getFirstVisit())
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
-                    this.buffer.add(curIter.read());
+                    this.buffer.add(merge(pIter.read(), curIter.read()));
                     curIter.next();
                 }
                 this.pIter.next();
