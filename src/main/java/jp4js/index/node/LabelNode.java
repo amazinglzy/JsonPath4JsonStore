@@ -1,12 +1,12 @@
 package jp4js.index.node;
 
-public class Node implements Comparable<Node> {
+public class LabelNode implements Comparable<LabelNode> {
     private Object value;
     private Object rootDocument;
     private long firstVisit, lastVisit;
     private int level;
 
-    public Node(long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+    public LabelNode(long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
         this.value = value;
         this.firstVisit = firstVisit;
         this.lastVisit = lastVisit;
@@ -55,7 +55,7 @@ public class Node implements Comparable<Node> {
     }
 
     @Override
-    public int compareTo(Node o) {
+    public int compareTo(LabelNode o) {
         if (this.getFirstVisit() != o.getFirstVisit()) {
             return this.getFirstVisit() < o.getFirstVisit() ? -1: 1;
         }

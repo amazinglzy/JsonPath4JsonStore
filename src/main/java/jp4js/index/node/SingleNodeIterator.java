@@ -5,22 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SingleNodeIterator implements Iter<Node> {
-    private ArrayList<Node> data;
+public class SingleNodeIterator implements Iter<LabelNode> {
+    private ArrayList<LabelNode> data;
     private int idx;
 
-    public SingleNodeIterator(List<Node> data) {
-        this.data = new ArrayList<Node>(data);
+    public SingleNodeIterator(List<LabelNode> data) {
+        this.data = new ArrayList<LabelNode>(data);
         this.idx = 0;
     }
 
-    private SingleNodeIterator(ArrayList<Node> data, int idx) {
+    private SingleNodeIterator(ArrayList<LabelNode> data, int idx) {
         this.data = data;
         this.idx = idx;
     }
 
     @Override
-    public Node read() {
+    public LabelNode read() {
         return this.data.get(this.idx);
     }
 
@@ -38,7 +38,7 @@ public class SingleNodeIterator implements Iter<Node> {
     }
 
     @Override
-    public Iter<Node> cloneCurrentIterator() {
+    public Iter<LabelNode> cloneCurrentIterator() {
         return new SingleNodeIterator(this.data, this.idx);
     }
 }

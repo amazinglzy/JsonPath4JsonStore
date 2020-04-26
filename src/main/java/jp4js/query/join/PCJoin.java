@@ -1,6 +1,6 @@
 package jp4js.query.join;
 
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import jp4js.query.PlanOperator;
 
@@ -17,24 +17,24 @@ public class PCJoin implements PlanOperator {
     }
 
     @Override
-    public Iter<Node> iterator() {
+    public Iter<LabelNode> iterator() {
         return new PCJoinIter(this.parentPlanOperator.iterator(),
                 this.childPlanOperator.iterator());
     }
 
-    static class PCJoinIter implements Iter<Node> {
-        protected Iter<Node> pIter;
-        protected Iter<Node> cIter;
-        protected List<Node> buffer;
+    static class PCJoinIter implements Iter<LabelNode> {
+        protected Iter<LabelNode> pIter;
+        protected Iter<LabelNode> cIter;
+        protected List<LabelNode> buffer;
 
-        public PCJoinIter(Iter<Node> pIter, Iter<Node> cIter) {
+        public PCJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter) {
             this.pIter = pIter;
             this.cIter = cIter;
 
-            this.buffer = new LinkedList<Node>();
+            this.buffer = new LinkedList<LabelNode>();
         }
 
-        private PCJoinIter(Iter<Node> pIter, Iter<Node> cIter, List<Node> buffer) {
+        private PCJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter, List<LabelNode> buffer) {
             this.pIter = pIter;
             this.cIter = cIter;
             this.buffer = buffer;
@@ -46,7 +46,7 @@ public class PCJoin implements PlanOperator {
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
                 while (cIter.hasNext() && cIter.read().getLastVisit() <= pIter.read().getFirstVisit())
                     cIter.next();
-                Iter<Node> curIter = cIter.cloneCurrentIterator();
+                Iter<LabelNode> curIter = cIter.cloneCurrentIterator();
                 while (curIter.hasNext() && curIter.read().getFirstVisit() <= pIter.read().getFirstVisit())
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {
@@ -69,7 +69,7 @@ public class PCJoin implements PlanOperator {
         }
 
         @Override
-        public Node read() {
+        public LabelNode read() {
             this.checkEmpty(true);
             return this.buffer.get(0);
         }
@@ -86,8 +86,8 @@ public class PCJoin implements PlanOperator {
         }
 
         @Override
-        public Iter<Node> cloneCurrentIterator() {
-            List<Node> buffer = new LinkedList<Node>(this.buffer);
+        public Iter<LabelNode> cloneCurrentIterator() {
+            List<LabelNode> buffer = new LinkedList<LabelNode>(this.buffer);
             return new PCJoinIter(this.pIter.cloneCurrentIterator(), this.cIter.cloneCurrentIterator(), buffer);
         }
     }

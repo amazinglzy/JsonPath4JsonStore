@@ -4,8 +4,8 @@ package jp4js.index;
 import jp4js.index.node.NodeFactory;
 import jp4js.utils.Configuration;
 import jp4js.utils.Iter;
-import jp4js.index.node.ArrayNode.*;
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelArray.*;
+import jp4js.index.node.LabelNode;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,7 +70,7 @@ public class IndexerTest {
          */
         final Configuration configuration = Configuration.defaultConfiguration();
         final IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
-        final Iter<Node> iter = indexContext.openObject("a");
+        final Iter<LabelNode> iter = indexContext.openObject("a");
         assertThat(iter.read()).isEqualToIgnoringNullFields(
                 NodeFactory.create("a", 1, 6, 1, null, null)
         );
@@ -111,7 +111,7 @@ public class IndexerTest {
                 add(new ArrayIndex(2));
                 add(new ArraySlice(0, 2));
         }});
-        Iter<Node> iter = indexContext.openArray(selections);
+        Iter<LabelNode> iter = indexContext.openArray(selections);
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(

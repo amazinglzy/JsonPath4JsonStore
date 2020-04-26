@@ -1,7 +1,7 @@
 package jp4js.query.join;
 
 import jp4js.utils.Iter;
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelNode;
 import jp4js.query.PlanOperator;
 
 public class KJoin implements PlanOperator {
@@ -16,14 +16,14 @@ public class KJoin implements PlanOperator {
     }
 
     @Override
-    public Iter<Node> iterator() {
+    public Iter<LabelNode> iterator() {
         return new KJoinIter(this.ancestorPlanOp.iterator(), this.decedentPlanOp.iterator(), k);
     }
 
     static class KJoinIter extends PCJoin.PCJoinIter {
         private int k;
 
-        public KJoinIter(Iter<Node> pIter, Iter<Node> cIter, int k) {
+        public KJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter, int k) {
             super(pIter, cIter);
             this.k = k;
         }
@@ -34,7 +34,7 @@ public class KJoin implements PlanOperator {
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
                 while (cIter.hasNext() && cIter.read().getLastVisit() < pIter.read().getFirstVisit())
                     cIter.next();
-                Iter<Node> curIter = cIter.cloneCurrentIterator();
+                Iter<LabelNode> curIter = cIter.cloneCurrentIterator();
                 while (curIter.hasNext() && curIter.read().getFirstVisit() < pIter.read().getFirstVisit())
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {

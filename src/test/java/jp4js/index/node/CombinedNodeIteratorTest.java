@@ -10,15 +10,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CombinedNodeIteratorTest {
     @Test
     public void testCombinedNodeIteratorSanity() {
-        LinkedList<Node> l1 = new LinkedList<Node>() {{
+        LinkedList<LabelNode> l1 = new LinkedList<LabelNode>() {{
             add(NodeFactory.create(0, 0, 10, 1, null, null));
             add(NodeFactory.create(0, 1, 5, 2, null, null));
         }};
-        LinkedList<Node> l2 = new LinkedList<Node>() {{
+        LinkedList<LabelNode> l2 = new LinkedList<LabelNode>() {{
             add(NodeFactory.create(1, 6, 7, 2, null, null));
             add(NodeFactory.create(1, 7, 8, 2, null, null));
         }};
-        Iter<Node> iter = new CombinedNodeIterator(new SingleNodeIterator(l1), new SingleNodeIterator(l2));
+        Iter<LabelNode> iter = new CombinedNodeIterator(new SingleNodeIterator(l1), new SingleNodeIterator(l2));
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 0, 10, 1, null, null));
         iter.next();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 1, 5, 2, null, null));
@@ -33,20 +33,20 @@ public class CombinedNodeIteratorTest {
 
     @Test
     public void testCombinedNodeIteratorClone() {
-        LinkedList<Node> l1 = new LinkedList<Node>() {{
+        LinkedList<LabelNode> l1 = new LinkedList<LabelNode>() {{
             add(NodeFactory.create(0, 0, 10, 1, null, null));
             add(NodeFactory.create(0, 1, 5, 2, null, null));
         }};
-        LinkedList<Node> l2 = new LinkedList<Node>() {{
+        LinkedList<LabelNode> l2 = new LinkedList<LabelNode>() {{
             add(NodeFactory.create(1, 6, 7, 2, null, null));
             add(NodeFactory.create(1, 7, 8, 2, null, null));
         }};
-        Iter<Node> iter = new CombinedNodeIterator(new SingleNodeIterator(l1), new SingleNodeIterator(l2));
+        Iter<LabelNode> iter = new CombinedNodeIterator(new SingleNodeIterator(l1), new SingleNodeIterator(l2));
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 0, 10, 1, null, null));
 
-        Iter<Node> iterCopy = iter.cloneCurrentIterator();
+        Iter<LabelNode> iterCopy = iter.cloneCurrentIterator();
         iter.next();
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 1, 5, 2, null, null));

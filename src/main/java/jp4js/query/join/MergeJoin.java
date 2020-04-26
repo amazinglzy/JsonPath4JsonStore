@@ -1,7 +1,7 @@
 package jp4js.query.join;
 
 import jp4js.index.IndexContext;
-import jp4js.index.node.ArrayNode.ArraySelections;
+import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.parser.JsonPathBaseListener;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.ArraySelectionsVisitor;

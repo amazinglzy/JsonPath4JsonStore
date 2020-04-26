@@ -1,26 +1,26 @@
 package jp4js.index;
 
 import jp4js.index.node.CombinedNodeIterator;
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import jp4js.index.node.SingleNodeIterator;
-import jp4js.index.node.ArrayNode.ArraySelections;
+import jp4js.index.node.LabelArray.ArraySelections;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class IndexContext {
-    private Map<String, LinkedList<Node>> objectsPartitions;
-    private Map<Long, LinkedList<Node>> arraysPartitions;
+    private Map<String, LinkedList<LabelNode>> objectsPartitions;
+    private Map<Long, LinkedList<LabelNode>> arraysPartitions;
 
-    public IndexContext(Map<String, LinkedList<Node>> objectPartitions, Map<Long, LinkedList<Node>> arrayPartitions) {
+    public IndexContext(Map<String, LinkedList<LabelNode>> objectPartitions, Map<Long, LinkedList<LabelNode>> arrayPartitions) {
         this.objectsPartitions = objectPartitions;
         this.arraysPartitions = arrayPartitions;
     }
 
-    public Iter<Node> openAll() {
-        Iter<Node> iter = null;
+    public Iter<LabelNode> openAll() {
+        Iter<LabelNode> iter = null;
         for (String label: this.objectsPartitions.keySet()) {
             if (iter == null) iter = getObjectOrEmptyStream(label);
             else iter = new CombinedNodeIterator(iter, getObjectOrEmptyStream(label));
@@ -32,17 +32,17 @@ public class IndexContext {
         return iter;
     }
 
-    public Iter<Node> openObject(String objectLabel) {
+    public Iter<LabelNode> openObject(String objectLabel) {
         return getObjectOrEmptyStream(objectLabel);
     }
 
-    public Iter<Node> openArray(Long arrayIndex) {
+    public Iter<LabelNode> openArray(Long arrayIndex) {
         return getArrayOrEmptyStream(arrayIndex);
     }
 
-    public Iter<Node> openObject(List<String> objectLabels) {
+    public Iter<LabelNode> openObject(List<String> objectLabels) {
         if (objectLabels.size() == 1) return getObjectOrEmptyStream(objectLabels.get(0));
-        Iter<Node> ret = new CombinedNodeIterator(
+        Iter<LabelNode> ret = new CombinedNodeIterator(
                 getObjectOrEmptyStream(objectLabels.get(0)),
                 getObjectOrEmptyStream(objectLabels.get(1))
         );
@@ -55,11 +55,11 @@ public class IndexContext {
         return ret;
     }
 
-    public Iter<Node> openArray(ArraySelections selections) {
+    public Iter<LabelNode> openArray(ArraySelections selections) {
         List<Integer> indicies = selections.select();
         if (indicies.size() == 0) return new SingleNodeIterator(new LinkedList<>());
         else {
-            Iter<Node> iter = null;
+            Iter<LabelNode> iter = null;
             for (Integer val: indicies) {
                 if (iter == null) iter = getArrayOrEmptyStream(Long.valueOf(val));
                 else iter = new CombinedNodeIterator(iter, getArrayOrEmptyStream(Long.valueOf(val)));
@@ -68,15 +68,15 @@ public class IndexContext {
         }
     }
 
-    private Iter<Node> getObjectOrEmptyStream(String objectLabel) {
-        LinkedList<Node> ret = this.objectsPartitions.get(objectLabel);
-        if (ret == null) ret = new LinkedList<Node>();
+    private Iter<LabelNode> getObjectOrEmptyStream(String objectLabel) {
+        LinkedList<LabelNode> ret = this.objectsPartitions.get(objectLabel);
+        if (ret == null) ret = new LinkedList<LabelNode>();
         return new SingleNodeIterator(ret);
     }
 
-    private Iter<Node> getArrayOrEmptyStream(Long arrayIndex) {
-        LinkedList<Node> ret = this.arraysPartitions.get(arrayIndex);
-        if (ret == null) ret = new LinkedList<Node>();
+    private Iter<LabelNode> getArrayOrEmptyStream(Long arrayIndex) {
+        LinkedList<LabelNode> ret = this.arraysPartitions.get(arrayIndex);
+        if (ret == null) ret = new LinkedList<LabelNode>();
         return new SingleNodeIterator(ret);
     }
 }

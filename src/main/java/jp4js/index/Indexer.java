@@ -1,9 +1,9 @@
 package jp4js.index;
 
 import jp4js.utils.Configuration;
-import jp4js.index.node.ArrayNode;
-import jp4js.index.node.Node;
-import jp4js.index.node.ObjectNode;
+import jp4js.index.node.LabelArray;
+import jp4js.index.node.LabelNode;
+import jp4js.index.node.LabelObject;
 
 import java.util.*;
 
@@ -22,8 +22,8 @@ public class Indexer {
     }
 
     public static IndexContext index(Object json, Configuration configuration) {
-        Map<String, LinkedList<Node>> objectsPartitions = new HashMap<String, LinkedList<Node>>();
-        Map<Long, LinkedList<Node>> arraysPartitions = new HashMap<Long, LinkedList<Node>>();
+        Map<String, LinkedList<LabelNode>> objectsPartitions = new HashMap<String, LinkedList<LabelNode>>();
+        Map<Long, LinkedList<LabelNode>> arraysPartitions = new HashMap<Long, LinkedList<LabelNode>>();
         iterateJsonObject("$", json, json, configuration, new Timestamp(), 0, objectsPartitions, arraysPartitions);
         return new IndexContext(objectsPartitions, arraysPartitions);
     }
@@ -34,12 +34,12 @@ public class Indexer {
                                           Configuration configuration,
                                           Timestamp timestamp,
                                           int level,
-                                          Map<String, LinkedList<Node>> objectsPartitions,
-                                          Map<Long, LinkedList<Node>> arraysPartitions) {
-        ObjectNode node = new ObjectNode(key, json, rootDocument);
+                                          Map<String, LinkedList<LabelNode>> objectsPartitions,
+                                          Map<Long, LinkedList<LabelNode>> arraysPartitions) {
+        LabelObject node = new LabelObject(key, json, rootDocument);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
-        if (!objectsPartitions.containsKey(key)) objectsPartitions.put(key, new LinkedList<Node>());
+        if (!objectsPartitions.containsKey(key)) objectsPartitions.put(key, new LinkedList<LabelNode>());
         objectsPartitions.get(key).add(node);
         iterateJson(json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
@@ -51,12 +51,12 @@ public class Indexer {
                                          Configuration configuration,
                                          Timestamp timestamp,
                                          int level,
-                                         Map<String, LinkedList<Node>> objectsPartitions,
-                                         Map<Long, LinkedList<Node>> arraysPartitions) {
-        ArrayNode node = new ArrayNode(index, json, rootDocument);
+                                         Map<String, LinkedList<LabelNode>> objectsPartitions,
+                                         Map<Long, LinkedList<LabelNode>> arraysPartitions) {
+        LabelArray node = new LabelArray(index, json, rootDocument);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
-        if (!arraysPartitions.containsKey(index)) arraysPartitions.put(index, new LinkedList<Node>());
+        if (!arraysPartitions.containsKey(index)) arraysPartitions.put(index, new LinkedList<LabelNode>());
         arraysPartitions.get(index).add(node);
         iterateJson(json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
@@ -68,8 +68,8 @@ public class Indexer {
             Configuration configuration,
             Timestamp timestamp,
             int level,
-            Map<String, LinkedList<Node>> objectsPartitions,
-            Map<Long, LinkedList<Node>> arraysPartitions) {
+            Map<String, LinkedList<LabelNode>> objectsPartitions,
+            Map<Long, LinkedList<LabelNode>> arraysPartitions) {
         if (configuration.jsonProvider().isMap(json)) {
             List<String> properties = new ArrayList<String>(configuration.jsonProvider().getPropertyKeys(json));
             properties.sort(new Comparator<String>() {

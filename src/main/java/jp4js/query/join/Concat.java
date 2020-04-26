@@ -1,7 +1,7 @@
 package jp4js.query.join;
 
 import jp4js.utils.Iter;
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelNode;
 import jp4js.query.PlanOperator;
 
 import java.util.LinkedList;
@@ -16,7 +16,7 @@ public class Concat implements PlanOperator {
     }
     
     @Override
-    public Iter<Node> iterator() {
+    public Iter<LabelNode> iterator() {
         return new ConcatNodeIterator(new LinkedList<>(){{
             for (PlanOperator op: ops) {
                 add(op.iterator());
@@ -25,10 +25,10 @@ public class Concat implements PlanOperator {
 
     }
 
-    static class ConcatNodeIterator implements Iter<Node> {
-        private List<Iter<Node>> iters;
+    static class ConcatNodeIterator implements Iter<LabelNode> {
+        private List<Iter<LabelNode>> iters;
 
-        public ConcatNodeIterator(List<Iter<Node>> iters) {
+        public ConcatNodeIterator(List<Iter<LabelNode>> iters) {
             this.iters = iters;
         }
 
@@ -38,7 +38,7 @@ public class Concat implements PlanOperator {
         }
 
         @Override
-        public Node read() {
+        public LabelNode read() {
             popEmpty();
             return this.iters.get(0).read();
         }
@@ -56,9 +56,9 @@ public class Concat implements PlanOperator {
         }
 
         @Override
-        public Iter<Node> cloneCurrentIterator() {
-            List<Iter<Node>> itersCopy = new LinkedList<>() {{
-                for (Iter<Node> iter : iters) {
+        public Iter<LabelNode> cloneCurrentIterator() {
+            List<Iter<LabelNode>> itersCopy = new LinkedList<>() {{
+                for (Iter<LabelNode> iter : iters) {
                     add(iter.cloneCurrentIterator());
                 }
             }};

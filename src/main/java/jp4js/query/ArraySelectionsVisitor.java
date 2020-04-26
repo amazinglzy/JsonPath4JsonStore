@@ -2,7 +2,7 @@ package jp4js.query;
 
 import java.util.LinkedList;
 
-import jp4js.index.node.ArrayNode.*;
+import jp4js.index.node.LabelArray.*;
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
 

@@ -1,6 +1,6 @@
 package jp4js.query.scan;
 
-import jp4js.index.node.ArrayNode.ArraySelections;
+import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.query.RecordSet;
 import jp4js.query.RecordSet.Record;
 import jp4js.utils.Configuration;

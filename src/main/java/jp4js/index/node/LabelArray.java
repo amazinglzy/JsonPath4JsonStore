@@ -4,14 +4,14 @@ import jp4js.utils.Utils;
 import java.util.List;
 import java.util.LinkedList;
 
-public class ArrayNode extends Node {
+public class LabelArray extends LabelNode {
     private long index;
-    public ArrayNode(long index, Object value, Object rootDocument) {
+    public LabelArray(long index, Object value, Object rootDocument) {
         super(-1, -1, -1, value, rootDocument);
         this.index = index;
     }
 
-    public ArrayNode(long index, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+    public LabelArray(long index, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
         super(firstVisit, lastVisit, level, value, rootDocument);
         this.index = index;
     }

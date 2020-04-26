@@ -3,7 +3,7 @@ package jp4js.query;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
-import jp4js.index.node.Node;
+import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class IndexPropertyScanTest {
         }};
 
         IndexPropertyScan scan = new IndexPropertyScan(indexContext, properties);
-        Iter<Node> iter = scan.iterator();
+        Iter<LabelNode> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read().getValue()).isEqualTo(1);

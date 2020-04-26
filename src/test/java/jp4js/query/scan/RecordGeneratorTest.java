@@ -3,7 +3,7 @@ package jp4js.query.scan;
 import jp4js.query.RecordSet;
 import jp4js.query.RecordSet.Record;
 import jp4js.utils.Configuration;
-import jp4js.index.node.ArrayNode.ArraySlice;
+import jp4js.index.node.LabelArray.ArraySlice;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
