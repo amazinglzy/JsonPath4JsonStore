@@ -1,10 +1,11 @@
 package jp4js.index.node;
 
+import jp4js.utils.Iter;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SingleNodeIterator implements NodeIterator {
+public class SingleNodeIterator implements Iter<Node> {
     private ArrayList<Node> data;
     private int idx;
 
@@ -37,7 +38,7 @@ public class SingleNodeIterator implements NodeIterator {
     }
 
     @Override
-    public NodeIterator cloneCurrentIterator() {
+    public Iter<Node> cloneCurrentIterator() {
         return new SingleNodeIterator(this.data, this.idx);
     }
 }

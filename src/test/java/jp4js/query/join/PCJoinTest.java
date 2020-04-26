@@ -3,7 +3,8 @@ package jp4js.query.join;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
-import jp4js.index.node.NodeIterator;
+import jp4js.index.node.Node;
+import jp4js.utils.Iter;
 import jp4js.query.IndexPropertyScan;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class PCJoinTest {
         IndexPropertyScan level2 = new IndexPropertyScan(indexContext, "level2");
         IndexPropertyScan level3 = new IndexPropertyScan(indexContext, "level3");
 
-        NodeIterator iter;
+        Iter<Node> iter;
 
         iter = level1.iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(1); iter.next();
@@ -65,7 +66,7 @@ public class PCJoinTest {
         IndexPropertyScan level2 = new IndexPropertyScan(indexContext, "level2");
         IndexPropertyScan level3 = new IndexPropertyScan(indexContext, "level3");
 
-        NodeIterator iter;
+        Iter<Node> iter;
 
         iter = level1.iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(1); iter.next();

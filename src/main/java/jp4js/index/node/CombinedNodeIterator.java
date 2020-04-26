@@ -1,9 +1,11 @@
 package jp4js.index.node;
 
-public class CombinedNodeIterator implements NodeIterator {
-    private NodeIterator iter1, iter2;
+import jp4js.utils.Iter;
 
-    public CombinedNodeIterator(NodeIterator iter1, NodeIterator iter2) {
+public class CombinedNodeIterator implements Iter<Node> {
+    private Iter<Node> iter1, iter2;
+
+    public CombinedNodeIterator(Iter<Node> iter1, Iter<Node> iter2) {
         this.iter1 = iter1;
         this.iter2 = iter2;
     }
@@ -45,7 +47,7 @@ public class CombinedNodeIterator implements NodeIterator {
     }
 
     @Override
-    public NodeIterator cloneCurrentIterator() {
+    public Iter<Node> cloneCurrentIterator() {
         return new CombinedNodeIterator(this.iter1.cloneCurrentIterator(), this.iter2.cloneCurrentIterator());
     }
 }

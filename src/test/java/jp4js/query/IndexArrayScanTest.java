@@ -3,7 +3,8 @@ package jp4js.query;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
-import jp4js.index.node.NodeIterator;
+import jp4js.index.node.Node;
+import jp4js.utils.Iter;
 import jp4js.index.node.ArrayNode.*;
 
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class IndexArrayScanTest {
         ArraySelections selections = new ArrayIndex(1);
 
         IndexArrayScan scan = new IndexArrayScan(indexContext, selections);
-        NodeIterator iter = scan.iterator();
+        Iter<Node> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read().getValue()).isEqualTo(2);
@@ -50,7 +51,7 @@ public class IndexArrayScanTest {
         ArraySelections selections = new ArraySlice(0, 3);
 
         IndexArrayScan scan = new IndexArrayScan(indexContext, selections);
-        NodeIterator iter = scan.iterator();
+        Iter<Node> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read().getValue()).isEqualTo(1);

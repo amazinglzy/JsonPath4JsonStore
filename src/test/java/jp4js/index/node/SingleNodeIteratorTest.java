@@ -1,9 +1,10 @@
 package jp4js.index.node;
 
-import org.junit.Test;
+import jp4js.utils.Iter;
 
 import java.util.LinkedList;
 
+import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SingleNodeIteratorTest {
@@ -14,7 +15,7 @@ public class SingleNodeIteratorTest {
             add(NodeFactory.create(0, 1, 5, 2, null, null));
         }};
 
-        NodeIterator iter = new SingleNodeIterator(l);
+        Iter<Node> iter = new SingleNodeIterator(l);
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 0, 10, 1, null, null));
         iter.next();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 1, 5, 2, null, null));
@@ -29,12 +30,12 @@ public class SingleNodeIteratorTest {
             add(NodeFactory.create(0, 1, 5, 2, null, null));
         }};
 
-        NodeIterator iter = new SingleNodeIterator(l);
+        Iter<Node> iter = new SingleNodeIterator(l);
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(0, 0, 10, 1, null, null));
 
-        NodeIterator iterCopy = iter.cloneCurrentIterator();
+        Iter<Node> iterCopy = iter.cloneCurrentIterator();
 
         iter.next();
         assertThat(iter.hasNext()).isTrue();

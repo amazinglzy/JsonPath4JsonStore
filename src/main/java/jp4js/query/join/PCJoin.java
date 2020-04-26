@@ -1,7 +1,7 @@
 package jp4js.query.join;
 
 import jp4js.index.node.Node;
-import jp4js.index.node.NodeIterator;
+import jp4js.utils.Iter;
 import jp4js.query.PlanOperator;
 
 import java.util.LinkedList;
@@ -17,24 +17,24 @@ public class PCJoin implements PlanOperator {
     }
 
     @Override
-    public NodeIterator iterator() {
+    public Iter<Node> iterator() {
         return new PCJoinIter(this.parentPlanOperator.iterator(),
                 this.childPlanOperator.iterator());
     }
 
-    static class PCJoinIter implements NodeIterator {
-        protected NodeIterator pIter;
-        protected NodeIterator cIter;
+    static class PCJoinIter implements Iter<Node> {
+        protected Iter<Node> pIter;
+        protected Iter<Node> cIter;
         protected List<Node> buffer;
 
-        public PCJoinIter(NodeIterator pIter, NodeIterator cIter) {
+        public PCJoinIter(Iter<Node> pIter, Iter<Node> cIter) {
             this.pIter = pIter;
             this.cIter = cIter;
 
             this.buffer = new LinkedList<Node>();
         }
 
-        private PCJoinIter(NodeIterator pIter, NodeIterator cIter, List<Node> buffer) {
+        private PCJoinIter(Iter<Node> pIter, Iter<Node> cIter, List<Node> buffer) {
             this.pIter = pIter;
             this.cIter = cIter;
             this.buffer = buffer;
@@ -46,7 +46,7 @@ public class PCJoin implements PlanOperator {
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
                 while (cIter.hasNext() && cIter.read().getLastVisit() <= pIter.read().getFirstVisit())
                     cIter.next();
-                NodeIterator curIter = cIter.cloneCurrentIterator();
+                Iter<Node> curIter = cIter.cloneCurrentIterator();
                 while (curIter.hasNext() && curIter.read().getFirstVisit() <= pIter.read().getFirstVisit())
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {
@@ -86,7 +86,7 @@ public class PCJoin implements PlanOperator {
         }
 
         @Override
-        public NodeIterator cloneCurrentIterator() {
+        public Iter<Node> cloneCurrentIterator() {
             List<Node> buffer = new LinkedList<Node>(this.buffer);
             return new PCJoinIter(this.pIter.cloneCurrentIterator(), this.cIter.cloneCurrentIterator(), buffer);
         }

@@ -1,6 +1,7 @@
 package jp4js.query.join;
 
-import jp4js.index.node.NodeIterator;
+import jp4js.utils.Iter;
+import jp4js.index.node.Node;
 import jp4js.query.PlanOperator;
 
 public class ADJoin implements PlanOperator {
@@ -13,13 +14,13 @@ public class ADJoin implements PlanOperator {
     }
 
     @Override
-    public NodeIterator iterator() {
+    public Iter<Node> iterator() {
         return new ADJoinIter(this.ancestorPlanOp.iterator(), this.decedentPlanOp.iterator());
     }
 
     static class ADJoinIter extends PCJoin.PCJoinIter {
 
-        public ADJoinIter(NodeIterator pIter, NodeIterator cIter) {
+        public ADJoinIter(Iter<Node> pIter, Iter<Node> cIter) {
             super(pIter, cIter);
         }
 
@@ -29,7 +30,7 @@ public class ADJoin implements PlanOperator {
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
                 while (cIter.hasNext() && cIter.read().getLastVisit() < pIter.read().getFirstVisit())
                     cIter.next();
-                NodeIterator curIter = cIter.cloneCurrentIterator();
+                Iter<Node> curIter = cIter.cloneCurrentIterator();
                 while (curIter.hasNext() && curIter.read().getFirstVisit() < pIter.read().getFirstVisit())
                     curIter.next();
                 while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {

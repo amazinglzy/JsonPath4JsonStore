@@ -1,10 +1,10 @@
-package jp4js.index.node;
+package jp4js.utils;
 
-public interface NodeIterator {
+public interface Iter<E> {
     /*
     return the current node of the iterator
      */
-    Node read();
+    E read();
 
     /*
 
@@ -16,5 +16,5 @@ public interface NodeIterator {
      */
     boolean hasNext();
 
-    NodeIterator cloneCurrentIterator();
+    Iter<E> cloneCurrentIterator();
 }

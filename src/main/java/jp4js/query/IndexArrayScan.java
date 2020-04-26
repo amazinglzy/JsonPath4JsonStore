@@ -1,7 +1,8 @@
 package jp4js.query;
 
 import jp4js.index.IndexContext;
-import jp4js.index.node.NodeIterator;
+import jp4js.index.node.Node;
+import jp4js.utils.Iter;
 import jp4js.query.PlanOperator;
 import jp4js.utils.Utils;
 import static jp4js.index.node.ArrayNode.ArraySelections;
@@ -22,7 +23,7 @@ public class IndexArrayScan implements PlanOperator {
     }
 
     @Override
-    public NodeIterator iterator() {
+    public Iter<Node> iterator() {
         return this.indexContext.openArray(selections);
     }
 }

@@ -1,16 +1,16 @@
 package jp4js.query;
 
 import jp4js.index.node.Node;
-import jp4js.index.node.NodeIterator;
+import jp4js.utils.Iter;
 import jp4js.query.RecordSet.Record;
 
 import java.util.Iterator;
 
 public class NodeWrapper implements Iterator<Record> {
-    private NodeIterator iter;
+    private Iter<Node> iter;
     private RecordSet recordSet;
 
-    public NodeWrapper(NodeIterator iter, RecordSet recordSet) {
+    public NodeWrapper(Iter<Node> iter, RecordSet recordSet) {
         this.iter = iter;
         this.recordSet = recordSet;
     }

@@ -1,7 +1,7 @@
 package jp4js.query.join;
 
+import jp4js.utils.Iter;
 import jp4js.index.node.Node;
-import jp4js.index.node.NodeIterator;
 import jp4js.query.PlanOperator;
 
 import java.util.LinkedList;
@@ -16,7 +16,7 @@ public class Concat implements PlanOperator {
     }
     
     @Override
-    public NodeIterator iterator() {
+    public Iter<Node> iterator() {
         return new ConcatNodeIterator(new LinkedList<>(){{
             for (PlanOperator op: ops) {
                 add(op.iterator());
@@ -25,10 +25,10 @@ public class Concat implements PlanOperator {
 
     }
 
-    static class ConcatNodeIterator implements NodeIterator {
-        private List<NodeIterator> iters;
+    static class ConcatNodeIterator implements Iter<Node> {
+        private List<Iter<Node>> iters;
 
-        public ConcatNodeIterator(List<NodeIterator> iters) {
+        public ConcatNodeIterator(List<Iter<Node>> iters) {
             this.iters = iters;
         }
 
@@ -56,9 +56,9 @@ public class Concat implements PlanOperator {
         }
 
         @Override
-        public NodeIterator cloneCurrentIterator() {
-            List<NodeIterator> itersCopy = new LinkedList<>() {{
-                for (NodeIterator iter : iters) {
+        public Iter<Node> cloneCurrentIterator() {
+            List<Iter<Node>> itersCopy = new LinkedList<>() {{
+                for (Iter<Node> iter : iters) {
                     add(iter.cloneCurrentIterator());
                 }
             }};
