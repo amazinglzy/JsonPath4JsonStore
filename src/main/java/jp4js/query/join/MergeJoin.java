@@ -2,6 +2,7 @@ package jp4js.query.join;
 
 import jp4js.index.IndexContext;
 import jp4js.index.node.LabelArray.ArraySelections;
+import jp4js.index.node.LabelNode;
 import jp4js.parser.JsonPathBaseListener;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.ArraySelectionsVisitor;
@@ -14,29 +15,29 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class MergeJoin extends JsonPathBaseListener {
-    private List<PlanOperator> planOps;
+    private List<PlanOperator<Item>> planOps;
     private IndexContext indexContext;
     public MergeJoin(IndexContext indexContext) {
         this.indexContext = indexContext;
         this.planOps = null;
     }
 
-    public List<PlanOperator> operators() {
+    public List<PlanOperator<Item>> operators() {
         return this.planOps;
     }
 
     @Override
     public void enterJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
         this.planOps = new LinkedList<>(){{
-            add(new IndexPropertyScan(indexContext, "$"));
+            add(new NormalWrapper(new IndexPropertyScan(indexContext, "$")));
         }};
     }
 
     @Override 
     public void enterJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
         this.planOps = new LinkedList<>() {{
-            for (PlanOperator op: planOps) {
-                add(new PCJoin(op, new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())));
+            for (PlanOperator<Item> op: planOps) {
+                add(new PCJoin(op, new NormalWrapper(new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText()))));
             }
         }};
     }
@@ -44,8 +45,8 @@ public class MergeJoin extends JsonPathBaseListener {
     @Override
     public void enterJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
         this.planOps = new LinkedList<>(){{
-            for (PlanOperator op: planOps) {
-                add(new PCJoin(op, new IndexTokenScan(indexContext)));
+            for (PlanOperator<Item> op: planOps) {
+                add(new PCJoin(op, new NormalWrapper(new IndexTokenScan(indexContext))));
             }
         }};
     }
@@ -53,8 +54,8 @@ public class MergeJoin extends JsonPathBaseListener {
     @Override
     public void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
         this.planOps = new LinkedList<>(){{
-            for (PlanOperator op: planOps) {
-                add(new ADJoin(op, new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())));
+            for (PlanOperator<Item> op: planOps) {
+                add(new ADJoin(op, new NormalWrapper(new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText()))));
             }
         }};
     }
@@ -62,8 +63,8 @@ public class MergeJoin extends JsonPathBaseListener {
     @Override
     public void enterJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
         this.planOps = new LinkedList<>() {{
-            for (PlanOperator op: planOps) {
-                add(new PCJoin(op, new IndexTokenScan(indexContext)));
+            for (PlanOperator<Item> op: planOps) {
+                add(new PCJoin(op, new NormalWrapper(new IndexTokenScan(indexContext))));
             }
         }};
     }
@@ -74,9 +75,9 @@ public class MergeJoin extends JsonPathBaseListener {
         ArraySelections selections = visitor.visit(ctx);
         List<ArraySelections> singleSelections = selections.asList();
         this.planOps = new LinkedList<>() {{
-            for (PlanOperator op: planOps) {
+            for (PlanOperator<Item> op: planOps) {
                 for (ArraySelections s: singleSelections) {
-                    add(new PCJoin(op, new IndexArrayScan(indexContext, s)));
+                    add(new PCJoin(op, new NormalWrapper(new IndexArrayScan(indexContext, s))));
                 }
             }
         }};

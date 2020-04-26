@@ -1,29 +1,28 @@
 package jp4js.query.join;
 
 import jp4js.utils.Iter;
-import jp4js.index.node.LabelNode;
 import jp4js.query.PlanOperator;
 
-public class KJoin implements PlanOperator {
-    private PlanOperator ancestorPlanOp;
-    private PlanOperator decedentPlanOp;
+public class KJoin implements PlanOperator<Item> {
+    private PlanOperator<Item> ancestorPlanOp;
+    private PlanOperator<Item> decedentPlanOp;
     private int k;
 
-    public KJoin(PlanOperator ancestorPlanOp, PlanOperator decedentPlanOp, int k) {
+    public KJoin(PlanOperator<Item> ancestorPlanOp, PlanOperator<Item> decedentPlanOp, int k) {
         this.ancestorPlanOp = ancestorPlanOp;
         this.decedentPlanOp = decedentPlanOp;
         this.k = k;
     }
 
     @Override
-    public Iter<LabelNode> iterator() {
+    public Iter<Item> iterator() {
         return new KJoinIter(this.ancestorPlanOp.iterator(), this.decedentPlanOp.iterator(), k);
     }
 
     static class KJoinIter extends PCJoin.PCJoinIter {
         private int k;
 
-        public KJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter, int k) {
+        public KJoinIter(Iter<Item> pIter, Iter<Item> cIter, int k) {
             super(pIter, cIter);
             this.k = k;
         }
@@ -32,13 +31,13 @@ public class KJoin implements PlanOperator {
             if (this.buffer.size() > 0) return;
 
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
-                while (cIter.hasNext() && cIter.read().getLastVisit() < pIter.read().getFirstVisit())
+                while (cIter.hasNext() && cIter.read().getData().getLastVisit() < pIter.read().getData().getFirstVisit())
                     cIter.next();
-                Iter<LabelNode> curIter = cIter.cloneCurrentIterator();
-                while (curIter.hasNext() && curIter.read().getFirstVisit() < pIter.read().getFirstVisit())
+                Iter<Item> curIter = cIter.cloneCurrentIterator();
+                while (curIter.hasNext() && curIter.read().getData().getFirstVisit() < pIter.read().getData().getFirstVisit())
                     curIter.next();
-                while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {
-                   if (curIter.read().getLevel() == pIter.read().getLevel() + this.k)
+                while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
+                   if (curIter.read().getData().getLevel() == pIter.read().getData().getLevel() + this.k)
                     this.buffer.add(curIter.read());
                     curIter.next();
                 }

@@ -8,6 +8,7 @@ import jp4js.query.join.MergeJoin;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
+import jp4js.index.node.LabelNode;
 
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
@@ -37,7 +38,7 @@ public class JsonPath {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, parser.jsonBasicPathExpr());
 
-        PlanOperator op = new Concat(listener.operators());
+        PlanOperator<LabelNode> op = new Concat(listener.operators());
         return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 }

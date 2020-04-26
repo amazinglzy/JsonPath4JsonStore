@@ -3,7 +3,6 @@ package jp4js.query.join;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
-import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import jp4js.query.IndexPropertyScan;
 import org.junit.Test;
@@ -27,12 +26,12 @@ public class ADJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        IndexPropertyScan level1 = new IndexPropertyScan(indexContext, "level1");
-        IndexPropertyScan level3 = new IndexPropertyScan(indexContext, "level3");
+        NormalWrapper level1 = new NormalWrapper(new IndexPropertyScan(indexContext, "level1"));
+        NormalWrapper level3 = new NormalWrapper(new IndexPropertyScan(indexContext, "level3"));
 
-        Iter<LabelNode> iter;
+        Iter<Item> iter;
 
         iter = new ADJoin(level3, level1).iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3);
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 }

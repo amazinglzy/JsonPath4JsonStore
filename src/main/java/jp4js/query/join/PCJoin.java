@@ -1,40 +1,39 @@
 package jp4js.query.join;
 
-import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import jp4js.query.PlanOperator;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class PCJoin implements PlanOperator {
-    private PlanOperator parentPlanOperator;
-    private PlanOperator childPlanOperator;
+public class PCJoin implements PlanOperator<Item> {
+    private PlanOperator<Item> parentPlanOperator;
+    private PlanOperator<Item> childPlanOperator;
 
-    public PCJoin(PlanOperator parentPlanOperator, PlanOperator childPlanOperator) {
+    public PCJoin(PlanOperator<Item> parentPlanOperator, PlanOperator<Item> childPlanOperator) {
         this.parentPlanOperator = parentPlanOperator;
         this.childPlanOperator = childPlanOperator;
     }
 
     @Override
-    public Iter<LabelNode> iterator() {
+    public Iter<Item> iterator() {
         return new PCJoinIter(this.parentPlanOperator.iterator(),
                 this.childPlanOperator.iterator());
     }
 
-    static class PCJoinIter implements Iter<LabelNode> {
-        protected Iter<LabelNode> pIter;
-        protected Iter<LabelNode> cIter;
-        protected List<LabelNode> buffer;
+    static class PCJoinIter implements Iter<Item> {
+        protected Iter<Item> pIter;
+        protected Iter<Item> cIter;
+        protected List<Item> buffer;
 
-        public PCJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter) {
+        public PCJoinIter(Iter<Item> pIter, Iter<Item> cIter) {
             this.pIter = pIter;
             this.cIter = cIter;
 
-            this.buffer = new LinkedList<LabelNode>();
+            this.buffer = new LinkedList<Item>();
         }
 
-        private PCJoinIter(Iter<LabelNode> pIter, Iter<LabelNode> cIter, List<LabelNode> buffer) {
+        private PCJoinIter(Iter<Item> pIter, Iter<Item> cIter, List<Item> buffer) {
             this.pIter = pIter;
             this.cIter = cIter;
             this.buffer = buffer;
@@ -44,13 +43,13 @@ public class PCJoin implements PlanOperator {
             if (this.buffer.size() > 0) return;
 
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
-                while (cIter.hasNext() && cIter.read().getLastVisit() <= pIter.read().getFirstVisit())
+                while (cIter.hasNext() && cIter.read().getData().getLastVisit() <= pIter.read().getData().getFirstVisit())
                     cIter.next();
-                Iter<LabelNode> curIter = cIter.cloneCurrentIterator();
-                while (curIter.hasNext() && curIter.read().getFirstVisit() <= pIter.read().getFirstVisit())
+                Iter<Item> curIter = cIter.cloneCurrentIterator();
+                while (curIter.hasNext() && curIter.read().getData().getFirstVisit() <= pIter.read().getData().getFirstVisit())
                     curIter.next();
-                while (curIter.hasNext() && curIter.read().getLastVisit() < pIter.read().getLastVisit()) {
-                    if (curIter.read().getLevel() == pIter.read().getLevel() + 1)
+                while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
+                    if (curIter.read().getData().getLevel() == pIter.read().getData().getLevel() + 1)
                         this.buffer.add(curIter.read());
                     curIter.next();
                 }
@@ -69,7 +68,7 @@ public class PCJoin implements PlanOperator {
         }
 
         @Override
-        public LabelNode read() {
+        public Item read() {
             this.checkEmpty(true);
             return this.buffer.get(0);
         }
@@ -86,9 +85,10 @@ public class PCJoin implements PlanOperator {
         }
 
         @Override
-        public Iter<LabelNode> cloneCurrentIterator() {
-            List<LabelNode> buffer = new LinkedList<LabelNode>(this.buffer);
+        public Iter<Item> cloneCurrentIterator() {
+            List<Item> buffer = new LinkedList<Item>(this.buffer);
             return new PCJoinIter(this.pIter.cloneCurrentIterator(), this.cIter.cloneCurrentIterator(), buffer);
         }
     }
 }
+

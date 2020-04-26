@@ -27,23 +27,23 @@ public class PCJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        IndexPropertyScan level1 = new IndexPropertyScan(indexContext, "level1");
-        IndexPropertyScan level2 = new IndexPropertyScan(indexContext, "level2");
-        IndexPropertyScan level3 = new IndexPropertyScan(indexContext, "level3");
+        NormalWrapper level1 = new NormalWrapper(new IndexPropertyScan(indexContext, "level1"));
+        NormalWrapper level2 = new NormalWrapper(new IndexPropertyScan(indexContext, "level2"));
+        NormalWrapper level3 = new NormalWrapper(new IndexPropertyScan(indexContext, "level3"));
 
-        Iter<LabelNode> iter;
+        Iter<Item> iter;
 
         iter = level1.iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(1); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(2); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(1); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
         iter = new PCJoin(level2, level1).iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(2); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
         iter = new PCJoin(new PCJoin(level3, level2), level1).iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3);
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 
     @Test
@@ -62,22 +62,22 @@ public class PCJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        IndexPropertyScan level1 = new IndexPropertyScan(indexContext, "level1");
-        IndexPropertyScan level2 = new IndexPropertyScan(indexContext, "level2");
-        IndexPropertyScan level3 = new IndexPropertyScan(indexContext, "level3");
+        NormalWrapper level1 = new NormalWrapper(new IndexPropertyScan(indexContext, "level1"));
+        NormalWrapper level2 = new NormalWrapper(new IndexPropertyScan(indexContext, "level2"));
+        NormalWrapper level3 = new NormalWrapper(new IndexPropertyScan(indexContext, "level3"));
 
-        Iter<LabelNode> iter;
+        Iter<Item> iter;
 
         iter = level1.iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(1); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(2); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(1); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
         iter = new PCJoin(level2, level1).iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(2); iter.next();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
         iter = new PCJoin(new PCJoin(level3, level2), level1).iterator();
-        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getValue()).isEqualTo(3);
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 }

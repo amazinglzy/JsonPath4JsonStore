@@ -8,7 +8,7 @@ import jp4js.utils.Utils;
 import static jp4js.index.node.LabelArray.ArraySelections;
 
 
-public class IndexArrayScan implements PlanOperator {
+public class IndexArrayScan implements PlanOperator<LabelNode> {
 
     private ArraySelections selections;
     private IndexContext indexContext;

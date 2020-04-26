@@ -8,7 +8,7 @@ import jp4js.query.PlanOperator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class IndexPropertyScan implements PlanOperator {
+public class IndexPropertyScan implements PlanOperator<LabelNode> {
     private List<String> properties;
     private IndexContext indexContext;
 

@@ -5,7 +5,7 @@ import jp4js.index.node.LabelNode;
 import jp4js.utils.Iter;
 import jp4js.query.PlanOperator;
 
-public class IndexTokenScan implements PlanOperator {
+public class IndexTokenScan implements PlanOperator<LabelNode> {
     private IndexContext indexContext;
 
     public IndexTokenScan(IndexContext indexContext) {
