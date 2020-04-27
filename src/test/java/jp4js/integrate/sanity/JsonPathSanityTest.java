@@ -58,8 +58,14 @@ public class JsonPathSanityTest {
     }
 
     @Test
-    public void testJsonPathMergeJoinSanity() {
+    public void testJsonPathMergeJoinDSanity() {
         JsonPathEval eval = new JsonPathMergeJoinD();
+        testSanity(eval);
+    }
+
+    @Test
+    public void testJsonPathMergeJoinSSanity() {
+        JsonPathEval eval = new JsonPathMergeJoinS();
         testSanity(eval);
     }
 }
