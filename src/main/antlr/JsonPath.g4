@@ -1,11 +1,16 @@
 // Define a grammar called Hello
 grammar JsonPath;
 
-jsonBasicPathExpr: jsonAbsolutePathExpr ;
+jsonBasicPathExpr: jsonAbsolutePathExpr | jsonRelativePathExpr ;
 
 jsonAbsolutePathExpr: '$' jsonSteps ;
+jsonRelativePathExpr: '@' jsonSteps ;
 
-jsonSteps: (jsonObjectStep | jsonArrayStep | jsonDescendentStep) * ;
+jsonSteps: jsonStep * ;
+jsonStep: (jsonObjectStep | jsonArrayStep | jsonDescendentStep ) jsonFilterExpr;
+jsonFilterExpr: '[?(' jsonCond ')]' ;
+jsonCond: jsonExistsCond | jsonCond '&&' jsonCond;
+jsonExistsCond: jsonRelativePathExpr;
 
 jsonObjectStep: '.' (jsonObjectWildcardStep | jsonObjectFieldNameStep);
 jsonObjectWildcardStep: WILDCARD ;

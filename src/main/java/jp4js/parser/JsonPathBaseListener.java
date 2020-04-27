@@ -40,6 +40,18 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterJsonSteps(JsonPathParser.JsonStepsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -47,6 +59,54 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJsonSteps(JsonPathParser.JsonStepsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonStep(JsonPathParser.JsonStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonStep(JsonPathParser.JsonStepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonCond(JsonPathParser.JsonCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonCond(JsonPathParser.JsonCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -23,11 +23,41 @@ public interface JsonPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JsonPathParser#jsonRelativePathExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JsonPathParser#jsonSteps}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitJsonSteps(JsonPathParser.JsonStepsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JsonPathParser#jsonStep}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonStep(JsonPathParser.JsonStepContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JsonPathParser#jsonFilterExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JsonPathParser#jsonCond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonCond(JsonPathParser.JsonCondContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link JsonPathParser#jsonExistsCond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JsonPathParser#jsonObjectStep}.
 	 * @param ctx the parse tree

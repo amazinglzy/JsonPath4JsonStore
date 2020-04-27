@@ -28,6 +28,16 @@ public interface JsonPathListener extends ParseTreeListener {
 	 */
 	void exitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonRelativePathExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonRelativePathExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link JsonPathParser#jsonSteps}.
 	 * @param ctx the parse tree
 	 */
@@ -37,6 +47,46 @@ public interface JsonPathListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitJsonSteps(JsonPathParser.JsonStepsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonStep}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonStep(JsonPathParser.JsonStepContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonStep}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonStep(JsonPathParser.JsonStepContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonFilterExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonFilterExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonCond}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonCond(JsonPathParser.JsonCondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonCond}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonCond(JsonPathParser.JsonCondContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JsonPathParser#jsonExistsCond}.
+	 * @param ctx the parse tree
+	 */
+	void enterJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JsonPathParser#jsonExistsCond}.
+	 * @param ctx the parse tree
+	 */
+	void exitJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JsonPathParser#jsonObjectStep}.
 	 * @param ctx the parse tree
