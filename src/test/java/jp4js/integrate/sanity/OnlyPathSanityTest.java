@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-public class JsonPathSanityTest {
+public class OnlyPathSanityTest {
     private static Configuration configuration = Configuration.defaultConfiguration();
     private static Object example01 = JsonData.createJson(JsonData.EXAMPLE02, configuration);
     private static Object example02 = JsonData.createJson(JsonData.EXAPMLE01, configuration);

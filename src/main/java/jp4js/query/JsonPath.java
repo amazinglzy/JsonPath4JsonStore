@@ -22,10 +22,9 @@ public class JsonPath {
         JsonPathLexer lexer = new JsonPathLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         JsonPathParser parser = new JsonPathParser(tokens);
-        JsonPathScan listener = new JsonPathScan(json, configuration);
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(listener, parser.jsonBasicPathExpr());
-        return listener.results();
+        JsonPathScan visitor = new JsonPathScan(json, configuration);
+        visitor.visit(parser.jsonBasicPathExpr());
+        return visitor.results();
     }
 
     static public Iterator<Record> evaluateByMergeJoinD(String path, Object json, Configuration configuration) {

@@ -8,7 +8,7 @@ jsonRelativePathExpr: '@' jsonSteps ;
 
 jsonSteps: jsonStep * ;
 jsonStep: (jsonObjectStep | jsonArrayStep | jsonDescendentStep ) jsonFilterExpr ?;
-jsonFilterExpr: '[?(' jsonCond ')]' ;
+jsonFilterExpr: FILTER_BEGIN jsonCond FILTER_END ;
 jsonCond: jsonRelativePathExpr                                                          # JsonCondExists
         | jsonCond LOGIC_AND jsonCond                                                   # JsonCondAnd
         ;
@@ -19,7 +19,7 @@ jsonObjectFieldNameStep: jsonFieldName ;
 jsonDescendentStep: '..' jsonFieldName ;
 jsonFieldName: IDENTIFIER ;
 
-jsonArrayStep: '[' (jsonArrayWildcardStep | jsonArraySelectionsStep) ']' ;
+jsonArrayStep: ARRAY_BEGIN (jsonArrayWildcardStep | jsonArraySelectionsStep) ARRAY_END ;
 jsonArrayWildcardStep: WILDCARD;
 jsonArraySelectionsStep: jsonArraySelection (',' jsonArraySelection)* ;
 jsonArraySelection: jsonArrayIndex | jsonArraySlice ;
@@ -29,6 +29,11 @@ jsonArraySlice: NATRUAL_INTEGER ':' NATRUAL_INTEGER ;
 JSON_STRING: '"' (~["\\])* '"';
 NATRUAL_INTEGER: '0' | POSITIVEDIGIT DIGIT*;
 IDENTIFIER: LETTER (LETTER | DIGIT)*;
+
+FILTER_BEGIN: '[?(';
+FILTER_END: ')]';
+ARRAY_BEGIN: '[';
+ARRAY_END: ']';
 
 WILDCARD: '*';
 LOGIC_AND: '&&';

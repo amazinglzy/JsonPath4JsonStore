@@ -20,9 +20,10 @@ public class RelativeJsonPathScan extends AbstractJPScan {
     }
 
     @Override
-    public void enterJsonRelativePathExpr(JsonRelativePathExprContext ctx) {
+    public Void visitJsonRelativePathExpr(JsonRelativePathExprContext ctx) {
         RecordSet recordSet = new RecordSet(configuration);
         recordSet.append(this.path, this.value);
         this.generator = new RecordGenerator(recordSet, configuration);
+        return visitChildren(ctx);
     }
 }

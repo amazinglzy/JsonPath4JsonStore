@@ -10,16 +10,16 @@ import org.antlr.v4.runtime.tree.*;
 public class JsonPathExistsFilter implements Filter<Record> {
     private ParseTree tree;
     private Configuration configuration;
-    private ParseTreeWalker walker = new ParseTreeWalker();
 
     public JsonPathExistsFilter(ParseTree tree, Configuration configuration) {
         this.tree = tree;
+        this.configuration = configuration;
     }
 
     @Override
     public boolean accept(Record record)  {
         RelativeJsonPathScan scan = new RelativeJsonPathScan(record.getPath(), record.getValue(), configuration);
-        this.walker.walk(scan, this.tree);
+        scan.visit(this.tree);
         return scan.exists();
     }
 }

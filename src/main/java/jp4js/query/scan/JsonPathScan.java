@@ -22,9 +22,10 @@ public class JsonPathScan extends AbstractJPScan {
     }
 
     @Override
-    public void enterJsonAbsolutePathExpr(JsonAbsolutePathExprContext ctx) {
+    public Void visitJsonAbsolutePathExpr(JsonAbsolutePathExprContext ctx) {
         RecordSet recordSet = new RecordSet(configuration);
         recordSet.append("$", json);
         this.generator = new RecordGenerator(recordSet, configuration);
+        return visitChildren(ctx);
     }
 }

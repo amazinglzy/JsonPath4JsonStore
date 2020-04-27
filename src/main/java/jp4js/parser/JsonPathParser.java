@@ -17,9 +17,9 @@ public class JsonPathParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, JSON_STRING=11, NATRUAL_INTEGER=12, IDENTIFIER=13, WILDCARD=14, 
-		LOGIC_AND=15, DIGIT=16, POSITIVEDIGIT=17, LETTER=18, WS=19;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, JSON_STRING=7, NATRUAL_INTEGER=8, 
+		IDENTIFIER=9, FILTER_BEGIN=10, FILTER_END=11, ARRAY_BEGIN=12, ARRAY_END=13, 
+		WILDCARD=14, LOGIC_AND=15, DIGIT=16, POSITIVEDIGIT=17, LETTER=18, WS=19;
 	public static final int
 		RULE_jsonBasicPathExpr = 0, RULE_jsonAbsolutePathExpr = 1, RULE_jsonRelativePathExpr = 2, 
 		RULE_jsonSteps = 3, RULE_jsonStep = 4, RULE_jsonFilterExpr = 5, RULE_jsonCond = 6, 
@@ -36,13 +36,13 @@ public class JsonPathParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'$'", "'@'", "'[?('", "')]'", "'.'", "'..'", "'['", "']'", "','", 
-		"':'", null, null, null, "'*'", "'&&'"
+		null, "'$'", "'@'", "'.'", "'..'", "','", "':'", null, null, null, "'[?('", 
+		"')]'", "'['", "']'", "'*'", "'&&'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, "JSON_STRING", 
-		"NATRUAL_INTEGER", "IDENTIFIER", "WILDCARD", "LOGIC_AND", "DIGIT", "POSITIVEDIGIT", 
-		"LETTER", "WS"
+		null, null, null, null, null, null, null, "JSON_STRING", "NATRUAL_INTEGER", 
+		"IDENTIFIER", "FILTER_BEGIN", "FILTER_END", "ARRAY_BEGIN", "ARRAY_END", 
+		"WILDCARD", "LOGIC_AND", "DIGIT", "POSITIVEDIGIT", "LETTER", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -350,19 +350,19 @@ public class JsonPathParser extends Parser {
 			setState(55);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__4:
+			case T__2:
 				{
 				setState(52);
 				jsonObjectStep();
 				}
 				break;
-			case T__6:
+			case ARRAY_BEGIN:
 				{
 				setState(53);
 				jsonArrayStep();
 				}
 				break;
-			case T__5:
+			case T__3:
 				{
 				setState(54);
 				jsonDescendentStep();
@@ -395,9 +395,11 @@ public class JsonPathParser extends Parser {
 	}
 
 	public static class JsonFilterExprContext extends ParserRuleContext {
+		public TerminalNode FILTER_BEGIN() { return getToken(JsonPathParser.FILTER_BEGIN, 0); }
 		public JsonCondContext jsonCond() {
 			return getRuleContext(JsonCondContext.class,0);
 		}
+		public TerminalNode FILTER_END() { return getToken(JsonPathParser.FILTER_END, 0); }
 		public JsonFilterExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -424,11 +426,11 @@ public class JsonPathParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(60);
-			match(T__2);
+			match(FILTER_BEGIN);
 			setState(61);
 			jsonCond(0);
 			setState(62);
-			match(T__3);
+			match(FILTER_END);
 			}
 		}
 		catch (RecognitionException re) {
@@ -590,7 +592,7 @@ public class JsonPathParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(75);
-			match(T__4);
+			match(T__2);
 			setState(78);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
@@ -738,7 +740,7 @@ public class JsonPathParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(84);
-			match(T__5);
+			match(T__3);
 			setState(85);
 			jsonFieldName();
 			}
@@ -797,6 +799,8 @@ public class JsonPathParser extends Parser {
 	}
 
 	public static class JsonArrayStepContext extends ParserRuleContext {
+		public TerminalNode ARRAY_BEGIN() { return getToken(JsonPathParser.ARRAY_BEGIN, 0); }
+		public TerminalNode ARRAY_END() { return getToken(JsonPathParser.ARRAY_END, 0); }
 		public JsonArrayWildcardStepContext jsonArrayWildcardStep() {
 			return getRuleContext(JsonArrayWildcardStepContext.class,0);
 		}
@@ -829,7 +833,7 @@ public class JsonPathParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(89);
-			match(T__6);
+			match(ARRAY_BEGIN);
 			setState(92);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
@@ -849,7 +853,7 @@ public class JsonPathParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			setState(94);
-			match(T__7);
+			match(ARRAY_END);
 			}
 		}
 		catch (RecognitionException re) {
@@ -943,11 +947,11 @@ public class JsonPathParser extends Parser {
 			setState(103);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__8) {
+			while (_la==T__4) {
 				{
 				{
 				setState(99);
-				match(T__8);
+				match(T__4);
 				setState(100);
 				jsonArraySelection();
 				}
@@ -1104,7 +1108,7 @@ public class JsonPathParser extends Parser {
 			setState(112);
 			match(NATRUAL_INTEGER);
 			setState(113);
-			match(T__9);
+			match(T__5);
 			setState(114);
 			match(NATRUAL_INTEGER);
 			}
@@ -1153,16 +1157,16 @@ public class JsonPathParser extends Parser {
 		"\5\n\6\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\t"+
 		"\3\2\2\2\65\63\3\2\2\2\66:\5\20\t\2\67:\5\32\16\28:\5\26\f\29\66\3\2\2"+
 		"\29\67\3\2\2\298\3\2\2\2:<\3\2\2\2;=\5\f\7\2<;\3\2\2\2<=\3\2\2\2=\13\3"+
-		"\2\2\2>?\7\5\2\2?@\5\16\b\2@A\7\6\2\2A\r\3\2\2\2BC\b\b\1\2CD\5\6\4\2D"+
+		"\2\2\2>?\7\f\2\2?@\5\16\b\2@A\7\r\2\2A\r\3\2\2\2BC\b\b\1\2CD\5\6\4\2D"+
 		"J\3\2\2\2EF\f\3\2\2FG\7\21\2\2GI\5\16\b\4HE\3\2\2\2IL\3\2\2\2JH\3\2\2"+
-		"\2JK\3\2\2\2K\17\3\2\2\2LJ\3\2\2\2MP\7\7\2\2NQ\5\22\n\2OQ\5\24\13\2PN"+
+		"\2JK\3\2\2\2K\17\3\2\2\2LJ\3\2\2\2MP\7\5\2\2NQ\5\22\n\2OQ\5\24\13\2PN"+
 		"\3\2\2\2PO\3\2\2\2Q\21\3\2\2\2RS\7\20\2\2S\23\3\2\2\2TU\5\30\r\2U\25\3"+
-		"\2\2\2VW\7\b\2\2WX\5\30\r\2X\27\3\2\2\2YZ\7\17\2\2Z\31\3\2\2\2[^\7\t\2"+
-		"\2\\_\5\34\17\2]_\5\36\20\2^\\\3\2\2\2^]\3\2\2\2_`\3\2\2\2`a\7\n\2\2a"+
-		"\33\3\2\2\2bc\7\20\2\2c\35\3\2\2\2di\5 \21\2ef\7\13\2\2fh\5 \21\2ge\3"+
-		"\2\2\2hk\3\2\2\2ig\3\2\2\2ij\3\2\2\2j\37\3\2\2\2ki\3\2\2\2lo\5\"\22\2"+
-		"mo\5$\23\2nl\3\2\2\2nm\3\2\2\2o!\3\2\2\2pq\7\16\2\2q#\3\2\2\2rs\7\16\2"+
-		"\2st\7\f\2\2tu\7\16\2\2u%\3\2\2\2\13(\639<JP^in";
+		"\2\2\2VW\7\6\2\2WX\5\30\r\2X\27\3\2\2\2YZ\7\13\2\2Z\31\3\2\2\2[^\7\16"+
+		"\2\2\\_\5\34\17\2]_\5\36\20\2^\\\3\2\2\2^]\3\2\2\2_`\3\2\2\2`a\7\17\2"+
+		"\2a\33\3\2\2\2bc\7\20\2\2c\35\3\2\2\2di\5 \21\2ef\7\7\2\2fh\5 \21\2ge"+
+		"\3\2\2\2hk\3\2\2\2ig\3\2\2\2ij\3\2\2\2j\37\3\2\2\2ki\3\2\2\2lo\5\"\22"+
+		"\2mo\5$\23\2nl\3\2\2\2nm\3\2\2\2o!\3\2\2\2pq\7\n\2\2q#\3\2\2\2rs\7\n\2"+
+		"\2st\7\b\2\2tu\7\n\2\2u%\3\2\2\2\13(\639<JP^in";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
