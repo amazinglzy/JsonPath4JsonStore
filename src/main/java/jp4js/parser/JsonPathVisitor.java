@@ -47,17 +47,19 @@ public interface JsonPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JsonPathParser#jsonCond}.
+	 * Visit a parse tree produced by the {@code JsonCondAnd}
+	 * labeled alternative in {@link JsonPathParser#jsonCond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJsonCond(JsonPathParser.JsonCondContext ctx);
+	T visitJsonCondAnd(JsonPathParser.JsonCondAndContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JsonPathParser#jsonExistsCond}.
+	 * Visit a parse tree produced by the {@code JsonCondExists}
+	 * labeled alternative in {@link JsonPathParser#jsonCond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx);
+	T visitJsonCondExists(JsonPathParser.JsonCondExistsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JsonPathParser#jsonObjectStep}.
 	 * @param ctx the parse tree

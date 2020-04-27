@@ -5,11 +5,13 @@ import jp4js.query.RecordSet;
 import jp4js.query.RecordSet.Record;
 import jp4js.utils.Configuration;
 import jp4js.utils.spi.json.JsonProvider;
+import jp4js.utils.filter.Filter;
 
 import java.util.List;
 import java.util.Iterator;
 
 public class RecordGenerator {
+
     private RecordSet data;
     private Configuration configuration;
 
@@ -53,6 +55,17 @@ public class RecordGenerator {
         Iterator<Record> iterator = this.data.iterator();
         while (iterator.hasNext()) {
             transformByScan(iterator.next(), properties, newData);
+        }
+        this.data = newData;
+        return this;
+    }
+
+    public RecordGenerator filter(Filter<Record> filter) {
+        RecordSet newData = new RecordSet(configuration);
+        Iterator<Record> iterator = this.data.iterator();
+        while (iterator.hasNext()) {
+            Record r = iterator.next();
+            if (filter.accept(r)) newData.append(r);
         }
         this.data = newData;
         return this;

@@ -7,10 +7,11 @@ jsonAbsolutePathExpr: '$' jsonSteps ;
 jsonRelativePathExpr: '@' jsonSteps ;
 
 jsonSteps: jsonStep * ;
-jsonStep: (jsonObjectStep | jsonArrayStep | jsonDescendentStep ) jsonFilterExpr;
+jsonStep: (jsonObjectStep | jsonArrayStep | jsonDescendentStep ) jsonFilterExpr ?;
 jsonFilterExpr: '[?(' jsonCond ')]' ;
-jsonCond: jsonExistsCond | jsonCond '&&' jsonCond;
-jsonExistsCond: jsonRelativePathExpr;
+jsonCond: jsonRelativePathExpr                                                          # JsonCondExists
+        | jsonCond LOGIC_AND jsonCond                                                   # JsonCondAnd
+        ;
 
 jsonObjectStep: '.' (jsonObjectWildcardStep | jsonObjectFieldNameStep);
 jsonObjectWildcardStep: WILDCARD ;
@@ -30,6 +31,7 @@ NATRUAL_INTEGER: '0' | POSITIVEDIGIT DIGIT*;
 IDENTIFIER: LETTER (LETTER | DIGIT)*;
 
 WILDCARD: '*';
+LOGIC_AND: '&&';
 DIGIT: [0-9];
 POSITIVEDIGIT: [1-9];
 LETTER: [A-Z] | [a-z];

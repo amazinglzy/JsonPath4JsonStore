@@ -88,25 +88,25 @@ public class JsonPathBaseListener implements JsonPathListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJsonCond(JsonPathParser.JsonCondContext ctx) { }
+	@Override public void enterJsonCondAnd(JsonPathParser.JsonCondAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJsonCond(JsonPathParser.JsonCondContext ctx) { }
+	@Override public void exitJsonCondAnd(JsonPathParser.JsonCondAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx) { }
+	@Override public void enterJsonCondExists(JsonPathParser.JsonCondExistsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJsonExistsCond(JsonPathParser.JsonExistsCondContext ctx) { }
+	@Override public void exitJsonCondExists(JsonPathParser.JsonCondExistsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
