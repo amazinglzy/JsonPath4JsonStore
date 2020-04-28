@@ -24,11 +24,12 @@ public class Indexer {
     public static IndexContext index(Object json, Configuration configuration) {
         Map<String, LinkedList<LabelNode>> objectsPartitions = new HashMap<String, LinkedList<LabelNode>>();
         Map<Long, LinkedList<LabelNode>> arraysPartitions = new HashMap<Long, LinkedList<LabelNode>>();
-        iterateJsonObject("$", json, json, configuration, new Timestamp(), 0, objectsPartitions, arraysPartitions);
+        iterateJsonObject("$", "$", json, json, configuration, new Timestamp(), 0, objectsPartitions, arraysPartitions);
         return new IndexContext(objectsPartitions, arraysPartitions);
     }
 
     private static void iterateJsonObject(String key,
+                                          String path,
                                           Object json,
                                           Object rootDocument,
                                           Configuration configuration,
@@ -36,16 +37,17 @@ public class Indexer {
                                           int level,
                                           Map<String, LinkedList<LabelNode>> objectsPartitions,
                                           Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelObject node = new LabelObject(key, json, rootDocument);
+        LabelObject node = new LabelObject(path, key, json, rootDocument);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
         if (!objectsPartitions.containsKey(key)) objectsPartitions.put(key, new LinkedList<LabelNode>());
         objectsPartitions.get(key).add(node);
-        iterateJson(json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
+        iterateJson(path, json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
     }
 
     private static void iterateJsonArray(long index,
+                                         String path,
                                          Object json,
                                          Object rootDocument,
                                          Configuration configuration,
@@ -53,16 +55,17 @@ public class Indexer {
                                          int level,
                                          Map<String, LinkedList<LabelNode>> objectsPartitions,
                                          Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelArray node = new LabelArray(index, json, rootDocument);
+        LabelArray node = new LabelArray(path, index, json, rootDocument);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
         if (!arraysPartitions.containsKey(index)) arraysPartitions.put(index, new LinkedList<LabelNode>());
         arraysPartitions.get(index).add(node);
-        iterateJson(json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
+        iterateJson(path, json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
     }
 
     private static void iterateJson(
+            String path,
             Object json,
             Object rootDocument,
             Configuration configuration,
@@ -81,6 +84,7 @@ public class Indexer {
             for (String property: properties) {
                 iterateJsonObject(
                         property,
+                        path + "." + property ,
                         configuration.jsonProvider().getMapValue(json, property),
                         rootDocument,
                         configuration,
@@ -94,6 +98,7 @@ public class Indexer {
             for (Object obj: configuration.jsonProvider().toIterable(json)) {
                 iterateJsonArray(
                         index,
+                        path + "[" + String.valueOf(index) + "]",
                         obj,
                         rootDocument,
                         configuration,

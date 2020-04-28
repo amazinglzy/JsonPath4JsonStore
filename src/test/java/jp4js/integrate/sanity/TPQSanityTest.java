@@ -25,4 +25,16 @@ public class TPQSanityTest {
         JsonPathEval eval = new JsonPathScan();
         testSanity(eval);
     }
+
+    @Test
+    public void testJsonPathMergeJoinD() {
+        JsonPathEval eval = new JsonPathMergeJoinD();
+        testSanity(eval);
+    }
+
+    @Test
+    public void testJsonPathMergeJoinS() {
+        JsonPathEval eval = new JsonPathMergeJoinS();
+        testSanity(eval);
+    }
 }

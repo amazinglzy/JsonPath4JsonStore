@@ -3,12 +3,13 @@ package jp4js.query;
 import java.util.List;
 
 import jp4js.utils.Configuration;
+import jp4js.utils.Value;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class RecordSet {
-    public class Record {
+    public class Record implements Value {
         private String path;
         private Object value;
 

@@ -14,6 +14,12 @@ public class RelativeJsonPathScan extends AbstractJPScan {
         this.value = value;
     }
 
+    public RelativeJsonPathScan(Object value, Configuration configuration) {
+        super(configuration);
+        this.path = "@";
+        this.value = value;
+    }
+
     public boolean exists() {
         assert(this.generator != null);
         return this.generator.data().iterator().hasNext();

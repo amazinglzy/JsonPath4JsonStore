@@ -9,6 +9,9 @@ import jp4js.query.IndexArrayScan;
 import jp4js.query.IndexPropertyScan;
 import jp4js.query.IndexTokenScan;
 import jp4js.query.PlanOperator;
+import jp4js.query.scan.FilterVisitor;
+import jp4js.utils.Configuration;
+import jp4js.utils.filter.Filter;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -16,9 +19,11 @@ import java.util.LinkedList;
 public class MergeJoinD extends JsonPathBaseVisitor<Void> {
     private List<PlanOperator<Item>> planOps;
     private IndexContext indexContext;
-    public MergeJoinD(IndexContext indexContext) {
-        this.indexContext = indexContext;
+    private Configuration configuration;
+    public MergeJoinD(IndexContext indexContext, Configuration configuration) {
         this.planOps = null;
+        this.indexContext = indexContext;
+        this.configuration = configuration;
     }
 
     public List<PlanOperator<Item>> operators() {
@@ -91,6 +96,18 @@ public class MergeJoinD extends JsonPathBaseVisitor<Void> {
             }
         }};
         visitChildren(ctx);
+        return null;
+    }
+
+    @Override 
+    public Void visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) {
+        FilterVisitor<Item> visitor = new FilterVisitor<Item>(configuration);
+        Filter<Item> filter = visitor.visit(ctx.jsonCond());
+        this.planOps = new LinkedList<>() {{
+            for (PlanOperator<Item> op: planOps) {
+                add(new FilterPlanOperator(op, filter));
+            }
+        }};
         return null;
     }
 }

@@ -1,12 +1,13 @@
 package jp4js.query.join;
 
 import jp4js.index.node.LabelNode;
+import jp4js.utils.Value;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Item {
+public class Item implements Value {
     private LabelNode data;
     private List<Integer> arraySelectionIndices;
 
@@ -33,6 +34,11 @@ public class Item {
 
     public List<Integer> getArraySelectionIndices() {
         return this.arraySelectionIndices;
+    }
+
+    @Override
+    public Object getValue() {
+        return this.data.getValue();
     }
 
     public static Comparator<Item> comparator() {

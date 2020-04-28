@@ -11,7 +11,7 @@ import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
 import jp4js.index.node.LabelNode;
 
-import org.antlr.v4.runtime.tree.*;
+// import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
 
 import java.util.Iterator;
@@ -34,7 +34,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinD visitor = new MergeJoinD(indexContext);
+        MergeJoinD visitor = new MergeJoinD(indexContext, configuration);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = new Concat(visitor.operators());
@@ -48,7 +48,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinS visitor = new MergeJoinS(indexContext);
+        MergeJoinS visitor = new MergeJoinS(indexContext, configuration);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = visitor.operator();

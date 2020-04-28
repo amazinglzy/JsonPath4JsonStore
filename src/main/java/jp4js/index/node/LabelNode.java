@@ -9,8 +9,7 @@ public class LabelNode implements Comparable<LabelNode> {
     private long firstVisit, lastVisit;
     private int level;
 
-    // TODO change path
-    public LabelNode(long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+    public LabelNode(String path, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
         this.path = ""; 
         this.value = value;
         this.firstVisit = firstVisit;

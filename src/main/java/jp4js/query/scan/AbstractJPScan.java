@@ -53,7 +53,7 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
 
     @Override 
     public Void visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) {
-        FilterVisitor visitor = new FilterVisitor(configuration);
+        FilterVisitor<Record> visitor = new FilterVisitor<Record>(configuration);
         Filter<Record> filter = visitor.visit(ctx.jsonCond());
         this.generator.filter(filter);
         return null;

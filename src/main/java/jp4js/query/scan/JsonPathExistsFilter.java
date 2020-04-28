@@ -2,12 +2,12 @@ package jp4js.query.scan;
 
 import jp4js.utils.filter.Filter;
 import jp4js.utils.Configuration;
-import jp4js.query.RecordSet.Record;
+import jp4js.utils.Value;
 
 import org.antlr.v4.runtime.tree.*;
 
 
-public class JsonPathExistsFilter implements Filter<Record> {
+public class JsonPathExistsFilter<E extends Value> implements Filter<E> {
     private ParseTree tree;
     private Configuration configuration;
 
@@ -17,8 +17,8 @@ public class JsonPathExistsFilter implements Filter<Record> {
     }
 
     @Override
-    public boolean accept(Record record)  {
-        RelativeJsonPathScan scan = new RelativeJsonPathScan(record.getPath(), record.getValue(), configuration);
+    public boolean accept(E record)  {
+        RelativeJsonPathScan scan = new RelativeJsonPathScan(record.getValue(), configuration);
         scan.visit(this.tree);
         return scan.exists();
     }

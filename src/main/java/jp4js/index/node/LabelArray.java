@@ -6,13 +6,13 @@ import java.util.LinkedList;
 
 public class LabelArray extends LabelNode {
     private long index;
-    public LabelArray(long index, Object value, Object rootDocument) {
-        super(-1, -1, -1, value, rootDocument);
+    public LabelArray(String path, long index, Object value, Object rootDocument) {
+        super(path, -1, -1, -1, value, rootDocument);
         this.index = index;
     }
 
-    public LabelArray(long index, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
-        super(firstVisit, lastVisit, level, value, rootDocument);
+    public LabelArray(String path, long index, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+        super(path, firstVisit, lastVisit, level, value, rootDocument);
         this.index = index;
     }
 
