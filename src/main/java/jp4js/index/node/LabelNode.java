@@ -3,12 +3,15 @@ package jp4js.index.node;
 import java.util.Comparator;
 
 public class LabelNode implements Comparable<LabelNode> {
+    private String path;
     private Object value;
     private Object rootDocument;
     private long firstVisit, lastVisit;
     private int level;
 
+    // TODO change path
     public LabelNode(long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+        this.path = ""; 
         this.value = value;
         this.firstVisit = firstVisit;
         this.lastVisit = lastVisit;
@@ -34,6 +37,10 @@ public class LabelNode implements Comparable<LabelNode> {
 
     public Object getRootDocument() {
         return rootDocument;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void setValue(Object value) {

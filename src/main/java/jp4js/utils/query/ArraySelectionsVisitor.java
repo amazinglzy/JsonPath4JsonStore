@@ -1,4 +1,4 @@
-package jp4js.query;
+package jp4js.utils.query;
 
 import java.util.LinkedList;
 

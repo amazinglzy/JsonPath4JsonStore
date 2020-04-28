@@ -2,7 +2,7 @@ package jp4js.query.scan;
 
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
-import jp4js.query.ArraySelectionsVisitor;
+import jp4js.utils.query.ArraySelectionsVisitor;
 import jp4js.utils.Configuration;
 import jp4js.utils.filter.Filter;
 import jp4js.query.RecordSet.Record;

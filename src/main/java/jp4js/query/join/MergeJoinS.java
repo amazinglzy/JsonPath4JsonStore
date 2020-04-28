@@ -3,9 +3,9 @@ package jp4js.query.join;
 import jp4js.index.IndexContext;
 import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.index.node.LabelNode;
-import jp4js.parser.JsonPathBaseListener;
+import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
-import jp4js.query.ArraySelectionsVisitor;
+import jp4js.utils.query.ArraySelectionsVisitor;
 import jp4js.query.IndexArrayScan;
 import jp4js.query.IndexPropertyScan;
 import jp4js.query.IndexTokenScan;
@@ -14,7 +14,7 @@ import jp4js.query.PlanOperator;
 import java.util.List;
 import java.util.LinkedList;
 
-public class MergeJoinS extends JsonPathBaseListener {
+public class MergeJoinS extends JsonPathBaseVisitor<Void> {
     private PlanOperator<Item> planOp;
     private IndexContext indexContext;
     public MergeJoinS(IndexContext indexContext) {
@@ -27,54 +27,64 @@ public class MergeJoinS extends JsonPathBaseListener {
     }
 
     @Override
-    public void enterJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
+    public Void visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
         this.planOp = new NormalWrapper(
             new IndexPropertyScan(indexContext, "$")
         );
+        visitChildren(ctx);
+        return null;
     }
 
     @Override 
-    public void enterJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
+    public Void visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
         this.planOp = new PCJoin(
             planOp,
             new NormalWrapper(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
+        visitChildren(ctx);
+        return null;
     }
 
     @Override
-    public void enterJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
+    public Void visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
         this.planOp = new PCJoin(
             planOp, 
             new NormalWrapper(
                 new IndexTokenScan(indexContext)
             )
         );
+        visitChildren(ctx);
+        return null;
     }
 
     @Override
-    public void enterJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
+    public Void visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
         this.planOp = new ADJoin(
             planOp,
             new NormalWrapper(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
+        visitChildren(ctx);
+        return null;
     }
 
     @Override
-    public void enterJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
+    public Void visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
         this.planOp = new PCJoin(
             planOp, 
             new NormalWrapper(
                 new IndexTokenScan(indexContext)
             )
         );
+        visitChildren(ctx);
+        return null;
     }
 
 	@Override
-    public void enterJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
+    public Void visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
         ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
         ArraySelections selections = visitor.visit(ctx);
         List<ArraySelections> singleSelections = selections.asList();
@@ -84,5 +94,7 @@ public class MergeJoinS extends JsonPathBaseListener {
             }
         }};
         this.planOp = new PCJoin(this.planOp, new Collector(planOps));
+        visitChildren(ctx);
+        return null;
     }
 }

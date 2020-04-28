@@ -34,11 +34,10 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinD listener = new MergeJoinD(indexContext);
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(listener, parser.jsonBasicPathExpr());
+        MergeJoinD visitor = new MergeJoinD(indexContext);
+        visitor.visit(parser.jsonBasicPathExpr());
 
-        PlanOperator<LabelNode> op = new Concat(listener.operators());
+        PlanOperator<LabelNode> op = new Concat(visitor.operators());
         return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 
@@ -49,11 +48,10 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinS listener = new MergeJoinS(indexContext);
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(listener, parser.jsonBasicPathExpr());
+        MergeJoinS visitor = new MergeJoinS(indexContext);
+        visitor.visit(parser.jsonBasicPathExpr());
 
-        PlanOperator<LabelNode> op = listener.operator();
+        PlanOperator<LabelNode> op = visitor.operator();
         return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 }
