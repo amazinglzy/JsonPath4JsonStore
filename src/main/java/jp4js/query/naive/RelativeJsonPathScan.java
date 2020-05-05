@@ -1,4 +1,4 @@
-package jp4js.query.scan;
+package jp4js.query.naive;
 
 import jp4js.parser.JsonPathParser.*;
 import jp4js.query.RecordSet;
@@ -21,15 +21,15 @@ public class RelativeJsonPathScan extends AbstractJPScan {
     }
 
     public boolean exists() {
-        assert(this.generator != null);
-        return this.generator.data().iterator().hasNext();
+        assert(this.planOp != null);
+        return this.planOp.iterator().hasNext();
     }
 
     @Override
     public Void visitJsonRelativePathExpr(JsonRelativePathExprContext ctx) {
         RecordSet recordSet = new RecordSet(configuration);
         recordSet.append(this.path, this.value);
-        this.generator = new RecordGenerator(recordSet, configuration);
+        this.planOp = recordSet;
         return visitChildren(ctx);
     }
 }

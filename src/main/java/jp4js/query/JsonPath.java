@@ -2,7 +2,7 @@ package jp4js.query;
 
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
-import jp4js.query.scan.JsonPathScan;
+import jp4js.query.naive.JsonPathScan;
 import jp4js.query.join.Concat;
 import jp4js.query.join.MergeJoinD;
 import jp4js.query.join.MergeJoinS;
@@ -10,6 +10,7 @@ import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
 import jp4js.index.node.LabelNode;
+import jp4js.utils.iter.Iter2Iterator;
 
 // import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
@@ -24,7 +25,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         JsonPathScan visitor = new JsonPathScan(json, configuration);
         visitor.visit(parser.jsonBasicPathExpr());
-        return visitor.results();
+        return new Iter2Iterator<>(visitor.results());
     }
 
     static public Iterator<Record> evaluateByMergeJoinD(String path, Object json, Configuration configuration) {
