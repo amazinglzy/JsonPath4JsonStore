@@ -34,7 +34,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinD visitor = new MergeJoinD(indexContext, configuration);
+        MergeJoinD visitor = new MergeJoinD(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = new Concat(visitor.operators());
@@ -48,7 +48,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        MergeJoinS visitor = new MergeJoinS(indexContext, configuration);
+        MergeJoinS visitor = new MergeJoinS(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = visitor.operator();

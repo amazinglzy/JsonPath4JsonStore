@@ -25,7 +25,7 @@ public class Indexer {
         Map<String, LinkedList<LabelNode>> objectsPartitions = new HashMap<String, LinkedList<LabelNode>>();
         Map<Long, LinkedList<LabelNode>> arraysPartitions = new HashMap<Long, LinkedList<LabelNode>>();
         iterateJsonObject("$", "$", json, json, configuration, new Timestamp(), 0, objectsPartitions, arraysPartitions);
-        return new IndexContext(objectsPartitions, arraysPartitions);
+        return new IndexContext(objectsPartitions, arraysPartitions, configuration);
     }
 
     private static void iterateJsonObject(String key,
