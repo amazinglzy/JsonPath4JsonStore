@@ -8,7 +8,6 @@ import jp4js.utils.Configuration;
 import jp4js.utils.filter.Filter;
 import jp4js.query.PlanOperator;
 import jp4js.query.RecordSet.Record;
-import jp4js.query.naive.RecordGenerator.*;
 import java.util.LinkedList;
 
 public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
@@ -21,13 +20,13 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
 
     @Override
 	public Void visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        this.planOp = new WildcardPlanOperator(this.planOp, configuration);
+        this.planOp = NaivePlanOpFactory.createWildcardPlanOperator(this.planOp, configuration);
         return visitChildren(ctx);
     }
 
     @Override
 	public Void visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) { 
-        this.planOp = new PropertyPlanOperator(
+        this.planOp = NaivePlanOpFactory.createPropertyPlanOperator(
             planOp, 
             new LinkedList<>(){{
                 add(ctx.jsonFieldName().IDENTIFIER().getText());
@@ -39,7 +38,7 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
 
     @Override 
     public Void visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) { 
-        this.planOp = new ScanPlanOperator(
+        this.planOp = NaivePlanOpFactory.createScanPlanOperator(
             this.planOp, 
             new LinkedList<>(){{
                 add(ctx.jsonFieldName().IDENTIFIER().getText());
@@ -51,7 +50,7 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) {
-        this.planOp = new WildcardPlanOperator(
+        this.planOp = NaivePlanOpFactory.createWildcardPlanOperator(
             planOp, 
             configuration
         );
@@ -62,7 +61,7 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
     public Void visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
         ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
         ArraySelections selections = visitor.visit(ctx);
-        this.planOp = new ArraySelectionsPlanOperator(
+        this.planOp = NaivePlanOpFactory.createArraySelectionsPlanOperator(
             this.planOp, 
             selections, 
             configuration);
@@ -73,7 +72,7 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
     public Void visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) {
         FilterVisitor<Record> visitor = new FilterVisitor<Record>(configuration);
         Filter<Record> filter = visitor.visit(ctx.jsonCond());
-        this.planOp = new FilterPlanOperator(
+        this.planOp = NaivePlanOpFactory.createFilterPlanOperator(
             planOp, 
             filter, 
             configuration);
