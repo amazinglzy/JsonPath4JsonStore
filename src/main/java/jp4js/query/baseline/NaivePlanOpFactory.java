@@ -1,4 +1,4 @@
-package jp4js.query.naive;
+package jp4js.query.baseline;
 
 import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.query.PlanOperator;

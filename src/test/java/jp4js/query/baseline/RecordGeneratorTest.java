@@ -1,4 +1,4 @@
-package jp4js.query.naive;
+package jp4js.query.baseline;
 
 // import jp4js.query.RecordSet;
 // import jp4js.query.RecordSet.Record;

@@ -2,7 +2,7 @@ package jp4js.query;
 
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
-import jp4js.query.naive.JsonPathScan;
+import jp4js.query.baseline.JsonPathScan;
 import jp4js.query.join.Concat;
 import jp4js.query.join.MergeJoinD;
 import jp4js.query.join.MergeJoinS;

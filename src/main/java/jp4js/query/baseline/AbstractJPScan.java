@@ -1,4 +1,4 @@
-package jp4js.query.naive;
+package jp4js.query.baseline;
 
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;

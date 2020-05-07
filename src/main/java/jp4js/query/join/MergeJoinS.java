@@ -10,7 +10,7 @@ import jp4js.query.IndexArrayScan;
 import jp4js.query.IndexPropertyScan;
 import jp4js.query.IndexTokenScan;
 import jp4js.query.PlanOperator;
-import jp4js.query.naive.FilterVisitor;
+import jp4js.query.baseline.FilterVisitor;
 import jp4js.utils.filter.Filter;
 
 import java.util.List;

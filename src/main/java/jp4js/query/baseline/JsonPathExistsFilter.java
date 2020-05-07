@@ -1,4 +1,4 @@
-package jp4js.query.naive;
+package jp4js.query.baseline;
 
 import jp4js.utils.filter.Filter;
 import jp4js.utils.Configuration;
