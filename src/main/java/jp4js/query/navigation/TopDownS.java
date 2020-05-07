@@ -16,10 +16,10 @@ import jp4js.utils.filter.Filter;
 import java.util.List;
 import java.util.LinkedList;
 
-public class MergeJoinS extends JsonPathBaseVisitor<Void> {
+public class TopDownS extends JsonPathBaseVisitor<Void> {
     private PlanOperator<Item> planOp;
     private IndexContext indexContext;
-    public MergeJoinS(IndexContext indexContext) {
+    public TopDownS(IndexContext indexContext) {
         this.indexContext = indexContext;
         this.planOp = null;
     }
