@@ -10,6 +10,8 @@ import jp4js.utils.filter.Filter;
 import jp4js.utils.iter.Iter;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class NaivePlanOpFactory {
 
@@ -31,6 +33,9 @@ public class NaivePlanOpFactory {
 
     public static FilterPlanOperator createFilterPlanOperator(PlanOperator<Record> planOp, Filter<Record> filter, Configuration configuration ){
         return new FilterPlanOperator(planOp, filter, configuration);
+    }
+    public static UniqueFilterPlanOperator createUniqueFilterPlanOperator(PlanOperator<Record> planOp, Configuration configuration) {
+        return new UniqueFilterPlanOperator(planOp, configuration);
     }
 
     public static class PropertyPlanOperator implements PlanOperator<Record> {
@@ -206,6 +211,32 @@ public class NaivePlanOpFactory {
             while (iterator.hasNext()) {
                 Record r = iterator.read(); iterator.next();
                 if (filter.accept(r)) newData.append(r);
+            }
+            return newData.iterator();
+        }
+    }
+
+    public static class UniqueFilterPlanOperator implements PlanOperator<Record> {
+        private PlanOperator<Record> planOp;
+        private Configuration configuration;
+
+        public UniqueFilterPlanOperator(PlanOperator<Record> planOp, Configuration configuration) {
+            this.planOp = planOp;
+            this.configuration = configuration;
+        }
+
+        @Override 
+        public Iter<Record> iterator() {
+            RecordSet newData = new RecordSet(configuration);
+            Iter<Record> iterator = this.planOp.iterator();
+            Set<String> set = new HashSet<>();
+            while (iterator.hasNext()) {
+                Record r = iterator.read();
+                if (!set.contains(r.getPath())) {
+                    newData.append(r);
+                    set.add(r.getPath());
+                }
+                iterator.next();
             }
             return newData.iterator();
         }

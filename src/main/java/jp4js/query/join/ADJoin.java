@@ -29,12 +29,11 @@ public class ADJoin implements PlanOperator<Item> {
             while (this.pIter.hasNext() && this.buffer.size() == 0) {
                 while (cIter.hasNext() && cIter.read().getData().getLastVisit() < pIter.read().getData().getFirstVisit())
                     cIter.next();
-                Iter<Item> curIter = cIter.cloneCurrentIterator();
-                while (curIter.hasNext() && curIter.read().getData().getFirstVisit() < pIter.read().getData().getFirstVisit())
-                    curIter.next();
-                while (curIter.hasNext() && curIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
-                    this.buffer.add(merge(pIter.read(), curIter.read()));
-                    curIter.next();
+                while (cIter.hasNext() && cIter.read().getData().getFirstVisit() < pIter.read().getData().getFirstVisit())
+                    cIter.next();
+                while (cIter.hasNext() && cIter.read().getData().getLastVisit() < pIter.read().getData().getLastVisit()) {
+                    this.buffer.add(merge(pIter.read(), cIter.read()));
+                    cIter.next();
                 }
                 this.pIter.next();
             }

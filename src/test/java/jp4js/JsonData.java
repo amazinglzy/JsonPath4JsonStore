@@ -68,6 +68,15 @@ public class JsonData {
         "  ] "+
         "}";
 
+    public static String EXAMPLE04 = 
+        "    {" +
+        "        \"a\": {" +
+        "            \"a\": {" +
+        "                \"b\": 1" +
+        "            }" +
+        "        }" +
+        "    }";
+
     public static Object createJson(String jsonString, Configuration configuration) {
         return configuration.jsonProvider().parse(jsonString);
     }

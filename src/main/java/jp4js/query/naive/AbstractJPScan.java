@@ -45,6 +45,9 @@ public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
             }}, 
             configuration
         );
+        this.planOp = NaivePlanOpFactory.createUniqueFilterPlanOperator(
+            this.planOp,
+            configuration);
         return visitChildren(ctx);
     }
 

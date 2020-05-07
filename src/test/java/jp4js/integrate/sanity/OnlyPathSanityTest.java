@@ -13,6 +13,7 @@ public class OnlyPathSanityTest {
     private static Object example01 = JsonData.createJson(JsonData.EXAMPLE02, configuration);
     private static Object example02 = JsonData.createJson(JsonData.EXAPMLE01, configuration);
     private static Object example03 = JsonData.createJson(JsonData.EXAMPLE03, configuration);
+    private static Object example04 = JsonData.createJson(JsonData.EXAMPLE04, configuration);
 
 
     public void testSanity(JsonPathEval eval) {
@@ -48,6 +49,10 @@ public class OnlyPathSanityTest {
         iter = eval.eval("$.phoneNumbers[0:1, 1].type", example03, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("iPhone");
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("home");
+        assertThat(iter.hasNext()).isFalse();
+
+        iter = eval.eval("$..a..b", example04, configuration);
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(1);
         assertThat(iter.hasNext()).isFalse();
     }
 
