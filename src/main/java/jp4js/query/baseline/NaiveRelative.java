@@ -4,17 +4,17 @@ import jp4js.parser.JsonPathParser.*;
 import jp4js.query.RecordSet;
 import jp4js.utils.Configuration;
 
-public class RelativeJsonPathScan extends AbstractJPScan {
+public class NaiveRelative extends AbstractNaive {
     private String path;
     private Object value;
     
-    public RelativeJsonPathScan(String path, Object value, Configuration configuration) {
+    public NaiveRelative(String path, Object value, Configuration configuration) {
         super(configuration);
         this.path = path;
         this.value = value;
     }
 
-    public RelativeJsonPathScan(Object value, Configuration configuration) {
+    public NaiveRelative(Object value, Configuration configuration) {
         super(configuration);
         this.path = "@";
         this.value = value;

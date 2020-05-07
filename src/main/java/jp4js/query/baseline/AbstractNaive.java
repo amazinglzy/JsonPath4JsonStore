@@ -10,10 +10,10 @@ import jp4js.query.PlanOperator;
 import jp4js.query.RecordSet.Record;
 import java.util.LinkedList;
 
-public abstract class AbstractJPScan extends JsonPathBaseVisitor<Void> {
+public abstract class AbstractNaive extends JsonPathBaseVisitor<Void> {
     protected Configuration configuration;
     protected PlanOperator<Record> planOp;
-    public AbstractJPScan(Configuration configuration) {
+    public AbstractNaive(Configuration configuration) {
         this.planOp = null;
         this.configuration = configuration;
     }

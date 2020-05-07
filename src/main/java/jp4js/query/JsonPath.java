@@ -2,7 +2,7 @@ package jp4js.query;
 
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
-import jp4js.query.baseline.JsonPathScan;
+import jp4js.query.baseline.NaiveAbsolute;
 import jp4js.query.navigation.Concat;
 import jp4js.query.navigation.MergeJoinD;
 import jp4js.query.navigation.MergeJoinS;
@@ -23,7 +23,7 @@ public class JsonPath {
         JsonPathLexer lexer = new JsonPathLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         JsonPathParser parser = new JsonPathParser(tokens);
-        JsonPathScan visitor = new JsonPathScan(json, configuration);
+        NaiveAbsolute visitor = new NaiveAbsolute(json, configuration);
         visitor.visit(parser.jsonBasicPathExpr());
         return new Iter2Iterator<>(visitor.results());
     }

@@ -7,10 +7,10 @@ import jp4js.query.RecordSet.Record;
 import jp4js.utils.iter.Iter;
 
 
-public class JsonPathScan extends AbstractJPScan {
+public class NaiveAbsolute extends AbstractNaive {
     private Object json;
 
-    public JsonPathScan(Object json, Configuration configuration) {
+    public NaiveAbsolute(Object json, Configuration configuration) {
         super(configuration);
         this.json = json;
     }
