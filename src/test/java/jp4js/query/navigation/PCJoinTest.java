@@ -1,4 +1,4 @@
-package jp4js.query.join;
+package jp4js.query.navigation;
 
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;

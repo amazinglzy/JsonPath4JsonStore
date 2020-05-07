@@ -1,4 +1,4 @@
-package jp4js.query.join;
+package jp4js.query.navigation;
 
 import jp4js.utils.iter.Iter;
 import jp4js.index.node.LabelNode;
