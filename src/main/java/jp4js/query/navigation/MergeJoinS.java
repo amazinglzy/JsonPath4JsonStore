@@ -25,12 +25,12 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
     }
 
     public PlanOperator<LabelNode> operator() {
-        return new Reorder(this.planOp);
+        return NavigationPlanOpFactory.createReorder(this.planOp);
     }
 
     @Override
     public Void visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
-        this.planOp = new NormalWrapper(
+        this.planOp = NavigationPlanOpFactory.createNormalWrapper(
             new IndexPropertyScan(indexContext, "$")
         );
         visitChildren(ctx);
@@ -39,9 +39,9 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
 
     @Override 
     public Void visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
-        this.planOp = new PCJoin(
+        this.planOp = NavigationPlanOpFactory.createPCJoin(
             planOp,
-            new NormalWrapper(
+            NavigationPlanOpFactory.createNormalWrapper(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
@@ -51,9 +51,9 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        this.planOp = new PCJoin(
+        this.planOp = NavigationPlanOpFactory.createPCJoin(
             planOp, 
-            new NormalWrapper(
+            NavigationPlanOpFactory.createNormalWrapper(
                 new IndexTokenScan(indexContext)
             )
         );
@@ -63,9 +63,9 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        this.planOp = new ADJoin(
+        this.planOp = NavigationPlanOpFactory.createADJoin(
             planOp,
-            new NormalWrapper(
+            NavigationPlanOpFactory.createNormalWrapper(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
@@ -75,9 +75,9 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        this.planOp = new PCJoin(
+        this.planOp = NavigationPlanOpFactory.createPCJoin(
             planOp, 
-            new NormalWrapper(
+            NavigationPlanOpFactory.createNormalWrapper(
                 new IndexTokenScan(indexContext)
             )
         );
@@ -93,14 +93,17 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
         List<PlanOperator<Item>> planOps = new LinkedList<>(){{
             for (int i = 0; i < singleSelections.size(); i++) {
                 add(
-                    new SelectionWrapper(
+                    NavigationPlanOpFactory.createSelectionWrapper(
                         new IndexArrayScan(indexContext, singleSelections.get(i)),
                         i
                     )
                 );
             }
         }};
-        this.planOp = new PCJoin(this.planOp, new Collector(planOps));
+        this.planOp = NavigationPlanOpFactory.createPCJoin(
+            this.planOp, 
+            NavigationPlanOpFactory.createCollector(planOps)
+        );
         visitChildren(ctx);
         return null;
     }
@@ -109,7 +112,7 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
     public Void visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) {
         FilterVisitor<Item> visitor = new FilterVisitor<Item>(this.indexContext.configuration());
         Filter<Item> filter = visitor.visit(ctx.jsonCond());
-        this.planOp = new FilterPlanOperator(this.planOp, filter);
+        this.planOp = NavigationPlanOpFactory.createFilterPlanOperator(this.planOp, filter);
         return null;
     }
 }

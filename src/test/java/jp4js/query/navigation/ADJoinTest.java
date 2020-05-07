@@ -5,6 +5,8 @@ import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
 import jp4js.utils.iter.Iter;
 import jp4js.query.IndexPropertyScan;
+import jp4js.query.PlanOperator;
+
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,12 +28,12 @@ public class ADJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        NormalWrapper level1 = new NormalWrapper(new IndexPropertyScan(indexContext, "level1"));
-        NormalWrapper level3 = new NormalWrapper(new IndexPropertyScan(indexContext, "level3"));
+        PlanOperator<Item> level1 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level1"));
+        PlanOperator<Item> level3 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level3"));
 
         Iter<Item> iter;
 
-        iter = new ADJoin(level3, level1).iterator();
+        iter = NavigationPlanOpFactory.createADJoin(level3, level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 }

@@ -3,9 +3,9 @@ package jp4js.query;
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
 import jp4js.query.baseline.NaiveAbsolute;
-import jp4js.query.navigation.Concat;
 import jp4js.query.navigation.MergeJoinD;
 import jp4js.query.navigation.MergeJoinS;
+import jp4js.query.navigation.NavigationPlanOpFactory;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
@@ -38,7 +38,7 @@ public class JsonPath {
         MergeJoinD visitor = new MergeJoinD(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
-        PlanOperator<LabelNode> op = new Concat(visitor.operators());
+        PlanOperator<LabelNode> op = NavigationPlanOpFactory.createConcat(visitor.operators());
         return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 
