@@ -91,8 +91,13 @@ public class MergeJoinS extends JsonPathBaseVisitor<Void> {
         ArraySelections selections = visitor.visit(ctx);
         List<ArraySelections> singleSelections = selections.asList();
         List<PlanOperator<Item>> planOps = new LinkedList<>(){{
-            for (ArraySelections s: singleSelections) {
-                add(new NormalWrapper(new IndexArrayScan(indexContext, s)));
+            for (int i = 0; i < singleSelections.size(); i++) {
+                add(
+                    new SelectionWrapper(
+                        new IndexArrayScan(indexContext, singleSelections.get(i)),
+                        i
+                    )
+                );
             }
         }};
         this.planOp = new PCJoin(this.planOp, new Collector(planOps));

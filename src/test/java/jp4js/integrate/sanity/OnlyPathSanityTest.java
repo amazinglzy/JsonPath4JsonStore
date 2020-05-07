@@ -51,6 +51,11 @@ public class OnlyPathSanityTest {
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("home");
         assertThat(iter.hasNext()).isFalse();
 
+        iter = eval.eval("$.phoneNumbers[1, 0].type", example03, configuration);
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("home");
+        assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo("iPhone");
+        assertThat(iter.hasNext()).isFalse();
+
         iter = eval.eval("$..a..b", example04, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(1);
         assertThat(iter.hasNext()).isFalse();
