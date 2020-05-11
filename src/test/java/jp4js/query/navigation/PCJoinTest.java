@@ -27,9 +27,9 @@ public class PCJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        PlanOperator<Item> level1 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level1"));
-        PlanOperator<Item> level2 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level2"));
-        PlanOperator<Item> level3 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level3"));
+        PlanOperator<Item> level1 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level1"));
+        PlanOperator<Item> level2 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level2"));
+        PlanOperator<Item> level3 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level3"));
 
         Iter<Item> iter;
 
@@ -38,11 +38,11 @@ public class PCJoinTest {
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
-        iter = NavigationPlanOpFactory.createPCJoin(level2, level1).iterator();
+        iter = NavigationPlanOp.createPCJoin(level2, level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
-        iter = NavigationPlanOpFactory.createPCJoin(NavigationPlanOpFactory.createPCJoin(level3, level2), level1).iterator();
+        iter = NavigationPlanOp.createPCJoin(NavigationPlanOp.createPCJoin(level3, level2), level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 
@@ -62,9 +62,9 @@ public class PCJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        PlanOperator<Item> level1 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level1"));
-        PlanOperator<Item> level2 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level2"));
-        PlanOperator<Item> level3 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level3"));
+        PlanOperator<Item> level1 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level1"));
+        PlanOperator<Item> level2 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level2"));
+        PlanOperator<Item> level3 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level3"));
 
         Iter<Item> iter;
 
@@ -73,11 +73,11 @@ public class PCJoinTest {
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
-        iter = NavigationPlanOpFactory.createPCJoin(level2, level1).iterator();
+        iter = NavigationPlanOp.createPCJoin(level2, level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
-        iter = NavigationPlanOpFactory.createPCJoin(NavigationPlanOpFactory.createPCJoin(level3, level2), level1).iterator();
+        iter = NavigationPlanOp.createPCJoin(NavigationPlanOp.createPCJoin(level3, level2), level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 }

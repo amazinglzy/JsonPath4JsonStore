@@ -5,7 +5,7 @@ import jp4js.query.RecordSet.Record;
 import jp4js.query.baseline.NaiveAbsolute;
 import jp4js.query.navigation.TopDownD;
 import jp4js.query.navigation.TopDownS;
-import jp4js.query.navigation.NavigationPlanOpFactory;
+import jp4js.query.navigation.NavigationPlanOp;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
 import jp4js.index.Indexer;
@@ -38,7 +38,10 @@ public class JsonPath {
         TopDownD visitor = new TopDownD(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
-        PlanOperator<LabelNode> op = NavigationPlanOpFactory.createConcat(visitor.operators());
+        PlanOperator<LabelNode> op = 
+            NavigationPlanOp.createItem2LabelNode(
+                GeneralPlanOp.createConcat(visitor.operators())
+            );
         return new NodeWrapper(op.iterator(), new RecordSet(configuration));
     }
 

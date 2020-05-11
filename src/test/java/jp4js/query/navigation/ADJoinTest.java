@@ -28,12 +28,12 @@ public class ADJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        PlanOperator<Item> level1 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level1"));
-        PlanOperator<Item> level3 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level3"));
+        PlanOperator<Item> level1 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level1"));
+        PlanOperator<Item> level3 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level3"));
 
         Iter<Item> iter;
 
-        iter = NavigationPlanOpFactory.createADJoin(level3, level1).iterator();
+        iter = NavigationPlanOp.createADJoin(level3, level1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
     }
 }

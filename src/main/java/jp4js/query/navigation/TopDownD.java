@@ -30,7 +30,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
     @Override
     public Void visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
         this.planOps = new LinkedList<>(){{
-            add(NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "$")));
+            add(NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "$")));
         }};
         visitChildren(ctx);
         return null;
@@ -40,7 +40,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
     public Void visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
         this.planOps = new LinkedList<>() {{
             for (PlanOperator<Item> op: planOps) {
-                add(NavigationPlanOpFactory.createPCJoin(op, NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText()))));
+                add(NavigationPlanOp.createPCJoin(op, NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText()))));
             }
         }};
         visitChildren(ctx);
@@ -51,7 +51,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
     public Void visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
         this.planOps = new LinkedList<>(){{
             for (PlanOperator<Item> op: planOps) {
-                add(NavigationPlanOpFactory.createPCJoin(op, NavigationPlanOpFactory.createNormalWrapper(new IndexTokenScan(indexContext))));
+                add(NavigationPlanOp.createPCJoin(op, NavigationPlanOp.createLabelNode2Item(new IndexTokenScan(indexContext))));
             }
         }};
         visitChildren(ctx);
@@ -62,9 +62,9 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
     public Void visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
         this.planOps = new LinkedList<>(){{
             for (PlanOperator<Item> op: planOps) {
-                add(NavigationPlanOpFactory.createADJoin(
+                add(NavigationPlanOp.createADJoin(
                     op, 
-                    NavigationPlanOpFactory.createNormalWrapper(
+                    NavigationPlanOp.createLabelNode2Item(
                         new IndexPropertyScan(
                             indexContext, 
                             ctx.jsonFieldName().getText())
@@ -79,7 +79,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
     public Void visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
         this.planOps = new LinkedList<>() {{
             for (PlanOperator<Item> op: planOps) {
-                add(NavigationPlanOpFactory.createPCJoin(op, NavigationPlanOpFactory.createNormalWrapper(new IndexTokenScan(indexContext))));
+                add(NavigationPlanOp.createPCJoin(op, NavigationPlanOp.createLabelNode2Item(new IndexTokenScan(indexContext))));
             }
         }};
         visitChildren(ctx);
@@ -94,7 +94,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
         this.planOps = new LinkedList<>() {{
             for (PlanOperator<Item> op: planOps) {
                 for (ArraySelections s: singleSelections) {
-                    add(NavigationPlanOpFactory.createPCJoin(op, NavigationPlanOpFactory.createNormalWrapper(new IndexArrayScan(indexContext, s))));
+                    add(NavigationPlanOp.createPCJoin(op, NavigationPlanOp.createLabelNode2Item(new IndexArrayScan(indexContext, s))));
                 }
             }
         }};
@@ -108,7 +108,7 @@ public class TopDownD extends JsonPathBaseVisitor<Void> {
         Filter<Item> filter = visitor.visit(ctx.jsonCond());
         this.planOps = new LinkedList<>() {{
             for (PlanOperator<Item> op: planOps) {
-                add(NavigationPlanOpFactory.createFilterPlanOperator(op, filter));
+                add(NavigationPlanOp.createFilterPlanOperator(op, filter));
             }
         }};
         return null;

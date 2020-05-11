@@ -25,12 +25,12 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
     }
 
     public PlanOperator<LabelNode> operator() {
-        return NavigationPlanOpFactory.createReorder(this.planOp);
+        return NavigationPlanOp.createReorder(this.planOp);
     }
 
     @Override
     public Void visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
-        this.planOp = NavigationPlanOpFactory.createNormalWrapper(
+        this.planOp = NavigationPlanOp.createLabelNode2Item(
             new IndexPropertyScan(indexContext, "$")
         );
         visitChildren(ctx);
@@ -39,9 +39,9 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
 
     @Override 
     public Void visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
-        this.planOp = NavigationPlanOpFactory.createPCJoin(
+        this.planOp = NavigationPlanOp.createPCJoin(
             planOp,
-            NavigationPlanOpFactory.createNormalWrapper(
+            NavigationPlanOp.createLabelNode2Item(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
@@ -51,9 +51,9 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        this.planOp = NavigationPlanOpFactory.createPCJoin(
+        this.planOp = NavigationPlanOp.createPCJoin(
             planOp, 
-            NavigationPlanOpFactory.createNormalWrapper(
+            NavigationPlanOp.createLabelNode2Item(
                 new IndexTokenScan(indexContext)
             )
         );
@@ -63,9 +63,9 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        this.planOp = NavigationPlanOpFactory.createADJoin(
+        this.planOp = NavigationPlanOp.createADJoin(
             planOp,
-            NavigationPlanOpFactory.createNormalWrapper(
+            NavigationPlanOp.createLabelNode2Item(
                 new IndexPropertyScan(indexContext, ctx.jsonFieldName().getText())
             )
         );
@@ -75,9 +75,9 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
 
     @Override
     public Void visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        this.planOp = NavigationPlanOpFactory.createPCJoin(
+        this.planOp = NavigationPlanOp.createPCJoin(
             planOp, 
-            NavigationPlanOpFactory.createNormalWrapper(
+            NavigationPlanOp.createLabelNode2Item(
                 new IndexTokenScan(indexContext)
             )
         );
@@ -93,16 +93,16 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
         List<PlanOperator<Item>> planOps = new LinkedList<>(){{
             for (int i = 0; i < singleSelections.size(); i++) {
                 add(
-                    NavigationPlanOpFactory.createSelectionWrapper(
+                    NavigationPlanOp.createSelectionWrapper(
                         new IndexArrayScan(indexContext, singleSelections.get(i)),
                         i
                     )
                 );
             }
         }};
-        this.planOp = NavigationPlanOpFactory.createPCJoin(
+        this.planOp = NavigationPlanOp.createPCJoin(
             this.planOp, 
-            NavigationPlanOpFactory.createCollector(planOps)
+            NavigationPlanOp.createCollector(planOps)
         );
         visitChildren(ctx);
         return null;
@@ -112,7 +112,7 @@ public class TopDownS extends JsonPathBaseVisitor<Void> {
     public Void visitJsonFilterExpr(JsonPathParser.JsonFilterExprContext ctx) {
         FilterVisitor<Item> visitor = new FilterVisitor<Item>(this.indexContext.configuration());
         Filter<Item> filter = visitor.visit(ctx.jsonCond());
-        this.planOp = NavigationPlanOpFactory.createFilterPlanOperator(this.planOp, filter);
+        this.planOp = NavigationPlanOp.createFilterPlanOperator(this.planOp, filter);
         return null;
     }
 }

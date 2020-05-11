@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 
-public class NavigationPlanOpFactory {
+public class NavigationPlanOp {
     public static ADJoin createADJoin(PlanOperator<Item> ancestorPlanOp, PlanOperator<Item> decedentPlanOp) {
         return new ADJoin(ancestorPlanOp, decedentPlanOp);
     }
@@ -31,8 +31,12 @@ public class NavigationPlanOpFactory {
         return new Reorder(planOp);
     }
 
-    public static NormalWrapper createNormalWrapper(PlanOperator<LabelNode> planOp) {
-        return new NormalWrapper(planOp);
+    public static LabelNode2Item createLabelNode2Item(PlanOperator<LabelNode> planOp) {
+        return new LabelNode2Item(planOp);
+    }
+
+    public static Item2LabelNode createItem2LabelNode(PlanOperator<Item> planOp) {
+        return new Item2LabelNode(planOp);
     }
 
     public static FilterPlanOperator createFilterPlanOperator(PlanOperator<Item> op, Filter<Item> filter) {
@@ -45,10 +49,6 @@ public class NavigationPlanOpFactory {
 
     public static Collector createCollector(List<PlanOperator<Item>> planOps) {
         return new Collector(planOps);
-    }
-
-    public static Concat createConcat(List<PlanOperator<Item>> ops) {
-        return new Concat(ops);
     }
 
     public static class ADJoin implements PlanOperator<Item> {
@@ -298,10 +298,10 @@ public class NavigationPlanOpFactory {
         }
     }
 
-    public static class NormalWrapper implements PlanOperator<Item> {
+    public static class LabelNode2Item implements PlanOperator<Item> {
         private PlanOperator<LabelNode> planOp;
 
-        public NormalWrapper(PlanOperator<LabelNode> planOp) {
+        public LabelNode2Item(PlanOperator<LabelNode> planOp) {
             this.planOp = planOp;
         }
 
@@ -335,6 +335,46 @@ public class NavigationPlanOpFactory {
             @Override
             public Iter<Item> cloneCurrentIterator() {
                 return new ArrayScanWrapperIter(iter.cloneCurrentIterator());
+            }
+        }
+    }
+
+    public static class Item2LabelNode implements PlanOperator<LabelNode> {
+        private PlanOperator<Item> planOp;
+
+        public Item2LabelNode(PlanOperator<Item> planOp) {
+            this.planOp = planOp;
+        }
+
+        @Override
+        public Iter<LabelNode> iterator() {
+            return new SelfIter(this.planOp.iterator());
+        }
+
+        public static class SelfIter implements Iter<LabelNode> {
+            private Iter<Item> iter;
+            public SelfIter(Iter<Item> iter) {
+                this.iter = iter;
+            }
+
+            @Override
+            public LabelNode read() {
+                return this.iter.read().getData();
+            }
+
+            @Override
+            public void next() {
+                this.iter.next();
+            }
+
+            @Override
+            public boolean hasNext() {
+                return this.iter.hasNext();
+            }
+
+            @Override
+            public Iter<LabelNode> cloneCurrentIterator() {
+                return new SelfIter(iter.cloneCurrentIterator());
             }
         }
     }
@@ -474,5 +514,4 @@ public class NavigationPlanOpFactory {
             }
         }
     }
-
 }

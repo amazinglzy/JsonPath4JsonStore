@@ -27,19 +27,19 @@ public class KJoinTest {
         Configuration configuration = Configuration.defaultConfiguration();
         IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
 
-        PlanOperator<Item> level1 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level1"));
-        PlanOperator<Item> level2 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level2"));
-        PlanOperator<Item> level3 = NavigationPlanOpFactory.createNormalWrapper(new IndexPropertyScan(indexContext, "level3"));
+        PlanOperator<Item> level1 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level1"));
+        PlanOperator<Item> level2 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level2"));
+        PlanOperator<Item> level3 = NavigationPlanOp.createLabelNode2Item(new IndexPropertyScan(indexContext, "level3"));
 
         Iter<Item> iter;
 
-        iter = NavigationPlanOpFactory.createKJoin(level3, level1, 2).iterator();
+        iter = NavigationPlanOp.createKJoin(level3, level1, 2).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3);
 
-        iter = NavigationPlanOpFactory.createKJoin(level3, level1, 1).iterator();
+        iter = NavigationPlanOp.createKJoin(level3, level1, 1).iterator();
         assertThat(iter.hasNext()).isFalse();
 
-        iter = NavigationPlanOpFactory.createKJoin(level2, level1, 1).iterator();
+        iter = NavigationPlanOp.createKJoin(level2, level1, 1).iterator();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(2); iter.next();
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.read().getData().getValue()).isEqualTo(3); iter.next();
 
