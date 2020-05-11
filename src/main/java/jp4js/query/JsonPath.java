@@ -3,8 +3,8 @@ package jp4js.query;
 import jp4js.parser.*;
 import jp4js.query.RecordSet.Record;
 import jp4js.query.baseline.NaiveAbsolute;
-import jp4js.query.navigation.TopDownD;
-import jp4js.query.navigation.TopDownS;
+import jp4js.query.navigation.NavigationD;
+import jp4js.query.navigation.NavigationS;
 import jp4js.query.navigation.NavigationPlanOp;
 import jp4js.utils.Configuration;
 import jp4js.index.IndexContext;
@@ -35,7 +35,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        TopDownD visitor = new TopDownD(indexContext);
+        NavigationD visitor = new NavigationD(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = 
@@ -52,7 +52,7 @@ public class JsonPath {
         JsonPathParser parser = new JsonPathParser(tokens);
         IndexContext indexContext = Indexer.index(json, configuration);
 
-        TopDownS visitor = new TopDownS(indexContext);
+        NavigationS visitor = new NavigationS(indexContext);
         visitor.visit(parser.jsonBasicPathExpr());
 
         PlanOperator<LabelNode> op = visitor.operator();

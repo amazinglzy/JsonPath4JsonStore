@@ -15,10 +15,10 @@ import jp4js.utils.filter.Filter;
 import java.util.List;
 import java.util.LinkedList;
 
-public class TopDownD extends JsonPathBaseVisitor<Void> {
+public class NavigationD extends JsonPathBaseVisitor<Void> {
     private List<PlanOperator<Item>> planOps;
     private IndexContext indexContext;
-    public TopDownD(IndexContext indexContext) {
+    public NavigationD(IndexContext indexContext) {
         this.planOps = null;
         this.indexContext = indexContext;
     }
