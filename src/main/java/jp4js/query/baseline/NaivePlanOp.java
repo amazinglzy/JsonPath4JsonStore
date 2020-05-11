@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
-public class NaivePlanOpFactory {
+public class NaivePlanOp {
 
     public static PropertyPlanOperator createPropertyPlanOperator(PlanOperator<Record> planOp, List<String> properties, Configuration configuration) {
         return new PropertyPlanOperator(planOp, properties, configuration);

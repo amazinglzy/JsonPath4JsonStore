@@ -1,4 +1,3 @@
-// Define a grammar called Hello
 grammar JsonPath;
 
 jsonBasicPathExpr: jsonAbsolutePathExpr | jsonRelativePathExpr ;
@@ -9,8 +8,8 @@ jsonRelativePathExpr: '@' jsonSteps ;
 jsonSteps: jsonStep * ;
 jsonStep: (jsonObjectStep | jsonArrayStep | jsonDescendentStep ) jsonFilterExpr ?;
 jsonFilterExpr: FILTER_BEGIN jsonCond FILTER_END ;
-jsonCond: jsonRelativePathExpr                                                          # JsonCondExists
-        | jsonCond LOGIC_AND jsonCond                                                   # JsonCondAnd
+jsonCond: jsonRelativePathExpr                               # JsonCondExists
+        | jsonCond LOGIC_AND jsonCond                        # JsonCondAnd
         ;
 
 jsonObjectStep: '.' (jsonObjectWildcardStep | jsonObjectFieldNameStep);
