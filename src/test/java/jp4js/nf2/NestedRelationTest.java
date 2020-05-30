@@ -1,26 +1,11 @@
 package jp4js.nf2;
 
+import static jp4js.nf2.NestedRelationSample.*;
+
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class NestedRelationTest {
-
-    public static NestedRelation flatRel0, nestedRel0;
-    static {
-        flatRel0 = new NestedRelationBuilder()
-            .put("age", BasicType.dInt)
-            .put("name", BasicType.dString)
-            .build();
-        nestedRel0 = new NestedRelationBuilder()
-            .put("age",BasicType.dInt)
-            .put("name", BasicType.dString)
-            .enter()
-                .put("course", BasicType.dString)
-                .put("score", BasicType.dInt)
-            .exit("courses")
-            .build();
-    }
 
     @Test
     public void testBasicUsageCreation01() {

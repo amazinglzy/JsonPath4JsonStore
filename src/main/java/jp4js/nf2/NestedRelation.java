@@ -5,9 +5,10 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 import java.util.TreeMap;
 
-public class NestedRelation implements DType { 
+public class NestedRelation implements DType, Iterable<String> { 
     private final TreeMap<String, DType> mapping;
     private final TreeMap<String, Integer> index;
 
@@ -22,6 +23,10 @@ public class NestedRelation implements DType {
 
     public int index(String fieldname) {
         return this.index.get(fieldname);
+    }
+
+    public Iterator<String> iterator() {
+        return this.mapping.keySet().iterator();
     }
 
     public TupleBuilder tupleBuilder() {
@@ -43,11 +48,19 @@ public class NestedRelation implements DType {
         return ret;
     }
 
-    public class Instance {
+    public class Instance implements Iterable<Tuple> {
         private final List<Tuple> data;
 
         public Instance(List<Tuple> data) {
             this.data = data;
+        }
+
+        public NestedRelation relation() {
+            return NestedRelation.this;
+        }
+
+        public Iterator<Tuple> iterator() {
+            return this.data.iterator();
         }
 
         @Override
