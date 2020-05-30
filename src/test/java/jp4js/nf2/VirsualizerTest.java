@@ -34,9 +34,9 @@ public class VirsualizerTest {
         Virsualizer virsualizer = new Virsualizer(instance);
         
         assertThat(virsualizer.toString()).isEqualTo(
-            " ----- ------\n" +
+            " ----- ------ \n" +
             "| age | name |\n" +
-            " ----- ------"
+            " ----- ------ "
         );
     }
 
