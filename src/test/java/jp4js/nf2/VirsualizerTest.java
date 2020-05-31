@@ -36,4 +36,47 @@ public class VirsualizerTest {
             " ----------------------------------- "
         );
     }
+
+    @Test
+    public void testHeaderAndTuplesFlat0() {
+        NestedRelation.Instance instance = NestedRelationSample.flatRel0.builder()
+            .begin()
+                .put("name", BasicType.createDString("Alice"))
+                .put("age", BasicType.createDInt(10))
+            .end()
+            .build();
+        Virsualizer virsualizer = new Virsualizer(instance);
+        assertThat(virsualizer.toString()).isEqualTo(
+            " ----------------- \n" +
+            "| ----- --------- |\n" +
+            "|| age | name    ||\n" +
+            "| ----- --------- |\n" +
+            " ----------------- \n" +
+            "| ----- --------- |\n" +
+            "|| 10  | \"Alice\" ||\n" +
+            "| ----- --------- |\n" +
+            " ----------------- "
+        );
+    }
+
+    @Test
+    public void testHeaderAndTupleFlat0ExistsNull() {
+        NestedRelation.Instance instance = NestedRelationSample.flatRel0.builder()
+            .begin()
+                .put("name", BasicType.createDString("Alice"))
+            .end()
+            .build();
+        Virsualizer virsualizer = new Virsualizer(instance);
+        assertThat(virsualizer.toString()).isEqualTo(
+            " ----------------- \n" +
+            "| ----- --------- |\n" +
+            "|| age | name    ||\n" +
+            "| ----- --------- |\n" +
+            " ----------------- \n" +
+            "| ----- --------- |\n" +
+            "||     | \"Alice\" ||\n" +
+            "| ----- --------- |\n" +
+            " ----------------- "
+        );
+    }
 }

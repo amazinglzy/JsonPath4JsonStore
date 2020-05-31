@@ -71,7 +71,9 @@ public class Virsualizer {
         Horizontal ret = new Horizontal();
         for (String fieldname: tuple.relation()) {
             Object value = tuple.get( tuple.relation().index(fieldname) );
-            if (value instanceof NestedRelation.Instance) {
+            if (value == null) 
+                ret.add(new HomoCell("",  ((SharedWidthWrapper)nestedSharedWidth.get(fieldname)).width()));
+            else if (value instanceof NestedRelation.Instance) {
                 NestedRelation.Instance instance = (NestedRelation.Instance)value;
                 Vertical vertical = new Vertical();
                 for (NestedRelation.Tuple t: instance) {
