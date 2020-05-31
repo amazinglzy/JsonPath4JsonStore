@@ -1,21 +1,17 @@
 package jp4js.utils.ui;
 
 import java.util.List;
-import java.util.LinkedList;
 
 public class Vertical extends Allignment{
-    private List<Container> containers;
+    private final List<Container> containers;
 
-    public Vertical() {
-        this.containers = new LinkedList<>();
+    public Vertical(List<Container> containers) {
+        this.containers = containers;
     }
-    public Vertical(SharedWidth width) {
+
+    public Vertical(List<Container> containers, SharedWidth width) {
         super(width);
-        this.containers = new LinkedList<>();
-    }
-
-    public void add(Container container) {
-        this.containers.add(container);
+        this.containers = containers;
     }
 
     @Override
