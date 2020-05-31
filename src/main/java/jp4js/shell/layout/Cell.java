@@ -28,10 +28,10 @@ public class Cell extends BaseContainer {
         drawer.drawHorizontalString(sx, sy + 1, this.data);
     }
 
-    public static class CellBuilder {
+    public static class Builder {
         private String data;
         private WidthAllign widthAllign;
-        public CellBuilder(String data, WidthAllign widthAllign) {
+        public Builder(String data, WidthAllign widthAllign) {
             this.data = data;
             this.widthAllign = widthAllign;
         }
@@ -41,9 +41,5 @@ public class Cell extends BaseContainer {
             ret.update();
             return ret;
         }
-    }
-
-    public static CellBuilder builder(String data, WidthAllign widthAllign) {
-        return new CellBuilder(data, widthAllign);
     }
 }

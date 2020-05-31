@@ -2,9 +2,7 @@ package jp4js.nf2;
 
 import jp4js.shell.ui.CharMatrixDrawer;
 import jp4js.shell.layout.Horizontal;
-import jp4js.shell.layout.HorizontalBuilder;
 import jp4js.shell.layout.Vertical;
-import jp4js.shell.layout.VerticalBuilder;
 import jp4js.shell.layout.WidthAllign;
 import jp4js.shell.layout.Cell;
 
@@ -24,7 +22,7 @@ public class Virsualizer {
         this.instance = instance;
         this.relation = this.instance.relation();
         this.nestedSharedWidth = this.callNestedSharedWidth(this.relation);
-        this.containers = new VerticalBuilder() {{
+        this.containers = new Vertical.Builder() {{
             add(
                 Virsualizer.this.header(
                     Virsualizer.this.relation, 
@@ -53,38 +51,38 @@ public class Virsualizer {
 
 
     private Horizontal header(NestedRelation relation, NestedSharedWidth nestedSharedWidth) {
-        return new HorizontalBuilder(nestedSharedWidth.width()) {{
+        return new Horizontal.Builder(nestedSharedWidth.width()) {{
             for (String fieldname: relation) {
                 DType type = relation.get(fieldname);
                 if (type instanceof NestedRelation) {
-                    Vertical vertical = new VerticalBuilder() {{
-                        add(Cell.builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
+                    Vertical vertical = new Vertical.Builder() {{
+                        add(new Cell.Builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                         add(Virsualizer.this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
                     }}.build();
                     this.add(vertical);
                 } else {
-                    this.add(Cell.builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
+                    this.add(new Cell.Builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                 }
             }
         }}.build();
     }
 
     private Horizontal tuple(NestedRelation.Tuple tuple, NestedSharedWidth nestedSharedWidth) {
-        return new HorizontalBuilder(nestedSharedWidth.width()) {{
+        return new Horizontal.Builder(nestedSharedWidth.width()) {{
             for (String fieldname: tuple.relation()) {
                 Object value = tuple.get( tuple.relation().index(fieldname) );
                 if (value == null) {
-                    this.add(Cell.builder("", nestedSharedWidth.get(fieldname).width()).build());
+                    this.add(new Cell.Builder("", nestedSharedWidth.get(fieldname).width()).build());
                 } else if (value instanceof NestedRelation.Instance) {
                     NestedRelation.Instance instance = (NestedRelation.Instance)value;
-                    Vertical vertical = new VerticalBuilder() {{
+                    Vertical vertical = new Vertical.Builder() {{
                         for (NestedRelation.Tuple t: instance) {
                             add(Virsualizer.this.tuple(t, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
                         }
                     }}.build();
                     this.add(vertical);
                 } else {
-                    this.add(Cell.builder(value.toString(),  (nestedSharedWidth.get(fieldname)).width()).build());
+                    this.add(new Cell.Builder(value.toString(),  (nestedSharedWidth.get(fieldname)).width()).build());
                 }
             }
         }}.build();

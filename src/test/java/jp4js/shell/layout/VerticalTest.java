@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class VerticalTest {
     @Test
     public void testWidthHeight01() {
-        Vertical vertical = new VerticalBuilder() {{
+        Vertical vertical = new Vertical.Builder() {{
             add(new ContainerMocker(5, 5));
             add(new ContainerMocker(8, 3));
             add(new ContainerMocker(9, 6));
@@ -20,7 +20,7 @@ public class VerticalTest {
 
     @Test
     public void testDraw01() {
-        Vertical vertical = new VerticalBuilder() {{
+        Vertical vertical = new Vertical.Builder() {{
             add(new ContainerMocker(2, 2));
             add(new ContainerMocker(3, 3));
             add(new ContainerMocker(3, 4));

@@ -48,4 +48,18 @@ public class Horizontal extends BaseContainer {
             offsetY += container.width() + 1;
         }
     }
+
+    public static class Builder extends ContainersBuilder {
+        public Builder() {}
+        public Builder(WidthAllign width) {
+            super(width);
+        }
+
+        @Override
+        public Horizontal build() {
+            Horizontal ret = new Horizontal(this.containers(), this.width());
+            ret.update();
+            return ret;
+        }
+    }
 }

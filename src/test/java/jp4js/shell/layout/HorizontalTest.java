@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HorizontalTest {
     @Test
     public void testWidthHeight01() {
-        Horizontal horizontal = new HorizontalBuilder() {{
+        Horizontal horizontal = new Horizontal.Builder() {{
             add(new ContainerMocker(5, 5));
             add(new ContainerMocker(8, 3));
             add(new ContainerMocker(9, 6));
@@ -21,7 +21,7 @@ public class HorizontalTest {
 
     @Test
     public void testDraw01() {
-        Horizontal horizontal = new HorizontalBuilder() {{
+        Horizontal horizontal = new Horizontal.Builder() {{
             add(new ContainerMocker(2, 2));
             add(new ContainerMocker(3, 3));
             add(new ContainerMocker(3, 4));

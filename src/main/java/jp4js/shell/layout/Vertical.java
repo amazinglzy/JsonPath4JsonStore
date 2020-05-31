@@ -47,4 +47,13 @@ public class Vertical extends BaseContainer{
             offsetX += container.height() + 1;
         }
     }
+
+    public static class Builder extends ContainersBuilder {
+        @Override
+        public Vertical build() {
+            Vertical ret = new Vertical(this.containers(), this.width());
+            ret.update();
+            return ret;
+        }
+    }
 }
