@@ -6,7 +6,7 @@ import jp4js.shell.layout.HorizontalBuilder;
 import jp4js.shell.layout.Vertical;
 import jp4js.shell.layout.VerticalBuilder;
 import jp4js.shell.layout.WidthAllign;
-import jp4js.shell.layout.CellBuilder;
+import jp4js.shell.layout.Cell;
 
 import java.util.TreeMap;
 
@@ -58,12 +58,12 @@ public class Virsualizer {
                 DType type = relation.get(fieldname);
                 if (type instanceof NestedRelation) {
                     Vertical vertical = new VerticalBuilder() {{
-                        add(new CellBuilder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
+                        add(Cell.builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                         add(Virsualizer.this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
                     }}.build();
                     this.add(vertical);
                 } else {
-                    this.add(new CellBuilder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
+                    this.add(Cell.builder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                 }
             }
         }}.build();
@@ -74,7 +74,7 @@ public class Virsualizer {
             for (String fieldname: tuple.relation()) {
                 Object value = tuple.get( tuple.relation().index(fieldname) );
                 if (value == null) {
-                    this.add(new CellBuilder("", nestedSharedWidth.get(fieldname).width()).build());
+                    this.add(Cell.builder("", nestedSharedWidth.get(fieldname).width()).build());
                 } else if (value instanceof NestedRelation.Instance) {
                     NestedRelation.Instance instance = (NestedRelation.Instance)value;
                     Vertical vertical = new VerticalBuilder() {{
@@ -84,7 +84,7 @@ public class Virsualizer {
                     }}.build();
                     this.add(vertical);
                 } else {
-                    this.add(new CellBuilder(value.toString(),  (nestedSharedWidth.get(fieldname)).width()).build());
+                    this.add(Cell.builder(value.toString(),  (nestedSharedWidth.get(fieldname)).width()).build());
                 }
             }
         }}.build();
