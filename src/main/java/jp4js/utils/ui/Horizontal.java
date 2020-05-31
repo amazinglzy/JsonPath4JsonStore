@@ -1,22 +1,17 @@
 package jp4js.utils.ui;
 
 import java.util.List;
-import java.util.LinkedList;
 
 public class Horizontal extends Allignment {
-    private List<Container> containers;
+    private final List<Container> containers;
 
-    public Horizontal() {
-        this.containers = new LinkedList<>();
+    public Horizontal(List<Container> containers) {
+        this.containers = containers;
     }
 
-    public Horizontal(SharedWidth width) {
+    public Horizontal(List<Container> containers, SharedWidth width) {
         super(width);
-        this.containers = new LinkedList<>();
-    }
-
-    public void add(Container container) {
-        this.containers.add(container);
+        this.containers = containers;
     }
 
     @Override

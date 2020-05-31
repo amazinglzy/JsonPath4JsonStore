@@ -2,6 +2,7 @@ package jp4js.nf2;
 
 import jp4js.utils.ui.CharMatrixDrawer;
 import jp4js.utils.ui.Horizontal;
+import jp4js.utils.ui.HorizontalBuilder;
 import jp4js.utils.ui.Vertical;
 import jp4js.utils.ui.VerticalBuilder;
 import jp4js.utils.ui.SharedWidth;
@@ -52,51 +53,49 @@ public class Virsualizer {
 
 
     private Horizontal header(NestedRelation relation, NestedSharedWidth nestedSharedWidth) {
-        Horizontal ret = new Horizontal(nestedSharedWidth.width());
-        for (String fieldname: relation) {
-            DType type = relation.get(fieldname);
-            if (type instanceof NestedRelation) {
-                Vertical vertical = new VerticalBuilder() {{
+        return new HorizontalBuilder(nestedSharedWidth.width()) {{
+            for (String fieldname: relation) {
+                DType type = relation.get(fieldname);
+                if (type instanceof NestedRelation) {
+                    Vertical vertical = new VerticalBuilder() {{
+                        Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
+                        cell.update();
+                        add(cell);
+                        add(Virsualizer.this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
+                    }}.build();
+                    this.add(vertical);
+                } else {
                     Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
                     cell.update();
-                    add(cell);
-                    add(Virsualizer.this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
-                }}.build();
-                ret.add(vertical);
-            } else {
-                Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
-                cell.update();
-                ret.add(cell);
+                    this.add(cell);
+                }
             }
-        }
-        ret.update();
-        return ret;
+        }}.build();
     }
 
     private Horizontal tuple(NestedRelation.Tuple tuple, NestedSharedWidth nestedSharedWidth) {
-        Horizontal ret = new Horizontal(nestedSharedWidth.width());
-        for (String fieldname: tuple.relation()) {
-            Object value = tuple.get( tuple.relation().index(fieldname) );
-            if (value == null) {
-                Cell cell = new Cell("", nestedSharedWidth.get(fieldname).width());
-                cell.update();
-                ret.add(cell);
-            } else if (value instanceof NestedRelation.Instance) {
-                NestedRelation.Instance instance = (NestedRelation.Instance)value;
-                Vertical vertical = new VerticalBuilder() {{
-                    for (NestedRelation.Tuple t: instance) {
-                        add(Virsualizer.this.tuple(t, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
-                    }
-                }}.build();
-                ret.add(vertical);
-            } else {
-                Cell cell = new Cell(value.toString(),  (nestedSharedWidth.get(fieldname)).width());
-                cell.update();
-                ret.add(cell);
+        return new HorizontalBuilder(nestedSharedWidth.width()) {{
+            for (String fieldname: tuple.relation()) {
+                Object value = tuple.get( tuple.relation().index(fieldname) );
+                if (value == null) {
+                    Cell cell = new Cell("", nestedSharedWidth.get(fieldname).width());
+                    cell.update();
+                    this.add(cell);
+                } else if (value instanceof NestedRelation.Instance) {
+                    NestedRelation.Instance instance = (NestedRelation.Instance)value;
+                    Vertical vertical = new VerticalBuilder() {{
+                        for (NestedRelation.Tuple t: instance) {
+                            add(Virsualizer.this.tuple(t, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
+                        }
+                    }}.build();
+                    this.add(vertical);
+                } else {
+                    Cell cell = new Cell(value.toString(),  (nestedSharedWidth.get(fieldname)).width());
+                    cell.update();
+                    this.add(cell);
+                }
             }
-        }
-        ret.update();
-        return ret;
+        }}.build();
     }
 
     @Override
