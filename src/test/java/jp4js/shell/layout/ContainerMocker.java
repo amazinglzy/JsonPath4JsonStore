@@ -3,7 +3,7 @@ package jp4js.shell.layout;
 import jp4js.shell.ui.CharMatrixDrawer;
 
 
-public class ContainerMocker extends Allignment {
+public class ContainerMocker extends BaseContainer {
     private int width, height;
 
     public ContainerMocker(int height, int width) {

@@ -2,7 +2,7 @@ package jp4js.shell.layout;
 
 import jp4js.shell.ui.CharMatrixDrawer;
 
-public class Cell extends Allignment {
+public class Cell extends BaseContainer {
     private String data;
     public Cell(String data) {
         this.data = data;

@@ -3,7 +3,7 @@ package jp4js.shell.layout;
 import jp4js.shell.ui.CharMatrixDrawer;
 import java.util.List;
 
-public class Horizontal extends Allignment {
+public class Horizontal extends BaseContainer {
     private final List<Container> containers;
 
     public Horizontal(List<Container> containers) {

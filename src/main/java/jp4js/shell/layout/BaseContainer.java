@@ -1,11 +1,11 @@
 package jp4js.shell.layout;
 
-public abstract class Allignment implements Container {
+public abstract class BaseContainer implements Container {
     private WidthAllign width;
-    public Allignment() {
+    public BaseContainer() {
         this.width = null;
     }
-    public Allignment(WidthAllign width) {
+    public BaseContainer(WidthAllign width) {
         this.width = width;
     }
 
