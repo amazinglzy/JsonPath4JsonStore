@@ -1,4 +1,8 @@
-package jp4js.nf2;
+package jp4js.shell;
+
+import jp4js.nf2.NestedRelation;
+import jp4js.nf2.NestedRelationSample;
+import jp4js.nf2.BasicType;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,5 +1,7 @@
-package jp4js.nf2;
+package jp4js.shell;
 
+import jp4js.nf2.NestedRelation;
+import jp4js.nf2.DType;
 import jp4js.shell.ui.CharMatrixDrawer;
 import jp4js.shell.layout.Horizontal;
 import jp4js.shell.layout.Vertical;
