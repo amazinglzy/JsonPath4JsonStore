@@ -1,12 +1,12 @@
 package jp4js.nf2;
 
 import jp4js.shell.ui.CharMatrixDrawer;
-import jp4js.shell.ui.Horizontal;
-import jp4js.shell.ui.HorizontalBuilder;
-import jp4js.shell.ui.Vertical;
-import jp4js.shell.ui.VerticalBuilder;
-import jp4js.shell.ui.SharedWidth;
-import jp4js.shell.ui.CellBuilder;
+import jp4js.shell.layout.Horizontal;
+import jp4js.shell.layout.HorizontalBuilder;
+import jp4js.shell.layout.Vertical;
+import jp4js.shell.layout.VerticalBuilder;
+import jp4js.shell.layout.SharedWidth;
+import jp4js.shell.layout.CellBuilder;
 
 import java.util.TreeMap;
 

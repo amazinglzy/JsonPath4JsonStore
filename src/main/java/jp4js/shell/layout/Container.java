@@ -1,4 +1,6 @@
-package jp4js.shell.ui;
+package jp4js.shell.layout;
+
+import jp4js.shell.ui.CharMatrixDrawer;
 
 public interface Container {
     public int width();

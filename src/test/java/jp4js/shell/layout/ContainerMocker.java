@@ -1,4 +1,7 @@
-package jp4js.shell.ui;
+package jp4js.shell.layout;
+
+import jp4js.shell.ui.CharMatrixDrawer;
+
 
 public class ContainerMocker extends Allignment {
     private int width, height;

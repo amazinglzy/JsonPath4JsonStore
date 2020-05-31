@@ -1,4 +1,4 @@
-package jp4js.shell.ui;
+package jp4js.shell.layout;
 
 import java.util.List;
 import java.util.LinkedList;

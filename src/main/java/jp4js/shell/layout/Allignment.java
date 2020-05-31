@@ -1,4 +1,4 @@
-package jp4js.shell.ui;
+package jp4js.shell.layout;
 
 public abstract class Allignment implements Container {
     private SharedWidth width;

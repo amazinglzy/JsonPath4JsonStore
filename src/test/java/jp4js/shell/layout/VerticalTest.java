@@ -1,4 +1,6 @@
-package jp4js.shell.ui;
+package jp4js.shell.layout;
+
+import jp4js.shell.ui.CharMatrixDrawer;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
