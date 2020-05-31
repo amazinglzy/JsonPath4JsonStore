@@ -6,7 +6,7 @@ import jp4js.utils.ui.HorizontalBuilder;
 import jp4js.utils.ui.Vertical;
 import jp4js.utils.ui.VerticalBuilder;
 import jp4js.utils.ui.SharedWidth;
-import jp4js.utils.ui.Cell;
+import jp4js.utils.ui.CellBuilder;
 
 import java.util.TreeMap;
 
@@ -58,16 +58,12 @@ public class Virsualizer {
                 DType type = relation.get(fieldname);
                 if (type instanceof NestedRelation) {
                     Vertical vertical = new VerticalBuilder() {{
-                        Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
-                        cell.update();
-                        add(cell);
+                        add(new CellBuilder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                         add(Virsualizer.this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
                     }}.build();
                     this.add(vertical);
                 } else {
-                    Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
-                    cell.update();
-                    this.add(cell);
+                    this.add(new CellBuilder(fieldname, nestedSharedWidth.get(fieldname).width()).build());
                 }
             }
         }}.build();
@@ -78,9 +74,7 @@ public class Virsualizer {
             for (String fieldname: tuple.relation()) {
                 Object value = tuple.get( tuple.relation().index(fieldname) );
                 if (value == null) {
-                    Cell cell = new Cell("", nestedSharedWidth.get(fieldname).width());
-                    cell.update();
-                    this.add(cell);
+                    this.add(new CellBuilder("", nestedSharedWidth.get(fieldname).width()).build());
                 } else if (value instanceof NestedRelation.Instance) {
                     NestedRelation.Instance instance = (NestedRelation.Instance)value;
                     Vertical vertical = new VerticalBuilder() {{
@@ -90,9 +84,7 @@ public class Virsualizer {
                     }}.build();
                     this.add(vertical);
                 } else {
-                    Cell cell = new Cell(value.toString(),  (nestedSharedWidth.get(fieldname)).width());
-                    cell.update();
-                    this.add(cell);
+                    this.add(new CellBuilder(value.toString(),  (nestedSharedWidth.get(fieldname)).width()).build());
                 }
             }
         }}.build();
