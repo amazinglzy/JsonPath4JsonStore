@@ -1,6 +1,6 @@
 package jp4js.utils.ui;
 
-public class ContainerMocker implements Container {
+public class ContainerMocker extends Allignment {
     private int width, height;
 
     public ContainerMocker(int height, int width) {
@@ -9,12 +9,12 @@ public class ContainerMocker implements Container {
     }
 
     @Override
-    public int width() {
+    public int actualWidth() {
         return this.width;
     }
 
     @Override
-    public int height() {
+    public int actualHeight() {
         return this.height;
     }
 

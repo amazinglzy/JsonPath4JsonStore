@@ -3,10 +3,14 @@ package jp4js.utils.ui;
 import java.util.List;
 import java.util.LinkedList;
 
-public class Vertical implements Container {
+public class Vertical extends Allignment{
     private List<Container> containers;
 
     public Vertical() {
+        this.containers = new LinkedList<>();
+    }
+    public Vertical(SharedWidth width) {
+        super(width);
         this.containers = new LinkedList<>();
     }
 
@@ -15,7 +19,7 @@ public class Vertical implements Container {
     }
 
     @Override
-    public int width() {
+    public int actualWidth() {
         int width = 1 + 1 + 1;
         for (Container container: containers) {
             if (1 + container.width() + 1 > width)
@@ -25,7 +29,7 @@ public class Vertical implements Container {
     }
 
     @Override
-    public int height() {
+    public int actualHeight() {
         int height = 1;
         for (Container container: containers) {
             height += container.height() + 1;

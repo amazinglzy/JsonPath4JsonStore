@@ -26,6 +26,7 @@ public class HorizontalTest {
         }};
         CharMatrixDrawer drawer = new CharMatrixDrawer(horizontal.width());
         horizontal.draw(drawer, 0, 0);
+        System.out.println(drawer.toString());
         assertThat(drawer.toString()).isEqualTo(
             " -- --- ---- \n" +
             "|  |   |    |\n" +

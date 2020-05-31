@@ -3,8 +3,7 @@ package jp4js.nf2;
 import jp4js.utils.ui.CharMatrixDrawer;
 import jp4js.utils.ui.Horizontal;
 import jp4js.utils.ui.Vertical;
-import jp4js.utils.ui.HomoCell;
-import jp4js.utils.ui.HomoCell.SharedWidth;
+import jp4js.utils.ui.SharedWidth;
 import jp4js.utils.ui.Cell;
 
 import java.util.TreeMap;
@@ -44,7 +43,7 @@ public class Virsualizer {
             if (type instanceof NestedRelation) {
                 ret.put(fieldname, callNestedSharedWidth((NestedRelation)type));
             } else {
-                ret.put(fieldname, new SharedWidthWrapper());
+                ret.put(fieldname, new SharedAttr());
             }
         }
         return ret;
@@ -52,28 +51,35 @@ public class Virsualizer {
 
 
     private Horizontal header(NestedRelation relation, NestedSharedWidth nestedSharedWidth) {
-        Horizontal ret = new Horizontal();
+        Horizontal ret = new Horizontal(nestedSharedWidth.width());
         for (String fieldname: relation) {
             DType type = relation.get(fieldname);
             if (type instanceof NestedRelation) {
                 Vertical vertical = new Vertical();
-                vertical.add(new Cell(fieldname));
+                Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
+                cell.update();
+                vertical.add(cell);
                 vertical.add(this.header((NestedRelation)type, (NestedSharedWidth)nestedSharedWidth.get(fieldname)));
                 ret.add(vertical);
             } else {
-                ret.add(new HomoCell(fieldname, ((SharedWidthWrapper)nestedSharedWidth.get(fieldname)).width()));
+                Cell cell = new Cell(fieldname, nestedSharedWidth.get(fieldname).width());
+                cell.update();
+                ret.add(cell);
             }
         }
+        ret.update();
         return ret;
     }
 
     private Horizontal tuple(NestedRelation.Tuple tuple, NestedSharedWidth nestedSharedWidth) {
-        Horizontal ret = new Horizontal();
+        Horizontal ret = new Horizontal(nestedSharedWidth.width());
         for (String fieldname: tuple.relation()) {
             Object value = tuple.get( tuple.relation().index(fieldname) );
-            if (value == null) 
-                ret.add(new HomoCell("",  ((SharedWidthWrapper)nestedSharedWidth.get(fieldname)).width()));
-            else if (value instanceof NestedRelation.Instance) {
+            if (value == null) {
+                Cell cell = new Cell("", nestedSharedWidth.get(fieldname).width());
+                cell.update();
+                ret.add(cell);
+            } else if (value instanceof NestedRelation.Instance) {
                 NestedRelation.Instance instance = (NestedRelation.Instance)value;
                 Vertical vertical = new Vertical();
                 for (NestedRelation.Tuple t: instance) {
@@ -81,9 +87,12 @@ public class Virsualizer {
                 }
                 ret.add(vertical);
             } else {
-                ret.add(new HomoCell(value.toString(),  ((SharedWidthWrapper)nestedSharedWidth.get(fieldname)).width()));
+                Cell cell = new Cell(value.toString(),  (nestedSharedWidth.get(fieldname)).width());
+                cell.update();
+                ret.add(cell);
             }
         }
+        ret.update();
         return ret;
     }
 
@@ -92,10 +101,9 @@ public class Virsualizer {
         return this.drawer.toString();
     }
 
-    public interface SharedAttr {};
-    public static class SharedWidthWrapper implements SharedAttr {
-        public SharedWidth width;
-        public SharedWidthWrapper() {
+    public static class  SharedAttr {
+        private SharedWidth width;
+        public SharedAttr() {
             this.width = new SharedWidth();
         }
         public SharedWidth width() {
@@ -103,7 +111,7 @@ public class Virsualizer {
         }
     }
 
-    public static class NestedSharedWidth implements SharedAttr, Iterable<String> {
+    public static class NestedSharedWidth extends SharedAttr implements Iterable<String> {
         private TreeMap<String, SharedAttr> mapping;
         public NestedSharedWidth() {
             this.mapping = new TreeMap<>();

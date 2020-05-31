@@ -67,6 +67,7 @@ public class VirsualizerTest {
             .end()
             .build();
         Virsualizer virsualizer = new Virsualizer(instance);
+        System.out.println(virsualizer.toString());
         assertThat(virsualizer.toString()).isEqualTo(
             " ----------------- \n" +
             "| ----- --------- |\n" +
@@ -77,6 +78,107 @@ public class VirsualizerTest {
             "||     | \"Alice\" ||\n" +
             "| ----- --------- |\n" +
             " ----------------- "
+        );
+    }
+
+    @Test
+    public void testHeaderAndTupleNested0() {
+        NestedRelation.Instance instance = NestedRelationSample.nestedRel0.builder()
+            .begin()
+                .put("name", BasicType.createDString("Alice"))
+                .put("age", BasicType.createDInt(10))
+                .enter("courses")
+                    .begin()
+                        .put("course", BasicType.createDString("English"))
+                        .put("score", BasicType.createDInt(90))
+                    .end()
+                    .begin()
+                        .put("course", BasicType.createDString("Chinese"))
+                        .put("score", BasicType.createDInt(95))
+                    .end()
+                .exit()
+            .end()
+            .build();
+        Virsualizer virsualizer = new Virsualizer(instance);
+        assertThat(virsualizer.toString()).isEqualTo(
+            " ----------------------------------------- \n" +
+            "| ----- ----------------------- --------- |\n" +
+            "|| age | --------------------- | name    ||\n" +
+            "||     || courses             ||         ||\n" +
+            "||     | --------------------- |         ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     ||| course    | score |||         ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     | --------------------- |         ||\n" +
+            "| ----- ----------------------- --------- |\n" +
+            " ----------------------------------------- \n" +
+            "| ----- ----------------------- --------- |\n" +
+            "|| 10  | --------------------- | \"Alice\" ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     ||| \"English\" | 90    |||         ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     | --------------------- |         ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     ||| \"Chinese\" | 95    |||         ||\n" +
+            "||     || ----------- ------- ||         ||\n" +
+            "||     | --------------------- |         ||\n" +
+            "| ----- ----------------------- --------- |\n" +
+            " ----------------------------------------- "
+        );
+    }
+
+    @Test
+    public void testHeaderAndTupleNested0ExistsNull() {
+        NestedRelation.Instance instance = NestedRelationSample.nestedRel0.builder()
+            .begin()
+                .put("name", BasicType.createDString("Alice"))
+                .put("age", BasicType.createDInt(10))
+                .enter("courses")
+                    .begin()
+                        .put("course", BasicType.createDString("English"))
+                        .put("score", BasicType.createDInt(90))
+                    .end()
+                    .begin()
+                        .put("course", BasicType.createDString("Chinese"))
+                        .put("score", BasicType.createDInt(95))
+                    .end()
+                .exit()
+            .end()
+            .begin()
+                .put("name", BasicType.createDString("Bob"))
+                .put("age", BasicType.createDInt(20))
+            .end()
+            .build();
+        Virsualizer virsualizer = new Virsualizer(instance);
+        System.out.println(virsualizer.toString());
+        assertThat(virsualizer.toString()).isEqualTo(
+            " ----------------------------------------- \n"+
+            "| ----- ----------------------- --------- |\n"+
+            "|| age | --------------------- | name    ||\n"+
+            "||     || courses             ||         ||\n"+
+            "||     | --------------------- |         ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     ||| course    | score |||         ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     | --------------------- |         ||\n"+
+            "| ----- ----------------------- --------- |\n"+
+            " ----------------------------------------- \n"+
+            "| ----- ----------------------- --------- |\n"+
+            "|| 10  | --------------------- | \"Alice\" ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     ||| \"English\" | 90    |||         ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     | --------------------- |         ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     ||| \"Chinese\" | 95    |||         ||\n"+
+            "||     || ----------- ------- ||         ||\n"+
+            "||     | --------------------- |         ||\n"+
+            "| ----- ----------------------- --------- |\n"+
+            " ----------------------------------------- \n"+
+            "| ----- --------------------- ---------   |\n"+
+            "|| 20  |                     | \"Bob\"   |  |\n"+
+            "| ----- --------------------- ---------   |\n"+
+            " ----------------------------------------- "
         );
     }
 }

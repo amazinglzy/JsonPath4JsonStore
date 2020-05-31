@@ -3,10 +3,15 @@ package jp4js.utils.ui;
 import java.util.List;
 import java.util.LinkedList;
 
-public class Horizontal implements Container {
+public class Horizontal extends Allignment {
     private List<Container> containers;
 
     public Horizontal() {
+        this.containers = new LinkedList<>();
+    }
+
+    public Horizontal(SharedWidth width) {
+        super(width);
         this.containers = new LinkedList<>();
     }
 
@@ -15,7 +20,7 @@ public class Horizontal implements Container {
     }
 
     @Override
-    public int width() {
+    public int actualWidth() {
         int width = 1;
         for (Container container: this.containers) {
             width += container.width() + 1;
@@ -25,7 +30,7 @@ public class Horizontal implements Container {
     }
 
     @Override
-    public int height() {
+    public int actualHeight() {
         int height = 1 + 1 + 1;
         for (Container container: this.containers) {
             if (1 + container.height() + 1 > height) {
@@ -38,7 +43,6 @@ public class Horizontal implements Container {
     @Override
     public void draw(CharMatrixDrawer drawer, int sx, int sy) {
         drawer.drawVerticalChar(sx + 1, sy, '|', this.height() - 2);
-        drawer.drawVerticalChar(sx + 1, sy + this.width() - 1, '|', this.height() - 2);
         int offsetY = 1;
         for (Container container: this.containers) {
             drawer.drawHorizontalChar(sx, sy + offsetY, '-', container.width());

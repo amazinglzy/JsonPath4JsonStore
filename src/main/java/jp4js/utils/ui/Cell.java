@@ -1,18 +1,23 @@
 package jp4js.utils.ui;
 
-public class Cell implements Container {
+public class Cell extends Allignment {
     private String data;
     public Cell(String data) {
         this.data = data;
     }
 
+    public Cell(String data, SharedWidth width) {
+        super(width);
+        this.data = data;
+    }
+
     @Override
-    public int width() {
+    public int actualWidth() {
         return this.data.length() + 2;
     }
 
     @Override
-    public int height() {
+    public int actualHeight() {
         return 1;
     }
 
