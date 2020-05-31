@@ -1,8 +1,8 @@
 package jp4js.shell.layout;
 
-public class SharedWidth {
+public class WidthAllign {
     private int data;
-    public SharedWidth() {
+    public WidthAllign() {
         this.data = 0;
     }
 

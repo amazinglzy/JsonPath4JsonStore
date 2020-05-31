@@ -10,7 +10,7 @@ public class Horizontal extends Allignment {
         this.containers = containers;
     }
 
-    public Horizontal(List<Container> containers, SharedWidth width) {
+    public Horizontal(List<Container> containers, WidthAllign width) {
         super(width);
         this.containers = containers;
     }

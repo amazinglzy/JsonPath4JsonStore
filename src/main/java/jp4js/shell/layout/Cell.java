@@ -8,7 +8,7 @@ public class Cell extends Allignment {
         this.data = data;
     }
 
-    public Cell(String data, SharedWidth width) {
+    public Cell(String data, WidthAllign width) {
         super(width);
         this.data = data;
     }

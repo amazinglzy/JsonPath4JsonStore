@@ -5,7 +5,7 @@ import jp4js.shell.layout.Horizontal;
 import jp4js.shell.layout.HorizontalBuilder;
 import jp4js.shell.layout.Vertical;
 import jp4js.shell.layout.VerticalBuilder;
-import jp4js.shell.layout.SharedWidth;
+import jp4js.shell.layout.WidthAllign;
 import jp4js.shell.layout.CellBuilder;
 
 import java.util.TreeMap;
@@ -96,11 +96,11 @@ public class Virsualizer {
     }
 
     public static class  SharedAttr {
-        private SharedWidth width;
+        private WidthAllign width;
         public SharedAttr() {
-            this.width = new SharedWidth();
+            this.width = new WidthAllign();
         }
-        public SharedWidth width() {
+        public WidthAllign width() {
             return this.width;
         }
     }

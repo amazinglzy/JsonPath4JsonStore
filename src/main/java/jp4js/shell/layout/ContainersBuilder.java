@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 public abstract class ContainersBuilder {
-    private SharedWidth width;
+    private WidthAllign width;
     private List<Container> containers;
 
     public ContainersBuilder() {
@@ -12,7 +12,7 @@ public abstract class ContainersBuilder {
         this.width = null;
     }
 
-    public ContainersBuilder(SharedWidth width) {
+    public ContainersBuilder(WidthAllign width) {
         this.width = width;
         this.containers = new LinkedList<>();
     }
@@ -25,7 +25,7 @@ public abstract class ContainersBuilder {
         return this.containers;
     }
 
-    public SharedWidth width() {
+    public WidthAllign width() {
         return this.width;
     }
 

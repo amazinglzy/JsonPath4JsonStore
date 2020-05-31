@@ -10,7 +10,7 @@ public class Vertical extends Allignment{
         this.containers = containers;
     }
 
-    public Vertical(List<Container> containers, SharedWidth width) {
+    public Vertical(List<Container> containers, WidthAllign width) {
         super(width);
         this.containers = containers;
     }

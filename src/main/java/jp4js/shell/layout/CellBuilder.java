@@ -2,8 +2,8 @@ package jp4js.shell.layout;
 
 public class CellBuilder {
     private String data;
-    private SharedWidth width;
-    public CellBuilder(String data, SharedWidth width) {
+    private WidthAllign width;
+    public CellBuilder(String data, WidthAllign width) {
         this.data = data;
         this.width = width;
     }

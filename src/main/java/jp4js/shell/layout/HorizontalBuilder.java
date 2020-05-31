@@ -2,7 +2,7 @@ package jp4js.shell.layout;
 
 public class HorizontalBuilder extends ContainersBuilder {
     public HorizontalBuilder() {}
-    public HorizontalBuilder(SharedWidth width) {
+    public HorizontalBuilder(WidthAllign width) {
         super(width);
     }
 
