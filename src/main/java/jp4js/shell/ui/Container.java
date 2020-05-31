@@ -1,4 +1,4 @@
-package jp4js.utils.ui;
+package jp4js.shell.ui;
 
 public interface Container {
     public int width();

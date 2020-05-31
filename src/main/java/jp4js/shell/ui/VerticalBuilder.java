@@ -1,4 +1,4 @@
-package jp4js.utils.ui;
+package jp4js.shell.ui;
 
 public class VerticalBuilder extends ContainersBuilder {
     @Override
