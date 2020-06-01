@@ -46,6 +46,11 @@ public class LabelArray extends LabelNode {
                 add(toAdd);
             }};
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(this.index);
+        }
     }
 
     public static class ArraySlice implements ArraySelections {
@@ -74,6 +79,11 @@ public class LabelArray extends LabelNode {
                 add(toAdd);
             }};
         }
+
+        @Override
+        public String toString() {
+            return String.valueOf(this.from) + ", " + String.valueOf(this.to);
+        }
     }
 
     public static class ArrayOperation implements ArraySelections {
@@ -97,6 +107,16 @@ public class LabelArray extends LabelNode {
             return new LinkedList<>(){{
                 addAll(selections);
             }};
+        }
+
+        @Override
+        public String toString() {
+            String ret = "";
+            for (ArraySelections selection: selections) {
+                if (ret.length() != 0) ret += ", ";
+                ret += selection.toString();
+            }
+            return ret;
         }
     }
 }
