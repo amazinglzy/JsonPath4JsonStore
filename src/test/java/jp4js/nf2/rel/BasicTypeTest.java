@@ -1,4 +1,4 @@
-package jp4js.nf2;
+package jp4js.nf2.rel;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

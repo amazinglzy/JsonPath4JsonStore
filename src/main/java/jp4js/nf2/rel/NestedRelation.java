@@ -1,4 +1,4 @@
-package jp4js.nf2;
+package jp4js.nf2.rel;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
