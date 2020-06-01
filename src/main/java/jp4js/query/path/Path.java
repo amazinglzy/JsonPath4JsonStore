@@ -5,4 +5,9 @@ public class Path {
     public Path(RootNode root) {
         this.root = root;
     }
+
+    @Override
+    public String toString() {
+        return "Path(" + root.toString() + ")";
+    }
 }
