@@ -10,19 +10,19 @@ public class NestedRelationSample {
         nestedRel0 = new NestedRelationBuilder()
             .put("age",BasicType.dInt)
             .put("name", BasicType.dString)
-            .enter()
+            .enter("courses")
                 .put("course", BasicType.dString)
                 .put("score", BasicType.dInt)
-            .exit("courses")
+            .exit()
             .build();
         nestedRel1 = new NestedRelationBuilder()
-            .enter()
+            .enter("customer")
                 .put("name.first.[str]", BasicType.dString)
                 .put("name.last.[str]", BasicType.dString)
-                .enter()
+                .enter("address")
                     .put("[str]", BasicType.dString)
-                .exit("address")
-            .exit("customer")
+                .exit()
+            .exit()
             .build();
     }
 }

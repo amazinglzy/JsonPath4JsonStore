@@ -1,43 +1,57 @@
 package jp4js.nf2.rel;
 
 import java.util.TreeMap;
-import java.util.Stack;
+
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class NestedRelationBuilder {
-    private Stack<TreeMap<String, DType>> path;
+    private Deque<TreeMap<String, DType>> mappingPath;
+    private Deque<String> fieldPath;
 
 
     public NestedRelationBuilder() {
-        this.path = new Stack<>();
-        this.path.push(new TreeMap<>());
+        this.mappingPath = new ArrayDeque<>();
+        this.fieldPath = new ArrayDeque<>();
+        this.mappingPath.push(new TreeMap<>());
     }
 
     public NestedRelationBuilder put(String fieldname, DType type) {
-        this.path.peek().put(fieldname, type);
+        this.mappingPath.peek().put(fieldname, type);
         return this;
     }
 
-    public NestedRelationBuilder enter() {
-        TreeMap<String, DType> newMapping = new TreeMap<>();
-        this.path.push(newMapping);
+    public NestedRelationBuilder enter(String fieldname) {
+        if (this.mappingPath.peek().containsKey(fieldname)) {
+            if (this.mappingPath.peek().get(fieldname) instanceof NestedRelation) {
+                NestedRelation rel = (NestedRelation) this.mappingPath.peek().get(fieldname);
+                this.mappingPath.push(rel.mapping());
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            TreeMap<String, DType> newMapping = new TreeMap<>();
+            this.mappingPath.push(newMapping);
+        }
+        this.fieldPath.push(fieldname);
 
         return this;
     }
 
-    public NestedRelationBuilder exit(String fieldname) {
-        if (this.path.size() <= 1) 
+    public NestedRelationBuilder exit() {
+        if (this.mappingPath.size() <= 1) 
             throw new IllegalArgumentException();
-        TreeMap<String, DType> mapping = this.path.pop();
+        TreeMap<String, DType> mapping = this.mappingPath.pop();
         TreeMap<String, Integer> index = buildIndex(mapping);
         NestedRelation rel = new NestedRelation(mapping, index);
-        this.path.peek().put(fieldname, rel);
+        this.mappingPath.peek().put(this.fieldPath.pop(), rel);
         return this;
     }
 
     public NestedRelation build() {
-        if (this.path.size() != 1) 
+        if (this.mappingPath.size() != 1) 
             throw new IllegalArgumentException();
-        TreeMap<String, DType> mapping = this.path.pop();
+        TreeMap<String, DType> mapping = this.mappingPath.pop();
         TreeMap<String, Integer> index = buildIndex(mapping);
         NestedRelation rel = new NestedRelation(mapping, index);
         return rel;

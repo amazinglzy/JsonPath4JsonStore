@@ -20,10 +20,10 @@ public class NestedRelationBuilderTest {
         NestedRelation relation = new NestedRelationBuilder()
             .put("age", BasicType.dInt)
             .put("name", BasicType.dString)
-            .enter()
+            .enter("courses")
                 .put("course", BasicType.dString)
                 .put("score", BasicType.dInt)
-            .exit("courses")
+            .exit()
             .build();
         System.out.println(relation.toString());
         assertThat(relation.toString()).isEqualTo(
@@ -37,10 +37,10 @@ public class NestedRelationBuilderTest {
             .put("field1", BasicType.dString)
             .put("field2", BasicType.dInt)
             .put("field3", BasicType.dDouble)
-            .enter()
+            .enter("field4")
                 .put("field1", BasicType.dString)
                 .put("field2", BasicType.dDouble)
-            .exit("field4")
+            .exit()
             .build();
         assertThat(relation.toString()).isEqualTo(
             "field1(DString), field2(DInt), field3(DDouble), field4(field1(DString), field2(DDouble))"

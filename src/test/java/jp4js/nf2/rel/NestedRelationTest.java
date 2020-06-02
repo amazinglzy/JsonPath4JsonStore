@@ -13,10 +13,10 @@ public class NestedRelationTest {
             .put("field1", BasicType.dString)
             .put("field2", BasicType.dInt)
             .put("field3", BasicType.dDouble)
-            .enter()
+            .enter("field4")
                 .put("field1", BasicType.dString)
                 .put("field2", BasicType.dDouble)
-            .exit("field4")
+            .exit()
             .build();
         assertThat(rel.toString()).isEqualTo(
             "field1(DString), field2(DInt), field3(DDouble), field4(field1(DString), field2(DDouble))"

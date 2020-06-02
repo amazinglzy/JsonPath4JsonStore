@@ -29,6 +29,10 @@ public class NestedRelation implements DType, Iterable<String> {
         return this.mapping.keySet().iterator();
     }
 
+    public TreeMap<String, DType> mapping() {
+        return this.mapping;
+    }
+
     public TupleBuilder tupleBuilder() {
         return new TupleBuilder();
     }
