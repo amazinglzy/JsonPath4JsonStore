@@ -3,12 +3,11 @@ package jp4js.utils.nf2;
 import org.junit.Test;
 
 import jp4js.nf2.rel.DType;
+import jp4js.storage.MemStore;
 import jp4js.utils.Configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-import java.util.LinkedList;
 
 public class Json2DTypeTest {
     @Test
@@ -19,14 +18,14 @@ public class Json2DTypeTest {
         String json4 = "{\"name\": 1}";
 
         Configuration configuration = Configuration.defaultConfiguration();
-        List<Object> jsonLst = new LinkedList<>() {{
-            add(configuration.jsonProvider().parse(json1));
-            add(configuration.jsonProvider().parse(json2));
-            add(configuration.jsonProvider().parse(json3));
-            add(configuration.jsonProvider().parse(json4));
+        MemStore store = new MemStore() {{
+            add(configuration.jsonProvider().parse(json1), configuration);
+            add(configuration.jsonProvider().parse(json2), configuration);
+            add(configuration.jsonProvider().parse(json3), configuration);
+            add(configuration.jsonProvider().parse(json4), configuration);
         }};
 
-        DType relation = new Json2DType(jsonLst, configuration).relation();
+        DType relation = new Json2DType(store.docs()).relation();
         assertThat(relation.toString()).isEqualTo(
             "name([str](DString)), name.[double](DDouble), name.[int](DInt), name.[str](DString)"
         );
@@ -39,13 +38,13 @@ public class Json2DTypeTest {
         String json3 = "34";
 
         Configuration configuration = Configuration.defaultConfiguration();
-        List<Object> jsonLst = new LinkedList<>() {{
-            add(configuration.jsonProvider().parse(json1));
-            add(configuration.jsonProvider().parse(json2));
-            add(configuration.jsonProvider().parse(json3));
+        MemStore store = new MemStore() {{
+            add(configuration.jsonProvider().parse(json1), configuration);
+            add(configuration.jsonProvider().parse(json2), configuration);
+            add(configuration.jsonProvider().parse(json3), configuration);
         }};
 
-        DType relation = new Json2DType(jsonLst, configuration).relation();
+        DType relation = new Json2DType(store.docs()).relation();
         assertThat(relation.toString()).isEqualTo(
             "[int](DInt), [str](DString)"
         );
