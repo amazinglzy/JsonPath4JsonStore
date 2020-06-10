@@ -78,6 +78,11 @@ public final class Utils {
 
     }
 
+    public static String append(String s1, String s2, String delimiter) {
+        if (s1.length() == 0) return s2;
+        return s1 + delimiter + s2;
+    }
+
     //---------------------------------------------------------
     //
     // IO

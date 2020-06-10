@@ -19,7 +19,7 @@ public class PathNode {
         return this.children.get(i);
     }
 
-    public Collection<PathNode> children() {
+    public List<PathNode> children() {
         return this.children;
     }
 
