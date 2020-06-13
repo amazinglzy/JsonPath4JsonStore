@@ -1,7 +1,6 @@
 package jp4js.query.path;
 
 import java.util.List;
-import java.util.Collection;
 import java.util.LinkedList;
 
 public class PathNode {

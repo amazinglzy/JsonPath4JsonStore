@@ -3,7 +3,6 @@ package jp4js.query.baseline;
 import org.junit.Test;
 
 import jp4js.nf2.rel.NestedRelation;
-import jp4js.query.PathParser;
 import jp4js.query.path.Path;
 import jp4js.storage.MemStore;
 import jp4js.storage.doc.DocNode;

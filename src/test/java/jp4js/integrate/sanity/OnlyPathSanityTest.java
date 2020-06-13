@@ -6,7 +6,7 @@ import jp4js.query.RecordSet.Record;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Iterator;
 
-import org.junit.Test;
+// import org.junit.Test;
 
 public class OnlyPathSanityTest {
     private static Configuration configuration = Configuration.defaultConfiguration();
@@ -59,23 +59,5 @@ public class OnlyPathSanityTest {
         iter = eval.eval("$..a..b", example04, configuration);
         assertThat(iter.hasNext()).isTrue(); assertThat(iter.next().getValue()).isEqualTo(1);
         assertThat(iter.hasNext()).isFalse();
-    }
-
-    @Test
-    public void testJsonPathScanSanity() {
-        JsonPathEval eval = new JsonPathScan();
-        testSanity(eval);
-    }
-
-    @Test
-    public void testJsonPathMergeJoinDSanity() {
-        JsonPathEval eval = new JsonPathMergeJoinD();
-        testSanity(eval);
-    }
-
-    @Test
-    public void testJsonPathMergeJoinSSanity() {
-        JsonPathEval eval = new JsonPathMergeJoinS();
-        testSanity(eval);
     }
 }
