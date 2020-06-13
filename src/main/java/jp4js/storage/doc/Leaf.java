@@ -1,5 +1,6 @@
 package jp4js.storage.doc;
 
+import jp4js.nf2.rel.BasicType;
 import jp4js.nf2.rel.BasicType.DDouble;
 import jp4js.nf2.rel.BasicType.DInt;
 import jp4js.nf2.rel.BasicType.DString;
@@ -10,14 +11,25 @@ public class Leaf {
         return new StringNode(id, data);
     }
 
+    public static StringNode createStringNode(NodeID id, String data) {
+        return new StringNode(id, BasicType.createDString(data));
+    }
+
     public static DoubleNode createDoubleNode(NodeID id, DDouble.Instance data) {
         return new DoubleNode(id, data);
+    }
+
+    public static DoubleNode createDoubleNode(NodeID id, double data) {
+        return new DoubleNode(id, BasicType.createDDouble(data));
     }
 
     public static IntNode createIntNode(NodeID id, DInt.Instance data) {
         return new IntNode(id, data);
     }
 
+    public static IntNode createIntNode(NodeID id, Integer data) {
+        return new IntNode(id, BasicType.createDInt(data));
+    }
     
     public static abstract class LeafNode extends DocNode {
         public LeafNode(NodeID id) {

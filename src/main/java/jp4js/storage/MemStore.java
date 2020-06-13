@@ -64,9 +64,7 @@ public class MemStore implements Store {
                     for (String fieldname: propertyNode) 
                         this.add(propertyNode.get(fieldname).id());
                 }
-            } else {
-                throw new IllegalArgumentException();
-            }
+            } 
         }};
     }
 
@@ -79,8 +77,6 @@ public class MemStore implements Store {
                 for (String fieldname: properties) 
                     if (propertyNode.contains(fieldname))
                         this.add(propertyNode.get(fieldname).id());
-            } else {
-                throw new IllegalArgumentException();
             }
         }};
     }
@@ -94,8 +90,6 @@ public class MemStore implements Store {
                 for (Integer idx: selections.select()) 
                     if (indexNode.contains(idx)) this.add(indexNode.get(idx).id());
                     else break;
-            } else {
-                throw new IllegalArgumentException();
             }
         }};
     }

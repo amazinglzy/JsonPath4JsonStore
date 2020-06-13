@@ -3,6 +3,7 @@ package jp4js.utils.nf2;
 import org.junit.Test;
 
 import jp4js.nf2.rel.DType;
+import jp4js.nf2.rel.NestedRelationBuilder;
 import jp4js.storage.MemStore;
 import jp4js.utils.Configuration;
 
@@ -25,7 +26,9 @@ public class Json2DTypeTest {
             add(configuration.jsonProvider().parse(json4), configuration);
         }};
 
-        DType relation = new Json2DType(store.docs()).relation();
+        NestedRelationBuilder builder = new NestedRelationBuilder();
+        new Json2DType(store.docs(), "", builder);
+        DType relation = builder.build();
         assertThat(relation.toString()).isEqualTo(
             "name([str](DString)), name.[double](DDouble), name.[int](DInt), name.[str](DString)"
         );
@@ -44,7 +47,9 @@ public class Json2DTypeTest {
             add(configuration.jsonProvider().parse(json3), configuration);
         }};
 
-        DType relation = new Json2DType(store.docs()).relation();
+        NestedRelationBuilder builder = new NestedRelationBuilder();
+        new Json2DType(store.docs(), "", builder);
+        DType relation = builder.build();
         assertThat(relation.toString()).isEqualTo(
             "[int](DInt), [str](DString)"
         );

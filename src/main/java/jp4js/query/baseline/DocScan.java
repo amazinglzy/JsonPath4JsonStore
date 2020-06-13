@@ -211,7 +211,7 @@ public class DocScan {
                 for (DocNode[] nodeMatch: RelationConstruct.this.nodeMatches) 
                     add(nodeMatch[RelationConstruct.this.currentColumnIndex]);
             }};
-            builder.put(this.currentFieldname(), new Json2DType(nodes).relation());
+            new Json2DType(nodes, this.currentFieldname(), builder);
             this.currentColumnIndex ++;
         }
     }

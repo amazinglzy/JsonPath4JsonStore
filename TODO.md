@@ -1,5 +1,9 @@
 # JsonPath Implmentation
 
+## 0. Helpful basics
+
+* [ ] tool to create memstore for debug
+
 ## 1. Parsing the JsonPath query
 
 * [x] write anltr file to parse the query

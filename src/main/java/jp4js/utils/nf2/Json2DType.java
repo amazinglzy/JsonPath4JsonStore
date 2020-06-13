@@ -11,17 +11,14 @@ import jp4js.storage.doc.Leaf;
 
 public class Json2DType {
     private List<DocNode> jsonLst;
+    private String base;
+    private NestedRelationBuilder builder;
 
-    public Json2DType(List<DocNode> jsonLst) {
+    public Json2DType(List<DocNode> jsonLst, String base, NestedRelationBuilder builder) {
         this.jsonLst = jsonLst;
-    }
-
-    public DType relation() {
-        NestedRelationBuilder builder = new NestedRelationBuilder();
-        builder.enter("$");
-        for (DocNode node: jsonLst) update("", node, builder);
-        builder.exit();
-        return builder.build().get("$");
+        this.builder = builder;
+        this.base = base;
+        for (DocNode node: jsonLst) update(base, node, builder);
     }
 
     public void update(String fieldname, DocNode node, NestedRelationBuilder builder) {
