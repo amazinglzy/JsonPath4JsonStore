@@ -29,6 +29,6 @@ public class DocScanTest {
         DocScan.RelationConstruct construct = new DocScan.RelationConstruct(path, new LinkedList<>());
         construct.iterate();
         NestedRelation relation = construct.relation();
-        assertThat(relation.toString()).isEqualTo("$.1, 2, 3(name)(name())");
+        assertThat(relation.toString()).isEqualTo("$.1, 2, 3(name).name()");
     }
 }

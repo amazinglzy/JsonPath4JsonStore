@@ -32,6 +32,10 @@ public class Leaf {
             this.data = data;
         }
 
+        public DString.Instance data() {
+            return this.data;
+        }
+
         @Override
         public String toString() {
             return "[" + this.id().toString() + ":" + this.data.toString() + "]";
@@ -43,6 +47,10 @@ public class Leaf {
         public DoubleNode(NodeID id, DDouble.Instance data) {
             super(id);
             this.data = data;
+        }
+
+        public DDouble.Instance data() {
+            return this.data;
         }
 
         @Override

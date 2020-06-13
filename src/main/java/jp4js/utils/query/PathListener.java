@@ -12,52 +12,49 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 public class PathListener extends PathBaseListener {
-    private Deque<Deque<String>> fieldPath;
+    private Deque<String> fieldPath;
 
     public PathListener(Path path) {
         super(path);
-        this.fieldPath = new ArrayDeque<>() {{
-            push(new ArrayDeque<>());
-        }};
+        this.fieldPath = new ArrayDeque<>();
     }
 
     public void enterRootNode(RootNode node) {
-        this.fieldPath.peek().push("$");
+        this.fieldPath.push("$");
         if (this.isLeaf(node)) 
             this.visitLeafRootNode(node);
     }
 
     public void enterPropertyNode(PropertyNode node) {
-        this.fieldPath.peek().push(node.toString());
+        this.fieldPath.push(node.toString());
         if (this.isLeaf(node)) 
             this.visitLeafPropertyNode(node);
     }
 
     public void enterArrayNode(ArrayNode node) {
-        this.fieldPath.peek().push(node.toString());
-        this.fieldPath.push(new ArrayDeque<>());
+        this.fieldPath.push(node.toString());
         if (this.isLeaf(node)) 
             this.visitLeafArrayNode(node);
     }
 
     public void enterWildcardNode(WildcardNode node) {
-        this.fieldPath.peek().push(node.toString());
+        this.fieldPath.push(node.toString());
         if (this.isLeaf(node)) 
             this.visitLeafWildcardNode(node);
     }
 
     public void enterDecendentNode(DecendentNode node) {
-        this.fieldPath.peek().push(node.toString());
+        this.fieldPath.push(node.toString());
         if (this.isLeaf(node)) 
             this.visitLeafDecendentNode(node);
     }
 
     public void exitRootNode(RootNode node) {
-        this.fieldPath.peek().pop();
+        this.fieldPath.pop();
     }
 
     public void exitPropertyNode(PropertyNode node) {
-        this.fieldPath.peek().pop();
+        this.fieldPath.pop();
     }
 
     public void exitArrayNode(ArrayNode node) {
@@ -65,11 +62,11 @@ public class PathListener extends PathBaseListener {
     }
 
     public void exitWildcardNode(WildcardNode node) {
-        this.fieldPath.peek().pop();
+        this.fieldPath.pop();
     }
 
     public void exitDecendentNode(DecendentNode node) {
-        this.fieldPath.peek().pop();
+        this.fieldPath.pop();
     }
 
     public void visitLeafRootNode(RootNode node) {}
@@ -80,21 +77,10 @@ public class PathListener extends PathBaseListener {
 
     public String currentFieldname() {
         String ret = "";
-        for (String fieldname: this.fieldPath.peek()) {
+        for (String fieldname: this.fieldPath) {
             if (ret.length() != 0) ret = "." + ret;
             ret = fieldname + ret;
         }
-        return ret;
-    }
-
-    public String parentFieldname() {
-        String ret = "";
-        Deque<String> temporDeque = this.fieldPath.pop();
-        for (String fieldname: this.fieldPath.peek()) {
-            if (ret.length() != 0) ret = "." + ret;
-            ret = fieldname + ret;
-        }
-        this.fieldPath.push(temporDeque);
         return ret;
     }
 

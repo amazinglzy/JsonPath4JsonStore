@@ -1,6 +1,5 @@
 package jp4js.query.baseline;
 
-import jp4js.nf2.rel.DType;
 import jp4js.nf2.rel.NestedRelation;
 import jp4js.nf2.rel.NestedRelationBuilder;
 import jp4js.query.path.ArrayNode;
@@ -13,17 +12,11 @@ import jp4js.query.path.WildcardNode;
 import jp4js.storage.Store;
 import jp4js.storage.doc.DocNode;
 import jp4js.storage.doc.NodeID;
-import jp4js.utils.Utils;
 import jp4js.utils.nf2.Json2DType;
-import jp4js.utils.query.PathBaseListener;
+import jp4js.utils.nf2.PathNodeFiller;
 import jp4js.utils.query.PathListener;
 
 import java.util.List;
-
-import com.ibm.icu.impl.UResource.Array;
-
-import java.util.Deque;
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 public class DocScan {
@@ -35,20 +28,27 @@ public class DocScan {
         this.path = path;
     }
 
+    public NestedRelation.Instance instance() {
+        return new Iter(store, path).instance();
+    }
+
     public static class Iter {
         private Store store;
         private Path path;
         private List<DocNode[]> nodeMatches;
         private NestedRelation relation;
         private NestedRelation.Instance instance;
-        private int currentColumnIndex;
 
         public Iter(Store store, Path path) {
             this.store = store;
             this.path = path;
             this.nodeMatches = this.iterateToFindMatches(this.store.docsID(), path.root());
             this.relation = new RelationConstruct(path, nodeMatches) {{ iterate(); }}.relation();
-            // this.instance = this.constructRelationInstance();
+            this.instance = new InstanceConstruct(path, nodeMatches, relation).instance();
+        }
+
+        public NestedRelation.Instance instance() {
+            return this.instance;
         }
 
         private List<DocNode[]> iterateToFindMatches(List<NodeID> currentMatches, PathNode node) {
@@ -141,19 +141,6 @@ public class DocScan {
                 this.builder = builder;
             }
 
-
-            @Override
-            public void enterArrayNode(ArrayNode node) {
-                super.enterArrayNode(node);
-                this.builder.enter(this.parentFieldname());
-            }
-
-            @Override
-            public void exitArrayNode(ArrayNode node) {
-                super.exitArrayNode(node);
-                this.builder.exit();
-            }
-
             public void visitLeafRootNode(RootNode node) {
                 this.collect();
             }
@@ -175,11 +162,9 @@ public class DocScan {
             }
 
             private void collect() {
-                List<DocNode> nodes = new LinkedList<>() {{
-                    for (DocNode[] nodeMatch: InstanceConstruct.this.nodeMatches) 
-                        add(nodeMatch[InstanceConstruct.this.currentColumnIndex]);
-                }};
-                builder.put(this.currentFieldname(), new Json2DType(nodes).relation());
+                new PathNodeFiller(this.currentFieldname(), this.builder).fill(
+                    InstanceConstruct.this.nodeMatches.get(InstanceConstruct.this.currentRowIndex)[InstanceConstruct.this.currentColumnIndex]
+                );
                 InstanceConstruct.this.currentColumnIndex ++;
             }
         }
@@ -199,18 +184,6 @@ public class DocScan {
 
         public NestedRelation relation() {
             return this.builder.build();
-        }
-
-        @Override
-        public void enterArrayNode(ArrayNode node) {
-            super.enterArrayNode(node);
-            this.builder.enter(this.parentFieldname());
-        }
-
-        @Override
-        public void exitArrayNode(ArrayNode node) {
-            super.exitArrayNode(node);
-            this.builder.exit();
         }
 
         public void visitLeafRootNode(RootNode node) {
