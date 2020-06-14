@@ -50,7 +50,7 @@ public class Leaf {
 
         @Override
         public String toString() {
-            return "[" + this.id().toString() + ":" + this.data.toString() + "]";
+            return this.data.toString();
         }
     }
 
@@ -67,7 +67,7 @@ public class Leaf {
 
         @Override
         public String toString() {
-            return "[" + this.id().toString() + ":" + this.data.toString() + "]";
+            return this.data.toString();
         }
     }
 
@@ -84,7 +84,7 @@ public class Leaf {
 
         @Override
         public String toString() {
-            return "[" + this.id().toString() + ":" + this.data.toString() + "]";
+            return this.data.toString();
         }
     }
 }

@@ -40,7 +40,7 @@ public class Internal {
                 if (ret.length() != 0) ret += ", ";
                 ret += node.toString();
             }
-            return "[" + this.id().toString() + ":" + ret + "]";
+            return ret;
         }
     }
 
@@ -88,7 +88,7 @@ public class Internal {
                 if (ret.length() != 0) ret += ", ";
                 ret += fieldname + "(" + this.data.get(fieldname).toString() + ")";
             }
-            return "[" + this.id().toString() + ":" + ret + "]";
+            return ret;
         }
     }
 

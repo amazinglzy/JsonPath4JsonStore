@@ -1,7 +1,5 @@
 package jp4js.query.baseline;
 
-import org.junit.Test;
-
 import jp4js.nf2.rel.NestedRelation;
 import jp4js.query.path.Path;
 import jp4js.storage.MemStore;
@@ -11,6 +9,7 @@ import jp4js.nf2.rel.doc.NodeID;
 import jp4js.utils.Configuration;
 import jp4js.utils.query.PathCompiler;
 
+import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.LinkedList;

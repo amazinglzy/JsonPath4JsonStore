@@ -16,11 +16,15 @@ import java.util.LinkedList;
 public class MemStore implements Store {
     private HashMap<NodeID, DocNode> primaryIndex;
     private LinkedList<DocNode> docs;
+    private LinkedList<NodeID> roots;
+    private HashMap<NodeID, LinkedList<NodeID>> children;
     private int currentNodeId;
 
     public MemStore() {
         this.primaryIndex = new HashMap<>();
         this.docs = new LinkedList<>();
+        this.roots = new LinkedList<>();
+        this.children = new HashMap<>();
     }
 
     @Override
