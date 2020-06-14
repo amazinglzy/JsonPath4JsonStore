@@ -1,4 +1,4 @@
-package jp4js.storage.doc;
+package jp4js.nf2.rel.doc;
 
 import java.util.ArrayList;
 import java.util.TreeMap;

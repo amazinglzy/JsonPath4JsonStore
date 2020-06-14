@@ -4,9 +4,9 @@ import java.util.List;
 
 import jp4js.nf2.rel.BasicType;
 import jp4js.nf2.rel.NestedRelationBuilder;
-import jp4js.storage.doc.DocNode;
-import jp4js.storage.doc.Internal;
-import jp4js.storage.doc.Leaf;
+import jp4js.nf2.rel.doc.DocNode;
+import jp4js.nf2.rel.doc.Internal;
+import jp4js.nf2.rel.doc.Leaf;
 
 public class Json2DType {
     public Json2DType(List<DocNode> jsonLst, String base, NestedRelationBuilder builder) {

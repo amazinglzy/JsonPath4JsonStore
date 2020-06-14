@@ -1,3 +1,20 @@
+/*
+DType: represents the determinstic schema of documents
+    BasicType.*
+    DocNode
+    NestedRelation
+
+BasicType:
+    dString
+    dInt
+    dDouble
+    dBool
+
+NestedRelation: includes determinstic and undeterminstic
+    SingleRelation
+    RepeatableRelation
+
+*/
 package jp4js.nf2.rel;
 
 import java.util.ArrayDeque;

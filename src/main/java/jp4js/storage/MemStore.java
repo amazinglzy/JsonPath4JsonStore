@@ -2,10 +2,10 @@ package jp4js.storage;
 
 import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.nf2.rel.BasicType;
-import jp4js.storage.doc.DocNode;
-import jp4js.storage.doc.Internal;
-import jp4js.storage.doc.Leaf;
-import jp4js.storage.doc.NodeID;
+import jp4js.nf2.rel.doc.DocNode;
+import jp4js.nf2.rel.doc.Internal;
+import jp4js.nf2.rel.doc.Leaf;
+import jp4js.nf2.rel.doc.NodeID;
 import jp4js.utils.Configuration;
 
 import java.util.HashMap;

@@ -6,8 +6,8 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import jp4js.utils.Configuration;
-import jp4js.storage.doc.Leaf;
-import jp4js.storage.doc.NodeID;
+import jp4js.nf2.rel.doc.Leaf;
+import jp4js.nf2.rel.doc.NodeID;
 
 
 public class MemStoreTest {

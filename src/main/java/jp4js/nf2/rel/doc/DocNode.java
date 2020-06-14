@@ -1,4 +1,4 @@
-package jp4js.storage.doc;
+package jp4js.nf2.rel.doc;
 
 public abstract class DocNode {
     private final NodeID id;

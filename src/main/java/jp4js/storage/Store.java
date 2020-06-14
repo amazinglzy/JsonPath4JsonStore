@@ -2,8 +2,8 @@ package jp4js.storage;
 
 import jp4js.utils.Configuration;
 import jp4js.index.node.LabelArray.ArraySelections;
-import jp4js.storage.doc.DocNode;
-import jp4js.storage.doc.NodeID;
+import jp4js.nf2.rel.doc.DocNode;
+import jp4js.nf2.rel.doc.NodeID;
 
 import java.util.List;
 
