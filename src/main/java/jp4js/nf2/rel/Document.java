@@ -1,10 +1,17 @@
 package jp4js.nf2.rel;
 
-public class BasicType {
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Iterator;
+
+
+public class Document {
 
     public static DString dString = new DString();
     public static DInt dInt = new DInt();
     public static DDouble dDouble = new DDouble();
+    public static DMapping dMapping = new DMapping();
+    public static DList dList = new DList();
 
     public static DString.Instance createDString(String data) {
         return dString.create(data);
@@ -17,10 +24,18 @@ public class BasicType {
     public static DDouble.Instance createDDouble(double data) {
         return dDouble.create(data);
     }
+
+    public static DMapping.Instance createDMapping() {
+        return dMapping.create();
+    }
+
+    public static DList.Instance createDList() {
+        return dList.create();
+    }
     
 
     public static class DString implements DType {
-        public class Instance {
+        public class Instance implements DType.Instance {
             private final String data;
 
             public Instance(String data) {
@@ -52,7 +67,7 @@ public class BasicType {
     }
 
     public static class DInt implements DType {
-        public class Instance {
+        public class Instance implements DType.Instance {
             private final int data;
 
             public Instance(int data) {
@@ -84,7 +99,7 @@ public class BasicType {
     }
 
     public static class DDouble implements DType {
-        public class Instance {
+        public class Instance implements DType.Instance {
             private final double data;
 
             public Instance(double data) {
@@ -114,5 +129,81 @@ public class BasicType {
             return "DDouble";
         }
 
+    }
+
+    public static class DMapping implements DType {
+        public class Instance implements DType.Instance {
+            private final HashMap<String, DType.Instance> data;
+
+            public Instance() {
+                this.data = new HashMap<>();
+            }
+
+            public Instance(HashMap<String, DType.Instance> data) {
+                this.data = data;
+            }
+
+            public void put(String field, DType.Instance data) {
+                this.data.put(field, data);
+            }
+
+            public DType.Instance get(String field) {
+                return this.data.get(field);
+            }
+
+            @Override
+            public String toString() {
+                return this.data.toString();
+            }
+        }
+
+        public Instance create() {
+            return new Instance();
+        }
+
+        @Override
+        public String toString() {
+            return "DMapping";
+        }
+    }
+
+    public static class DList implements DType {
+        public class Instance implements DType.Instance, Iterable<DType.Instance> {
+            private final LinkedList<DType.Instance> data;
+
+            public Instance() {
+                this.data = new LinkedList<>();
+            }
+
+            public Instance(LinkedList<DType.Instance> data) {
+                this.data = data;
+            }
+
+            public void add(DType.Instance item) {
+                this.data.add(item);
+            }
+
+            public Iterator<DType.Instance> iterator() {
+                return this.data.iterator();
+            }
+
+            public DType.Instance get(int index) {
+                return this.data.get(index);
+            }
+
+            @Override
+            public String toString() {
+                return this.data.toString();
+            }
+        }
+
+        public Instance create() {
+            return new Instance();
+        }
+
+        @Override
+        public String toString() {
+            return "DList";
+        }
     }
 }

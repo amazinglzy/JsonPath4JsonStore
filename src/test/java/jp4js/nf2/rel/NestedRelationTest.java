@@ -10,12 +10,12 @@ public class NestedRelationTest {
     @Test
     public void testBasicUsageCreation01() {
         NestedRelation rel = new NestedRelationBuilder()
-            .put("field1", BasicType.dString)
-            .put("field2", BasicType.dInt)
-            .put("field3", BasicType.dDouble)
+            .put("field1", Document.dString)
+            .put("field2", Document.dInt)
+            .put("field3", Document.dDouble)
             .enter("field4")
-                .put("field1", BasicType.dString)
-                .put("field2", BasicType.dDouble)
+                .put("field1", Document.dString)
+                .put("field2", Document.dDouble)
             .exit()
             .build();
         assertThat(rel.toString()).isEqualTo(
@@ -28,12 +28,12 @@ public class NestedRelationTest {
         NestedRelation.Instance ins = 
         flatRel0.builder()
             .begin()
-                .put("age", BasicType.createDInt(20))
-                .put("name", BasicType.createDString("Alice"))
+                .put("age", Document.createDInt(20))
+                .put("name", Document.createDString("Alice"))
             .end()
             .begin()
-                .put("age", BasicType.createDInt(10))
-                .put("name", BasicType.createDString("Alice"))
+                .put("age", Document.createDInt(10))
+                .put("name", Document.createDString("Alice"))
             .end()
             .build();
         assertThat(ins.toString()).isEqualTo(
@@ -46,16 +46,16 @@ public class NestedRelationTest {
         NestedRelation.Instance instance = 
             nestedRel0.builder()
                 .begin()
-                    .put("age", BasicType.createDInt(23))
-                    .put("name", BasicType.createDString("L"))
+                    .put("age", Document.createDInt(23))
+                    .put("name", Document.createDString("L"))
                     .enter("courses")
                         .begin()
-                            .put("course", BasicType.createDString("English"))
-                            .put("score", BasicType.createDInt(100))
+                            .put("course", Document.createDString("English"))
+                            .put("score", Document.createDInt(100))
                         .end()
                         .begin()
-                            .put("course", BasicType.createDString("Chinese"))
-                            .put("score", BasicType.createDInt(10))
+                            .put("course", Document.createDString("Chinese"))
+                            .put("score", Document.createDInt(10))
                         .end()
                     .exit()
                 .end()

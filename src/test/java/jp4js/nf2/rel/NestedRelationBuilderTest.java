@@ -9,8 +9,8 @@ public class NestedRelationBuilderTest {
     @Test
     public void testNestedRelationBuilderFlat01() {
         NestedRelation relation = new NestedRelationBuilder()
-            .put("age", BasicType.dInt)
-            .put("name", BasicType.dString)
+            .put("age", Document.dInt)
+            .put("name", Document.dString)
             .build();
         assertThat(relation.toString()).isEqualTo("age(DInt), name(DString)");
     }
@@ -18,11 +18,11 @@ public class NestedRelationBuilderTest {
     @Test
     public void testNestedRelationBuilderNested01() {
         NestedRelation relation = new NestedRelationBuilder()
-            .put("age", BasicType.dInt)
-            .put("name", BasicType.dString)
+            .put("age", Document.dInt)
+            .put("name", Document.dString)
             .enter("courses")
-                .put("course", BasicType.dString)
-                .put("score", BasicType.dInt)
+                .put("course", Document.dString)
+                .put("score", Document.dInt)
             .exit()
             .build();
         System.out.println(relation.toString());
@@ -34,12 +34,12 @@ public class NestedRelationBuilderTest {
     @Test
     public void testNestedRelationBuilderNested02() {
         NestedRelation relation = new NestedRelationBuilder()
-            .put("field1", BasicType.dString)
-            .put("field2", BasicType.dInt)
-            .put("field3", BasicType.dDouble)
+            .put("field1", Document.dString)
+            .put("field2", Document.dInt)
+            .put("field3", Document.dDouble)
             .enter("field4")
-                .put("field1", BasicType.dString)
-                .put("field2", BasicType.dDouble)
+                .put("field1", Document.dString)
+                .put("field2", Document.dDouble)
             .exit()
             .build();
         assertThat(relation.toString()).isEqualTo(

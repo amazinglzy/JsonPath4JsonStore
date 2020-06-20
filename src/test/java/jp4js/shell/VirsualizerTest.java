@@ -2,7 +2,7 @@ package jp4js.shell;
 
 import jp4js.nf2.rel.NestedRelation;
 import jp4js.nf2.rel.NestedRelationSample;
-import jp4js.nf2.rel.BasicType;
+import jp4js.nf2.rel.Document;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,8 +45,8 @@ public class VirsualizerTest {
     public void testHeaderAndTuplesFlat0() {
         NestedRelation.Instance instance = NestedRelationSample.flatRel0.builder()
             .begin()
-                .put("name", BasicType.createDString("Alice"))
-                .put("age", BasicType.createDInt(10))
+                .put("name", Document.createDString("Alice"))
+                .put("age", Document.createDInt(10))
             .end()
             .build();
         Virsualizer virsualizer = new Virsualizer(instance);
@@ -67,7 +67,7 @@ public class VirsualizerTest {
     public void testHeaderAndTupleFlat0ExistsNull() {
         NestedRelation.Instance instance = NestedRelationSample.flatRel0.builder()
             .begin()
-                .put("name", BasicType.createDString("Alice"))
+                .put("name", Document.createDString("Alice"))
             .end()
             .build();
         Virsualizer virsualizer = new Virsualizer(instance);
@@ -89,16 +89,16 @@ public class VirsualizerTest {
     public void testHeaderAndTupleNested0() {
         NestedRelation.Instance instance = NestedRelationSample.nestedRel0.builder()
             .begin()
-                .put("name", BasicType.createDString("Alice"))
-                .put("age", BasicType.createDInt(10))
+                .put("name", Document.createDString("Alice"))
+                .put("age", Document.createDInt(10))
                 .enter("courses")
                     .begin()
-                        .put("course", BasicType.createDString("English"))
-                        .put("score", BasicType.createDInt(90))
+                        .put("course", Document.createDString("English"))
+                        .put("score", Document.createDInt(90))
                     .end()
                     .begin()
-                        .put("course", BasicType.createDString("Chinese"))
-                        .put("score", BasicType.createDInt(95))
+                        .put("course", Document.createDString("Chinese"))
+                        .put("score", Document.createDInt(95))
                     .end()
                 .exit()
             .end()
@@ -135,22 +135,22 @@ public class VirsualizerTest {
     public void testHeaderAndTupleNested0ExistsNull() {
         NestedRelation.Instance instance = NestedRelationSample.nestedRel0.builder()
             .begin()
-                .put("name", BasicType.createDString("Alice"))
-                .put("age", BasicType.createDInt(10))
+                .put("name", Document.createDString("Alice"))
+                .put("age", Document.createDInt(10))
                 .enter("courses")
                     .begin()
-                        .put("course", BasicType.createDString("English"))
-                        .put("score", BasicType.createDInt(90))
+                        .put("course", Document.createDString("English"))
+                        .put("score", Document.createDInt(90))
                     .end()
                     .begin()
-                        .put("course", BasicType.createDString("Chinese"))
-                        .put("score", BasicType.createDInt(95))
+                        .put("course", Document.createDString("Chinese"))
+                        .put("score", Document.createDInt(95))
                     .end()
                 .exit()
             .end()
             .begin()
-                .put("name", BasicType.createDString("Bob"))
-                .put("age", BasicType.createDInt(20))
+                .put("name", Document.createDString("Bob"))
+                .put("age", Document.createDInt(20))
             .end()
             .build();
         Virsualizer virsualizer = new Virsualizer(instance);
@@ -191,29 +191,29 @@ public class VirsualizerTest {
             .begin()
                 .enter("customer")
                     .begin()
-                        .put("name.first.[str]", BasicType.createDString("John"))
-                        .put("name.last.[str]", BasicType.createDString("Smith"))
+                        .put("name.first.[str]", Document.createDString("John"))
+                        .put("name.last.[str]", Document.createDString("Smith"))
                         .enter("address")
                             .begin()
-                                .put("[str]", BasicType.createDString("11 Maple"))
+                                .put("[str]", Document.createDString("11 Maple"))
                             .end()
                         .exit()
                     .end()
                     .begin()
-                        .put("name.first.[str]", BasicType.createDString("Mary"))
-                        .put("name.last.[str]", BasicType.createDString("Jones"))
+                        .put("name.first.[str]", Document.createDString("Mary"))
+                        .put("name.last.[str]", Document.createDString("Jones"))
                         .enter("address")
                             .begin()
-                                .put("[str]", BasicType.createDString("456 Oak"))
+                                .put("[str]", Document.createDString("456 Oak"))
                             .end()
                             .begin()
-                                .put("[str]", BasicType.createDString("789 Pine"))
+                                .put("[str]", Document.createDString("789 Pine"))
                             .end()
                         .exit()
                     .end()
                     .begin()
-                        .put("name.first.[str]", BasicType.createDString("David"))
-                        .put("name.last.[str]", BasicType.createDString("Johnson"))
+                        .put("name.first.[str]", Document.createDString("David"))
+                        .put("name.last.[str]", Document.createDString("Johnson"))
                     .end()
                 .exit()
             .end()
