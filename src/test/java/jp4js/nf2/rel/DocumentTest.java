@@ -3,7 +3,7 @@ package jp4js.nf2.rel;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BasicTypeTest {
+public class DocumentTest {
     
     @Test
     public void testDStringBasic01() {
