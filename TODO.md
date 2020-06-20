@@ -3,7 +3,7 @@
 ## 0. Helpful basics
 
 * [x] tool to trans json to DocNode
-* [ ] DocNode Visitor to put DocNode into memstore
+* [x] DocNode Visitor to put DocNode into memstore
 * [ ] put json into memstore
 * [ ] tool to create memstore for debug
 
