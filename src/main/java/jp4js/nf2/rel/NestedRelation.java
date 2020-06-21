@@ -1,15 +1,4 @@
 /*
-DType: represents the determinstic schema of documents
-    BasicType.*
-    DocNode
-    NestedRelation
-
-BasicType:
-    dString
-    dInt
-    dDouble
-    dBool
-
 NestedRelation: includes determinstic and undeterminstic
     SingleRelation
     RepeatableRelation
@@ -51,11 +40,11 @@ public class NestedRelation implements DType, Iterable<String> {
     }
 
     public TupleBuilder tupleBuilder() {
-        return new TupleBuilder();
+        return new TupleBuilder(this);
     }
 
     public InstanceBuilder builder() {
-        return new InstanceBuilder();
+        return new InstanceBuilder(this);
     }
     
     @Override
@@ -69,43 +58,15 @@ public class NestedRelation implements DType, Iterable<String> {
         return ret;
     }
 
-    public class Instance implements Iterable<Tuple> {
-        private final List<Tuple> data;
-
-        public Instance(List<Tuple> data) {
-            this.data = data;
-        }
-
-        public NestedRelation relation() {
-            return NestedRelation.this;
-        }
-
-        public Iterator<Tuple> iterator() {
-            return this.data.iterator();
-        }
-
-        @Override
-        public String toString() {
-            String ret = "";
-            for (Tuple tuple : this.data) {
-                if (ret.length() != 0) {
-                    ret += ", ";
-                }
-                ret += tuple.toString();
-            }
-            return "[" + ret + "]";
-        }
-    }
-
     public class InstanceBuilder {
         private Deque<NestedRelation> typePath;
         private Deque<List<Tuple>> tuplePath;
         private Deque<TupleBuilder> tupleBuilderPath;
         private Deque<String> fieldNamePath;
 
-        public InstanceBuilder() {
+        public InstanceBuilder(NestedRelation relation) {
             this.typePath = new ArrayDeque<>() {{
-                push(NestedRelation.this);
+                push(relation);
             }};
             this.tuplePath = new ArrayDeque<>() {{
                 push(new LinkedList<>());
@@ -150,65 +111,21 @@ public class NestedRelation implements DType, Iterable<String> {
         public InstanceBuilder exit() {
             if (this.hasCurrentTupleBuilder())
                 throw new IllegalArgumentException();
-            NestedRelation relation = this.typePath.pop();
-            Instance instance = relation.new Instance(this.tuplePath.pop());
+            this.typePath.pop();
+            DocumentSetList instance = new DocumentSetList(this.tuplePath.pop());
             String fieldName = this.fieldNamePath.pop();
             this.tupleBuilderPath.peek().put(fieldName, instance);
             return this;
         }
 
-        public Instance build() {
+        public DocumentSetList build() {
             if (this.tuplePath.size() != 1) 
                 throw new IllegalArgumentException();
-            return new Instance(this.tuplePath.pop());
+            return new DocumentSetList(this.tuplePath.pop());
         }
 
         private boolean hasCurrentTupleBuilder() {
             return this.tupleBuilderPath.size() == this.typePath.size();
         }
-    }
-
-    public class Tuple {
-        private final Object[] data;
-
-        public Tuple(Object[] data) {
-            this.data = data;
-        }
-
-        public Object get(int i) {
-            return this.data[i];
-        }
-
-        public NestedRelation relation() {
-            return NestedRelation.this;
-        }
-
-        @Override
-        public String toString() {
-            String ret = "";
-            for (int i = 0; i < this.data.length; i++) {
-                if (i != 0) ret += ", ";
-                ret += this.data[i].toString();
-            }
-            return "(" + ret + ")";
-        }
-    }
-
-    public class TupleBuilder {
-        Object[] data;
-
-        public TupleBuilder() {
-            this.data = new Object[NestedRelation.this.mapping.size()];
-        }
-
-        public TupleBuilder put(String fieldname, Object value) {
-            this.data[NestedRelation.this.index(fieldname)] = value;
-            return this;
-        }
-
-        public Tuple build() {
-            return new Tuple(data);
-        }
-
     }
 }

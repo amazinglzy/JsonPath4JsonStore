@@ -25,7 +25,7 @@ public class NestedRelationTest {
 
     @Test
     public void testBasicUsageBuildInstance01() {
-        NestedRelation.Instance ins = 
+        DocumentSetList ins = 
         flatRel0.builder()
             .begin()
                 .put("age", Document.createDInt(20))
@@ -43,7 +43,7 @@ public class NestedRelationTest {
 
     @Test
     public void testBasicUsageBuildInstance02() {
-        NestedRelation.Instance instance = 
+        DocumentSetList instance = 
             nestedRel0.builder()
                 .begin()
                     .put("age", Document.createDInt(23))
