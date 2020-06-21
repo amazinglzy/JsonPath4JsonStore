@@ -7,12 +7,21 @@ Document Set Algebra is an algebra for document domains. Document Domain Algebra
 
 A Document can be:
 
-1. scalar values, for example: 1, true, false, "Hello", 1.0
-2. a mapping from string to document
-3. a list of document
+1. scalar values, for example: 1, true, false, "Hello", 1.0 (ScalarDocument)
+2. a mapping from string to document (MappingDocument)
+3. a list of document (ListDocument)
 
 A Document can have many representations including json, xml, yaml and so on but document 
 represent the information level otherwise what bits to represent the information.
+
+## What is a Template
+
+A Template has its structure. If The template is feed into data, then it will produce a 
+document that has the same structure of template.
+
+A Template can be:
+1. MappingTemplate (which can produce a MappingDocument)
+2. ListTemplate (which can produce a ListDocument)
 
 ## What is a Document Set
 
