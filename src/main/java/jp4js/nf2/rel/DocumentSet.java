@@ -1,9 +1,9 @@
 package jp4js.nf2.rel;
 
-public class Tuple {
+public class DocumentSet {
     private final Object[] data;
 
-    public Tuple(Object[] data) {
+    public DocumentSet(Object[] data) {
         this.data = data;
     }
 

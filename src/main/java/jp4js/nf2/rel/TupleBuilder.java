@@ -14,7 +14,7 @@ public class TupleBuilder {
         return this;
     }
 
-    public Tuple build() {
-        return new Tuple(data);
+    public DocumentSet build() {
+        return new DocumentSet(data);
     }
 }

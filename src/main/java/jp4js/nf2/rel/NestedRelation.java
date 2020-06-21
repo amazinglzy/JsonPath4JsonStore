@@ -60,7 +60,7 @@ public class NestedRelation implements DType, Iterable<String> {
 
     public class InstanceBuilder {
         private Deque<NestedRelation> typePath;
-        private Deque<List<Tuple>> tuplePath;
+        private Deque<List<DocumentSet>> tuplePath;
         private Deque<TupleBuilder> tupleBuilderPath;
         private Deque<String> fieldNamePath;
 

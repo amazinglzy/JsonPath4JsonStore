@@ -2,7 +2,7 @@ package jp4js.shell;
 
 import jp4js.nf2.rel.NestedRelation;
 import jp4js.nf2.rel.DType;
-import jp4js.nf2.rel.Tuple;
+import jp4js.nf2.rel.DocumentSet;
 import jp4js.nf2.rel.DocumentSetList;
 import jp4js.shell.ui.CharMatrixDrawer;
 import jp4js.shell.layout.Horizontal;
@@ -33,7 +33,7 @@ public class Virsualizer {
                     Virsualizer.this.nestedSharedWidth
                 )
             );
-            for (Tuple tuple: Virsualizer.this.instance) 
+            for (DocumentSet tuple: Virsualizer.this.instance) 
                 add(Virsualizer.this.tuple(tuple, relation, Virsualizer.this.nestedSharedWidth));
         }}.build();
         this.drawer = new CharMatrixDrawer(containers.width());
@@ -71,7 +71,7 @@ public class Virsualizer {
         }}.build();
     }
 
-    private Horizontal tuple(Tuple tuple, NestedRelation relation, NestedSharedWidth nestedSharedWidth) {
+    private Horizontal tuple(DocumentSet tuple, NestedRelation relation, NestedSharedWidth nestedSharedWidth) {
         return new Horizontal.Builder(nestedSharedWidth.width()) {{
             for (String fieldname: relation) {
                 Object value = tuple.get( relation.index(fieldname) );
@@ -80,7 +80,7 @@ public class Virsualizer {
                 } else if (value instanceof DocumentSetList) {
                     DocumentSetList instance = (DocumentSetList)value;
                     Vertical vertical = new Vertical.Builder() {{
-                        for (Tuple t: instance) {
+                        for (DocumentSet t: instance) {
                             add(
                                 Virsualizer.this.tuple(
                                     t, 
