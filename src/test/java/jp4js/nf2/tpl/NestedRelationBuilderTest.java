@@ -14,8 +14,8 @@ public class NestedRelationBuilderTest {
             .put("age", Scalar.dInt)
             .put("name", Scalar.dString)
             .build();
-        // System.out.println(relation.toString());
-        assertThat(relation.toString()).isEqualTo("[(age(DInt), name(DString))]");
+        System.out.println(relation.toString());
+        assertThat(relation.toString()).isEqualTo("[age(DInt), name(DString)]");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class NestedRelationBuilderTest {
             .build();
         System.out.println(relation.toString());
         assertThat(relation.toString()).isEqualTo(
-            "[(age(DInt), courses[(course(DString), score(DInt))], name(DString))]"
+            "[age(DInt), courses[course(DString), score(DInt)], name(DString)]"
         );
     }
 
@@ -46,7 +46,7 @@ public class NestedRelationBuilderTest {
             .exit()
             .build();
         assertThat(relation.toString()).isEqualTo(
-            "[(field1(DString), field2(DInt), field3(DDouble), field4[(field1(DString), field2(DDouble))])]"
+            "[field1(DString), field2(DInt), field3(DDouble), field4[field1(DString), field2(DDouble)]]"
         );
     }
 
@@ -55,9 +55,9 @@ public class NestedRelationBuilderTest {
         DHeader header = new DHeaderBuilder()
             .put(Scalar.dString)
             .build();
-        // System.out.println(header.toString());
+        System.out.println(header.toString());
         assertThat(header.toString()).isEqualTo(
-            "[(DString)]"
+            "[DString]"
         );
     }
 }
