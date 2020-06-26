@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 public class FixedMapping implements DType, Iterable<String> { 
-    private final TreeMap<String, Template> mapping;
+    private final TreeMap<String, DHeader> mapping;
     private final TreeMap<String, Integer> index;
 
     public FixedMapping() {
@@ -14,16 +14,16 @@ public class FixedMapping implements DType, Iterable<String> {
         this.index = new TreeMap<>();
     }
 
-    public FixedMapping(TreeMap<String, Template> mapping, TreeMap<String, Integer> index) {
+    public FixedMapping(TreeMap<String, DHeader> mapping, TreeMap<String, Integer> index) {
         this.mapping = mapping;
         this.index = index;
     }
 
-    public Template get(String fieldname) {
+    public DHeader get(String fieldname) {
         return this.mapping.get(fieldname);
     }
 
-    public void put(String fieldname, Template type) {
+    public void put(String fieldname, DHeader type) {
         this.mapping.put(fieldname, type);
         if (!this.index.containsKey(fieldname)) {
             this.index.put(fieldname, this.index.size());
@@ -38,14 +38,14 @@ public class FixedMapping implements DType, Iterable<String> {
         return this.mapping.keySet().iterator();
     }
 
-    public TreeMap<String, Template> mapping() {
+    public TreeMap<String, DHeader> mapping() {
         return this.mapping;
     }
 
     @Override
     public String toString() {
         String ret = "";
-        for (Map.Entry<String, Template> entry: this.mapping.entrySet()) {
+        for (Map.Entry<String, DHeader> entry: this.mapping.entrySet()) {
             if (ret.length() != 0) ret += ", ";
             ret += entry.getKey() + entry.getValue().toString();
         }

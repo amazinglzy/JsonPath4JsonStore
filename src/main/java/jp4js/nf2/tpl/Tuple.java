@@ -2,22 +2,22 @@ package jp4js.nf2.tpl;
 
 import jp4js.nf2.DType;
 
-public class SingularDocumentSet implements DocumentSet {
-    private final DType.Instance[] data;
+public class Tuple implements DType.Instance {
+    private final DBody[] data;
 
-    public SingularDocumentSet(int size) {
-        this.data = new DType.Instance[size];
+    public Tuple(int size) {
+        this.data = new DBody[size];
     }
 
-    public SingularDocumentSet(DType.Instance[] data) {
+    public Tuple(DBody[] data) {
         this.data = data;
     }
 
-    public DType.Instance get(int i) {
+    public DBody get(int i) {
         return this.data[i];
     }
 
-    public void put(int i, DType.Instance value) {
+    public void put(int i, DBody value) {
         this.data[i] = value;
     }
 
@@ -28,6 +28,6 @@ public class SingularDocumentSet implements DocumentSet {
             if (i != 0) ret += ", ";
             ret += this.data[i].toString();
         }
-        return "(" + ret + ")";
+        return ret;
     }
 }

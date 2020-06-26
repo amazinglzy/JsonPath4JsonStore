@@ -5,21 +5,21 @@ import jp4js.nf2.DType;
 import java.util.List;
 import java.util.Iterator;
 
-public class RepeatableDocumentSet implements DocumentSet, Iterable<DType.Instance> {
-    private final List<DType.Instance> data;
+public class DRepeatableBody implements DBody, Iterable<DBody> {
+    private final List<DBody> data;
 
-    public RepeatableDocumentSet(List<DType.Instance> data) {
+    public DRepeatableBody(List<DBody> data) {
         this.data = data;
     }
 
-    public Iterator<DType.Instance> iterator() {
+    public Iterator<DBody> iterator() {
         return this.data.iterator();
     }
 
     @Override
     public String toString() {
         String ret = "";
-        for (DType.Instance tuple : this.data) {
+        for (DBody tuple : this.data) {
             if (ret.length() != 0) {
                 ret += ", ";
             }

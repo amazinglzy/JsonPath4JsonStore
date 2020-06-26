@@ -3,7 +3,7 @@ package jp4js.nf2.tpl;
 import jp4js.nf2.Scalar;
 
 public class NestedRelationSample {
-    public static Template flatRel0, nestedRel0, nestedRel1;
+    public static DHeader flatRel0, nestedRel0, nestedRel1;
     static {
         /*
         (
@@ -25,11 +25,11 @@ public class NestedRelationSample {
         exit()
 
         */
-        flatRel0 = new TemplateBuilder()
+        flatRel0 = new DHeaderBuilder()
             .put("age", Scalar.dInt)
             .put("name", Scalar.dString)
             .build();
-        nestedRel0 = new TemplateBuilder()
+        nestedRel0 = new DHeaderBuilder()
             .put("age",Scalar.dInt)
             .put("name", Scalar.dString)
             .enter("courses")
@@ -37,7 +37,7 @@ public class NestedRelationSample {
                 .put("score", Scalar.dInt)
             .exit()
             .build();
-        nestedRel1 = new TemplateBuilder()
+        nestedRel1 = new DHeaderBuilder()
             .enter("customer")
                 .put("name.first.[str]", Scalar.dString)
                 .put("name.last.[str]", Scalar.dString)

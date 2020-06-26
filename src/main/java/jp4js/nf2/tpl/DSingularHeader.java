@@ -2,10 +2,10 @@ package jp4js.nf2.tpl;
 
 import jp4js.nf2.DType;
 
-public class SingularTemplate implements Template {
+public class DSingularHeader implements DHeader {
     private final DType elemType;
 
-    public SingularTemplate(DType elemType) {
+    public DSingularHeader(DType elemType) {
         this.elemType = elemType;
     }
 

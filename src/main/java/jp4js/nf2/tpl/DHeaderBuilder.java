@@ -5,25 +5,21 @@ import jp4js.nf2.DType;
 import java.util.Deque;
 import java.util.ArrayDeque;
 
-public class TemplateBuilder {
-    public static enum TemplateType {
-        SINGULAR, REPEATABLE
-    }
-
+public class DHeaderBuilder {
     private Deque<DType> mappingPath;
-    private Deque<TemplateType> templatePath;
+    private Deque<DHeaderType> templatePath;
     private Deque<String> fieldPath;
 
-    public TemplateBuilder() {
+    public DHeaderBuilder() {
         this.mappingPath = new ArrayDeque<>();
         this.fieldPath = new ArrayDeque<>();
         this.templatePath = new ArrayDeque<>();
 
         this.mappingPath.push(new FixedMapping());
-        this.templatePath.push(TemplateType.REPEATABLE);
+        this.templatePath.push(DHeaderType.REPEATABLE);
     }
 
-    public TemplateBuilder(TemplateType type) {
+    public DHeaderBuilder(DHeaderType type) {
         this.mappingPath = new ArrayDeque<>();
         this.fieldPath = new ArrayDeque<>();
         this.templatePath = new ArrayDeque<>();
@@ -32,34 +28,34 @@ public class TemplateBuilder {
         this.templatePath.push(type);
     }
 
-    public TemplateBuilder put(String fieldname, DType type) {
+    public DHeaderBuilder put(String fieldname, DType type) {
         FixedMapping fixedMapping = this.getOrReplaceCurrentFixedMapping();
 
-        Template template = new SingularTemplate(type);
+        DHeader template = new DSingularHeader(type);
         fixedMapping.put(fieldname, template);
 
         return this;
     }
 
-    public TemplateBuilder enter(String fieldname) {
+    public DHeaderBuilder enter(String fieldname) {
         this.getOrReplaceCurrentFixedMapping();
         this.mappingPath.push(new FixedMapping());
         this.fieldPath.push(fieldname);
-        this.templatePath.push(TemplateType.REPEATABLE);
+        this.templatePath.push(DHeaderType.REPEATABLE);
         return this;
     }
 
-    public TemplateBuilder exit() {
+    public DHeaderBuilder exit() {
         if (this.mappingPath.size() <= 1) 
             throw new IllegalArgumentException();
         DType type = this.mappingPath.pop();
-        Template template;
+        DHeader template;
         switch(this.templatePath.pop()) {
             case SINGULAR:
-                template = new SingularTemplate(type);
+                template = new DSingularHeader(type);
                 break;
             case REPEATABLE:
-                template = new RepeatableTemplate(type);
+                template = new DRepeatableHeader(type);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -69,15 +65,15 @@ public class TemplateBuilder {
         return this;
     }
 
-    public Template build() {
+    public DHeader build() {
         if (this.mappingPath.size() != 1) 
             throw new IllegalArgumentException();
         DType type = this.mappingPath.pop();
         switch(this.templatePath.pop()) {
             case SINGULAR:
-                return new SingularTemplate(type);
+                return new DSingularHeader(type);
             case REPEATABLE:
-                return new RepeatableTemplate(type);
+                return new DRepeatableHeader(type);
             default:
                 throw new IllegalArgumentException();
         }

@@ -12,7 +12,7 @@ public class NestedRelationTest {
 
     @Test
     public void testBasicUsageCreation01() {
-        Template rel = new TemplateBuilder()
+        DHeader rel = new DHeaderBuilder()
             .put("field1", Scalar.dString)
             .put("field2", Scalar.dInt)
             .put("field3", Scalar.dDouble)
@@ -23,66 +23,75 @@ public class NestedRelationTest {
             .build();
         System.out.println(rel.toString());
         assertThat(rel.toString()).isEqualTo(
-            "[field1(DString), field2(DInt), field3(DDouble), field4[field1(DString), field2(DDouble)]]"
+            "[(field1(DString), field2(DInt), field3(DDouble), field4[(field1(DString), field2(DDouble))])]"
         );
     }
 
     @Test
     public void testBasicUsageBuildInstance01() {
-        RepeatableDocumentSet ins = new RepeatableDocumentSet(
+        DRepeatableBody ins = new DRepeatableBody(
             new LinkedList<>() {{
                 add(
-                    new SingularDocumentSet(
-                        new DType.Instance[]{
-                            Scalar.createDInt(20),
-                            Scalar.createDString("Alice")
-                        }
+                    new DSingularBody(
+                        new Tuple(
+                            new DBody[] {
+                                new DSingularBody(Scalar.createDInt(20)),
+                                new DSingularBody(Scalar.createDString("Alice"))
+                            }
+                        )
                     )
                 );
                 add(
-                    new SingularDocumentSet(
-                        new DType.Instance[] {
-                            Scalar.createDInt(10),
-                            Scalar.createDString("Alice")
-                        }
+                    new DSingularBody(
+                        new Tuple(
+                            new DBody[] {
+                                new DSingularBody(Scalar.createDInt(10)),
+                                new DSingularBody(Scalar.createDString("Alice"))
+                            }
+                        )
                     )
                 );
             }}
         );
+        System.out.println(ins.toString());
         assertThat(ins.toString()).isEqualTo(
-            "[(20, \"Alice\"), (10, \"Alice\")]"
+            "[((20), (\"Alice\")), ((10), (\"Alice\"))]"
         );
     }
 
     @Test
     public void testBasicUsageBuildInstance02() {
-        RepeatableDocumentSet instance = new RepeatableDocumentSet(
+        DRepeatableBody instance = new DRepeatableBody(
             new LinkedList<>() {{
                 add(
-                    new SingularDocumentSet(
-                        new DType.Instance[] {
-                            Scalar.createDInt(23),
-                            new RepeatableDocumentSet(
+                    new DSingularBody(new Tuple(
+                        new DBody[] {
+                            new DSingularBody(Scalar.createDInt(23)),
+                            new DRepeatableBody(
                                 new LinkedList<>() {{
-                                    add(new SingularDocumentSet(new DType.Instance[]{
-                                        Scalar.createDString("English"),
-                                        Scalar.createDInt(100)
-                                    }));
-                                    add(new SingularDocumentSet(new DType.Instance[]{
-                                        Scalar.createDString("Chinese"),
-                                        Scalar.createDInt(10)
-                                    }));
+                                    add(new DSingularBody(
+                                        new Tuple(new DBody[]{
+                                            new DSingularBody(Scalar.createDString("English")),
+                                            new DSingularBody(Scalar.createDInt(100))
+                                        })
+                                    ));
+                                    add(new DSingularBody(
+                                        new Tuple(new DBody[]{
+                                            new DSingularBody(Scalar.createDString("Chinese")),
+                                            new DSingularBody(Scalar.createDInt(10))
+                                        })
+                                    ));
                                 }}
                             ),
-                            Scalar.createDString("L")
+                            new DSingularBody(Scalar.createDString("L"))
                         }
-                    )
+                    ))
                 );
             }}
         );
-        // System.out.println(instance.toString());
+        System.out.println(instance.toString());
         assertThat(instance.toString()).isEqualTo(
-            "[(23, [(\"English\", 100), (\"Chinese\", 10)], \"L\")]"
+            "[((23), [((\"English\"), (100)), ((\"Chinese\"), (10))], (\"L\"))]"
         );
     }
 }
