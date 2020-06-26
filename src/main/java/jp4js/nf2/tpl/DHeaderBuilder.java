@@ -37,6 +37,12 @@ public class DHeaderBuilder {
         return this;
     }
 
+    public DHeaderBuilder put(DType type) {
+        this.mappingPath.pop();
+        this.mappingPath.push(type);
+        return this;
+    }
+
     public DHeaderBuilder enter(String fieldname) {
         this.getOrReplaceCurrentFixedMapping();
         this.mappingPath.push(new FixedMapping());

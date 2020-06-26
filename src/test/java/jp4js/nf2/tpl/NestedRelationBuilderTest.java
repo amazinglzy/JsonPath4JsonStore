@@ -49,4 +49,15 @@ public class NestedRelationBuilderTest {
             "[(field1(DString), field2(DInt), field3(DDouble), field4[(field1(DString), field2(DDouble))])]"
         );
     }
+
+    @Test
+    public void basic04_repeatableDString() {
+        DHeader header = new DHeaderBuilder()
+            .put(Scalar.dString)
+            .build();
+        // System.out.println(header.toString());
+        assertThat(header.toString()).isEqualTo(
+            "[(DString)]"
+        );
+    }
 }

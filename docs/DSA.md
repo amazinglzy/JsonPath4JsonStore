@@ -31,11 +31,11 @@ student(
         first(DString), 
         last(DString)
     ), 
-    addr[
-        country(DString), 
-        province(DString)
-    ],
-    scores[DString]
+    addr[(
+            country(DString), 
+            province(DString)
+    )],
+    scores[(DString)]
 )
 
 * `DString`
@@ -58,3 +58,17 @@ If A Set Document share a common template, then we call the set the Document Set
 1. Scan(StructureList)
 2. Projection(StructureList)
 3. Selection()
+
+
+### StructureList
+(
+    ..first, 
+    ..last,
+    .addr[],
+    .scores
+)
+
+StructureList := ( Structure* )
+Structure := SingularStructure | RepeatableStructure
+SingularStructure := fieldname: (relation_type, filter?, StructureList?)
+RepeatableStructur := [ SingularStructure ]

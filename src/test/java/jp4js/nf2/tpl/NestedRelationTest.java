@@ -1,7 +1,6 @@
 package jp4js.nf2.tpl;
 
 import jp4js.nf2.Scalar;
-import jp4js.nf2.DType;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

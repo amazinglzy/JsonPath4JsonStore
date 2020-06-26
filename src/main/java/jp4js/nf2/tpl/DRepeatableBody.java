@@ -1,7 +1,5 @@
 package jp4js.nf2.tpl;
 
-import jp4js.nf2.DType;
-
 import java.util.List;
 import java.util.Iterator;
 
