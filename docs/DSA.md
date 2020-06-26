@@ -1,7 +1,7 @@
 # Document Set Algebra
 
-Document Set Algebra is an algebra for document domains. Document Domain Algebra defines what is a document
-, what document set and what operations can be done by document.
+Document Set Algebra is an algebra for document set. Document Set Algebra defines what is a document
+, what is document set and what operations can be done by document set.
 
 ## What is a Document
 
@@ -20,8 +20,30 @@ A Template has its structure. If The template is feed into data, then it will pr
 document that has the same structure of template.
 
 A Template can be:
-1. MappingTemplate (which can produce a MappingDocument)
-2. ListTemplate (which can produce a ListDocument)
+1. MappingTemplate (which can produce a MappingDocument) - DType
+    a mapping of string to Template
+
+2. ListTemplate
+    a list of DType
+
+student(
+    name(
+        first(DString), 
+        last(DString)
+    ), 
+    addr[
+        country(DString), 
+        province(DString)
+    ],
+    scores[DString]
+)
+
+* `DString`
+* `[DString]`
+* `(DString)`
+* `first(DString), last(DString)`
+* `(first(DString), last(DString))`
+
 
 ## What is a Document Set
 

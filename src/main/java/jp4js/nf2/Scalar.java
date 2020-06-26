@@ -1,11 +1,11 @@
-package jp4js.nf2.rel;
+package jp4js.nf2;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Iterator;
 
 
-public class Document {
+public class Scalar {
 
     public static DString dString = new DString();
     public static DInt dInt = new DInt();
