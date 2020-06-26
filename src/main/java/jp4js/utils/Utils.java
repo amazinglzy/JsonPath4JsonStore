@@ -368,6 +368,10 @@ public final class Utils {
         return 1 == count;
     }
 
+    public static void CanNotBeHere(String msg) {
+        throw new IllegalArgumentException(msg);
+    }
+
     /**
      * <p>Validate that the specified argument character sequence is
      * neither {@code null} nor a length of zero (no characters);

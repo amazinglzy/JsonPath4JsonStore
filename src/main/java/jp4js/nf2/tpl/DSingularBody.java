@@ -25,12 +25,20 @@ public class DSingularBody implements DBody {
         return this.tuple[i];
     }
 
+    public boolean contains(int i) {
+        return i < this.tuple.length;
+    }
+
     public void put(int i, DBody value) {
         this.tuple[i] = value;
     }
 
     public boolean isAtomic() {
         return this.data != null;
+    }
+
+    public DType.Instance data() {
+        return this.data;
     }
 
     @Override

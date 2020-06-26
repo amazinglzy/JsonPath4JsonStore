@@ -51,6 +51,11 @@ public class Scalar {
             }
 
             @Override
+            public DString type() {
+                return DString.this;
+            }
+
+            @Override
             public String toString() {
                 return "\"" + this.data + "\""; 
             }
@@ -83,6 +88,11 @@ public class Scalar {
             }
 
             @Override
+            public DInt type() {
+                return DInt.this;
+            }
+
+            @Override
             public String toString() {
                 return String.valueOf(this.data);
             }
@@ -112,6 +122,11 @@ public class Scalar {
 
             public double data() {
                 return this.data;
+            }
+
+            @Override
+            public DDouble type() {
+                return DDouble.this;
             }
 
             @Override
@@ -152,6 +167,11 @@ public class Scalar {
             }
 
             @Override
+            public DMapping type() {
+                return DMapping.this;
+            }
+
+            @Override
             public String toString() {
                 return this.data.toString();
             }
@@ -189,6 +209,11 @@ public class Scalar {
 
             public DType.Instance get(int index) {
                 return this.data.get(index);
+            }
+
+            @Override
+            public DList type() {
+                return DList.this;
             }
 
             @Override

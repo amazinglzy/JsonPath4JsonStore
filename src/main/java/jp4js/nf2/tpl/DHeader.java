@@ -28,6 +28,11 @@ public class DHeader implements Iterable<String> {
         Utils.notNull(this.mapping, "Mapping must not be null to be called");
         return this.mapping.get(fieldname);
     }
+    
+    public boolean contains(String fieldname) {
+        Utils.notNull(this.mapping, "Mapping must not be null to be called");
+        return this.mapping.containsKey(fieldname);
+    }
 
     public void put(String fieldname, DHeader type) {
         Utils.notNull(this.mapping, "Mapping must not be null to be called");
@@ -53,6 +58,10 @@ public class DHeader implements Iterable<String> {
 
     public DHeaderType headerType() {
         return this.headerType;
+    }
+
+    public DType dType() {
+        return this.dType;
     }
 
     @Override
