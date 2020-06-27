@@ -1,11 +1,9 @@
-package jp4js.nf2.tpl;
-
-import jp4js.nf2.Scalar;
+package jp4js.nf2;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DocumentTest {
+public class ScalarTest {
     
     @Test
     public void testDStringBasic01() {

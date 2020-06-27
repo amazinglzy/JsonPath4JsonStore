@@ -1,16 +1,20 @@
 package jp4js.nf2.op.structure;
 
-import java.util.HashMap;
+import jp4js.utils.Utils;
 
-public class StructureList{
+import java.util.TreeMap;
+import java.util.Iterator;
+
+
+public class StructureList implements Iterable<String> {
     private StructureType type;
-    private HashMap<String, StructureList> fieldname2structure;
-    private HashMap<String, StructureRelation> fieldname2rel;
+    private TreeMap<String, StructureList> fieldname2structure;
+    private TreeMap<String, StructureRelation> fieldname2rel;
 
     public StructureList(StructureType type) {
         this.type = type;
-        this.fieldname2structure = new HashMap<>();
-        this.fieldname2rel = new HashMap<>();
+        this.fieldname2structure = new TreeMap<>();
+        this.fieldname2rel = new TreeMap<>();
     }
 
     public void put(String fieldname, StructureList s, StructureRelation rel) {
@@ -28,6 +32,17 @@ public class StructureList{
 
     public StructureType type() {
         return this.type;
+    }
+
+    public Iterator<String> iterator() {
+        return this.fieldname2structure.keySet().iterator();
+    }
+
+    public void mergeIn(StructureList lst) {
+        Utils.isTrue(this.type() == lst.type(), "StructureType must be same when merge");
+        for (String fieldname: lst) {
+            this.put(fieldname, lst.structure(fieldname), lst.rel(fieldname));
+        }
     }
 
     @Override

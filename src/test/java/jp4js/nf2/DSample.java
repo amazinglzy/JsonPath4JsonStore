@@ -1,10 +1,9 @@
 package jp4js.nf2;
 
-import jp4js.nf2.tpl.DHeader;
-
 import java.util.LinkedList;
 
 import jp4js.nf2.tpl.DBody;
+import jp4js.nf2.tpl.DHeader;
 import jp4js.nf2.tpl.DHeaderBuilder;
 import jp4js.nf2.tpl.DRepeatableBody;
 import jp4js.nf2.tpl.DSingularBody;

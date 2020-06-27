@@ -1,6 +1,7 @@
 package jp4js.nf2.tpl;
 
 import jp4js.nf2.DType;
+import jp4js.utils.Utils;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
@@ -12,30 +13,48 @@ public class DHeaderBuilder {
     public DHeaderBuilder() {
         this.headerPath = new ArrayDeque<>();
         this.fieldPath = new ArrayDeque<>();
-        this.headerPath.push(new DHeader(DHeaderType.REPEATABLE));
+        this.headerPath.push(new DRepeatableHeader());
     }
 
     public DHeaderBuilder(DHeaderType type) {
         this.headerPath = new ArrayDeque<>();
         this.fieldPath = new ArrayDeque<>();
-        this.headerPath.push(new DHeader(type));
+        switch(type) {
+            case SINGULAR:
+                this.headerPath.push(new DSingularHeader());
+                break;
+            case REPEATABLE:
+                this.headerPath.push(new DRepeatableHeader());
+                break;
+            default:
+                Utils.CanNotBeHere("Unknown DHeaderType");
+        }
     }
 
     public DHeaderBuilder put(String fieldname, DType type) {
         DHeader dHeader = this.getOrReplaceCurrentUnatomicHeader();
-        dHeader.put(fieldname, new DHeader(DHeaderType.SINGULAR, type));
+        dHeader.put(fieldname, new DSingularHeader(type));
         return this;
     }
 
     public DHeaderBuilder put(DType type) {
         DHeader header = this.headerPath.pop();
-        this.headerPath.push(new DHeader(header.headerType(), type));
+        switch(header.headerType()) {
+            case SINGULAR:
+                this.headerPath.push(new DSingularHeader(type));
+                break;
+            case REPEATABLE:
+                this.headerPath.push(new DRepeatableHeader(type));
+                break;
+            default:
+                Utils.CanNotBeHere("Unknown DHeaderType");
+        }
         return this;
     }
 
     public DHeaderBuilder enter(String fieldname) {
         this.getOrReplaceCurrentUnatomicHeader();
-        this.headerPath.push(new DHeader(DHeaderType.REPEATABLE));
+        this.headerPath.push(new DRepeatableHeader());
         this.fieldPath.push(fieldname);
         return this;
     }
@@ -56,12 +75,20 @@ public class DHeaderBuilder {
     }
 
     private DHeader getOrReplaceCurrentUnatomicHeader() {
-        DHeader dHeader = this.headerPath.peek();
-        if (dHeader.isAtomic()) {
+        DHeader header = this.headerPath.peek();
+        if (header.isAtomic()) {
             this.headerPath.pop();
-            dHeader = new DHeader(dHeader.headerType());
-            this.headerPath.push(dHeader);
+            switch(header.headerType()) {
+                case SINGULAR:
+                    this.headerPath.push(new DSingularHeader());
+                    break;
+                case REPEATABLE:
+                    this.headerPath.push(new DRepeatableHeader());
+                    break;
+                default:
+                    Utils.CanNotBeHere("Unknown DHeaderType");
+            }
         }
-        return dHeader;
+        return header;
     }
 }

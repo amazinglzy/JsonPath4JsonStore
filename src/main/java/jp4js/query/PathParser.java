@@ -2,83 +2,97 @@ package jp4js.query;
 
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
-import jp4js.utils.query.ArraySelectionsVisitor;
-import jp4js.index.node.LabelArray.ArraySelections;
-import jp4js.query.path.ArrayNode;
-import jp4js.query.path.DecendentNode;
-import jp4js.query.path.PathNode;
-import jp4js.query.path.PropertyNode;
-import jp4js.query.path.RootNode;
-import jp4js.query.path.WildcardNode;
+// import jp4js.utils.query.ArraySelectionsVisitor;
+// import jp4js.index.node.LabelArray.ArraySelections;
+import jp4js.nf2.op.structure.StructureList;
+import jp4js.nf2.op.structure.StructureRelation;
+import jp4js.nf2.op.structure.StructureType;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 
-public class PathParser extends JsonPathBaseVisitor<PathNode> {
-    
+public class PathParser extends JsonPathBaseVisitor<StructureList> {
+    private Deque<StructureList> structurePath;
+    private Deque<String> fieldPath;
+    public PathParser() {
+        this.structurePath = new ArrayDeque<>();
+        this.fieldPath = new ArrayDeque<>();
+    }
+
     @Override
-    public PathNode visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
-        RootNode ret = new RootNode();
-        PathNode previous = ret;
+    public StructureList visitJsonAbsolutePathExpr(JsonPathParser.JsonAbsolutePathExprContext ctx) { 
         for (JsonPathParser.JsonStepContext jsonStep: ctx.jsonSteps().jsonStep()) {
-            PathNode node = this.visit(jsonStep);
-            previous.add(node);
-            previous = node;
+            this.visit(jsonStep);
         }
-        return ret;
+        return this.structurePath.pop();
     }
 
     @Override 
-    public PathNode visitJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx) { 
-        PathNode ret = null;
-        PathNode previous = null;
+    public StructureList visitJsonRelativePathExpr(JsonPathParser.JsonRelativePathExprContext ctx) { 
         for (JsonPathParser.JsonStepContext jsonStep: ctx.jsonSteps().jsonStep()) {
-            PathNode node = this.visit(jsonStep);
-            if (previous == null) {
-                previous = node;
-                ret = node;
-            } else {
-                previous.add(node);
-                previous = node;
-            }
+            this.visit(jsonStep);
         }
-        return ret;
+        return this.structurePath.pop();
     }
 
     @Override 
-    public PathNode visitJsonStep(JsonPathParser.JsonStepContext ctx) { 
-        PathNode ret = this.visit(ctx.getChild(0) );
+    public StructureList visitJsonStep(JsonPathParser.JsonStepContext ctx) { 
+        this.visit(ctx.getChild(0) );
         if (ctx.jsonFilterExpr() != null) {
-            List<PathNode> children = new FilterPathParser().visit(ctx.jsonFilterExpr());
-            for (PathNode child: children) {
-                ret.add(child);
-            }
+            StructureList children = new FilterPathParser().visit(ctx.jsonFilterExpr());
+            this.structurePath.peek().mergeIn(children);
         }
-        return ret;
+        return this.structurePath.peek();
     }
 
     @Override 
-    public PathNode visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
-        return new PropertyNode(new LinkedList<>(){{
-            add(ctx.jsonFieldName().getText());
-        }});
+    public StructureList visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
+        StructureList lst = new StructureList(StructureType.SINGULAR);
+        if (this.structurePath.size() > 0) {
+            this.structurePath.peek().put(
+                this.fieldPath.peek(), 
+                lst, 
+                StructureRelation.PC
+            );
+        }
+        this.structurePath.push(lst);
+        this.fieldPath.push(ctx.jsonFieldName().getText());
+        return null;
     }
 
     @Override
-    public PathNode visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        return new WildcardNode();
+    public StructureList visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
+        StructureList lst = new StructureList(StructureType.SINGULAR);
+        if (this.structurePath.size() > 0) {
+            this.structurePath.peek().put(
+                this.fieldPath.peek(), 
+                lst, 
+                StructureRelation.PC
+            );
+        }
+        this.structurePath.push(lst);
+        this.fieldPath.push("*");
+        return null;
     }
 
     @Override
-    public PathNode visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        return new DecendentNode(new LinkedList<>(){{
-            add(ctx.jsonFieldName().getText());
-        }});
+    public StructureList visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
+        StructureList lst = new StructureList(StructureType.SINGULAR);
+        if (this.structurePath.size() > 0) {
+            this.structurePath.peek().put(
+                this.fieldPath.peek(), 
+                lst, 
+                StructureRelation.AD
+            );
+        }
+        this.structurePath.push(lst);
+        this.fieldPath.push(ctx.jsonFieldName().getText());
+        return null;
     }
 
     @Override 
-    public PathNode visitJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx) { 
+    public StructureList visitJsonArrayStep(JsonPathParser.JsonArrayStepContext ctx) { 
         if (ctx.jsonArrayWildcardStep() != null) 
             return this.visit(ctx.jsonArrayWildcardStep());
         else
@@ -86,14 +100,23 @@ public class PathParser extends JsonPathBaseVisitor<PathNode> {
     }
 
     @Override
-    public PathNode visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        return new WildcardNode();
+    public StructureList visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
+        StructureList lst = new StructureList(StructureType.REPEATABLE);
+        if (this.structurePath.size() > 0) {
+            this.structurePath.peek().put(
+                this.fieldPath.peek(), 
+                lst, 
+                StructureRelation.AD
+            );
+        }
+        this.structurePath.push(lst);
+        return null;
     }
 
 	@Override
-    public PathNode visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
-        ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
-        ArraySelections selections = visitor.visit(ctx);
-        return new ArrayNode(selections);
+    public StructureList visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
+        // ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
+        // ArraySelections selections = visitor.visit(ctx);
+        return null;
     }
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class NestedRelationBuilderTest {
+public class DHeaderBuilderTest {
 
     @Test
     public void testNestedRelationBuilderFlat01() {

@@ -1,7 +1,7 @@
 package jp4js.nf2;
 
-import jp4js.nf2.tpl.DHeader;
 import jp4js.nf2.tpl.DBody;
+import jp4js.nf2.tpl.DHeader;
 import jp4js.nf2.tpl.DRepeatableBody;
 import jp4js.nf2.tpl.DSingularBody;
 import jp4js.utils.Utils;

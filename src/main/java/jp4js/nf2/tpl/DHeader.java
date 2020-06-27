@@ -7,20 +7,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class DHeader implements Iterable<String> {
-    private DHeaderType headerType;
+public abstract class DHeader implements Iterable<String> {
     private DType dType;
     private TreeMap<String, DHeader> mapping;
     private TreeMap<String, Integer> index;
 
-    public DHeader(DHeaderType headerType) {
-        this.headerType = headerType;
+    public DHeader() {
         this.mapping = new TreeMap<>();
         this.index = new TreeMap<>();
     }
 
-    public DHeader(DHeaderType headerType, DType dType) {
-        this.headerType = headerType;
+    public DHeader(DType dType) {
         this.dType = dType;
     }
 
@@ -56,13 +53,11 @@ public class DHeader implements Iterable<String> {
         return this.dType != null;
     }
 
-    public DHeaderType headerType() {
-        return this.headerType;
-    }
-
     public DType dType() {
         return this.dType;
     }
+
+    public abstract DHeaderType headerType();
 
     @Override
     public String toString() {
@@ -74,17 +69,6 @@ public class DHeader implements Iterable<String> {
             }
         } else {
             ret = this.dType.toString();
-        }
-
-        switch(this.headerType) {
-            case SINGULAR:
-                ret = "(" + ret + ")";
-                break;
-            case REPEATABLE:
-                ret = "[" + ret + "]";
-                break;
-            default:
-                throw new IllegalArgumentException();
         }
 
         return ret;
