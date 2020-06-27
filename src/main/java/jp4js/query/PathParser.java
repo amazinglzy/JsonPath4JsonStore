@@ -2,11 +2,12 @@ package jp4js.query;
 
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
+import jp4js.nf2.op.structure.RepeatableSL;
+import jp4js.nf2.op.structure.SingularSL;
 // import jp4js.utils.query.ArraySelectionsVisitor;
 // import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.op.structure.StructureRelation;
-import jp4js.nf2.op.structure.StructureType;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -48,7 +49,7 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override 
     public StructureList visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
-        StructureList lst = new StructureList(StructureType.SINGULAR);
+        StructureList lst = new SingularSL();
         if (this.structurePath.size() > 0) {
             this.structurePath.peek().put(
                 this.fieldPath.peek(), 
@@ -63,7 +64,7 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override
     public StructureList visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        StructureList lst = new StructureList(StructureType.SINGULAR);
+        StructureList lst = new SingularSL();
         if (this.structurePath.size() > 0) {
             this.structurePath.peek().put(
                 this.fieldPath.peek(), 
@@ -78,7 +79,7 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override
     public StructureList visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        StructureList lst = new StructureList(StructureType.SINGULAR);
+        StructureList lst = new SingularSL();
         if (this.structurePath.size() > 0) {
             this.structurePath.peek().put(
                 this.fieldPath.peek(), 
@@ -101,7 +102,7 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override
     public StructureList visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        StructureList lst = new StructureList(StructureType.REPEATABLE);
+        StructureList lst = new RepeatableSL();
         if (this.structurePath.size() > 0) {
             this.structurePath.peek().put(
                 this.fieldPath.peek(), 

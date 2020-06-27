@@ -6,13 +6,11 @@ import java.util.TreeMap;
 import java.util.Iterator;
 
 
-public class StructureList implements Iterable<String> {
-    private StructureType type;
+public abstract class StructureList implements Iterable<String> {
     private TreeMap<String, StructureList> fieldname2structure;
     private TreeMap<String, StructureRelation> fieldname2rel;
 
-    public StructureList(StructureType type) {
-        this.type = type;
+    public StructureList() {
         this.fieldname2structure = new TreeMap<>();
         this.fieldname2rel = new TreeMap<>();
     }
@@ -30,9 +28,7 @@ public class StructureList implements Iterable<String> {
         return this.fieldname2rel.get(fieldname);
     }
 
-    public StructureType type() {
-        return this.type;
-    }
+    public abstract StructureType type();
 
     public Iterator<String> iterator() {
         return this.fieldname2structure.keySet().iterator();
@@ -57,8 +53,6 @@ public class StructureList implements Iterable<String> {
             if (subList != null)
                 ret += subList.toString();
         }
-        if (this.type == StructureType.SINGULAR) ret = "(" + ret + ")";
-        else ret = "[" + ret + "]";
         return ret;
     }
 }

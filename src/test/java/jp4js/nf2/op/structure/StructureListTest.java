@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StructureListTest {
     @Test
     public void basic01_() {
-        StructureList lst = new StructureList(StructureType.REPEATABLE) {{
+        StructureList lst = new RepeatableSL() {{
             put("first", null, StructureRelation.AD);
             put("last", null, StructureRelation.AD);
-            put("addr", new StructureList(StructureType.REPEATABLE), StructureRelation.PC);
+            put("addr", new RepeatableSL(), StructureRelation.PC);
         }};
         // System.out.println(lst.toString());
         assertThat(lst.toString()).isEqualTo(
@@ -19,12 +19,12 @@ public class StructureListTest {
 
     @Test
     public void basic02_() {
-        StructureList lst1 = new StructureList(StructureType.REPEATABLE) {{
+        StructureList lst1 = new RepeatableSL() {{
             put("first", null, StructureRelation.AD);
             put("last", null, StructureRelation.AD);
         }};
-        StructureList lst2 = new StructureList(StructureType.REPEATABLE) {{
-            put("addr", new StructureList(StructureType.REPEATABLE), StructureRelation.PC);
+        StructureList lst2 = new RepeatableSL() {{
+            put("addr", new RepeatableSL(), StructureRelation.PC);
         }};
         lst1.mergeIn(lst2);
         // System.out.println(lst1.toString());
