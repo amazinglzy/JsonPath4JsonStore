@@ -9,6 +9,12 @@ public class RepeatableSL extends StructureList {
         this.lst = lst;
     }
 
+    public RepeatableSL(SingularSL lst) {
+        for (String fieldname: lst) {
+            this.put(fieldname, lst.structure(fieldname), lst.rel(fieldname));
+        }
+    }
+
     public boolean isNested() {
         return this.lst != null;
     }
