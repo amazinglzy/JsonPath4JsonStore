@@ -1,7 +1,5 @@
 package jp4js.nf2.tpl;
 
-import jp4js.nf2.DType;
-
 public class DRepeatableHeader extends DHeader {
     private DRepeatableHeader header;
 
@@ -10,10 +8,6 @@ public class DRepeatableHeader extends DHeader {
 
     public DRepeatableHeader(DRepeatableHeader header) {
         this.header = header;
-    }
-
-    public DRepeatableHeader(DType dType) {
-        super(dType);
     }
 
     public boolean isNested() {

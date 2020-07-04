@@ -28,6 +28,10 @@ public abstract class StructureList implements Iterable<String> {
         return this.fieldname2rel.get(fieldname);
     }
 
+    public int size() {
+        return this.fieldname2rel.size();
+    }
+
     public abstract StructureType type();
 
     public Iterator<String> iterator() {

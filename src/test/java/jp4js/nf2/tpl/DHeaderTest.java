@@ -12,17 +12,17 @@ public class DHeaderTest {
     @Test
     public void testBasicUsageCreation01() {
         DHeader rel = new DHeaderBuilder()
-            .put("field1", Scalar.dString)
-            .put("field2", Scalar.dInt)
-            .put("field3", Scalar.dDouble)
+            .put("field1")
+            .put("field2")
+            .put("field3")
             .enter("field4")
-                .put("field1", Scalar.dString)
-                .put("field2", Scalar.dDouble)
+                .put("field1")
+                .put("field2")
             .exit()
             .build();
         System.out.println(rel.toString());
         assertThat(rel.toString()).isEqualTo(
-            "[field1(DString), field2(DInt), field3(DDouble), field4[field1(DString), field2(DDouble)]]"
+            "[field1, field2, field3, field4[field1, field2]]"
         );
     }
 

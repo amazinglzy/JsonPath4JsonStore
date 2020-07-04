@@ -1,6 +1,8 @@
 package jp4js.nf2;
 
-import java.util.HashMap;
+
+import java.util.List;
+import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.Iterator;
 
@@ -147,14 +149,14 @@ public class Scalar {
     }
 
     public static class DMapping implements DType {
-        public class Instance implements DType.Instance {
-            private final HashMap<String, DType.Instance> data;
+        public class Instance implements DType.Instance, Iterable<String> {
+            private final TreeMap<String, DType.Instance> data;
 
             public Instance() {
-                this.data = new HashMap<>();
+                this.data = new TreeMap<>();
             }
 
-            public Instance(HashMap<String, DType.Instance> data) {
+            public Instance(TreeMap<String, DType.Instance> data) {
                 this.data = data;
             }
 
@@ -164,6 +166,15 @@ public class Scalar {
 
             public DType.Instance get(String field) {
                 return this.data.get(field);
+            }
+
+            public boolean contains(String field) {
+                return this.data.containsKey(field);
+            }
+
+            @Override
+            public Iterator<String> iterator() {
+                return this.data.keySet().iterator();
             }
 
             @Override
@@ -209,6 +220,10 @@ public class Scalar {
 
             public DType.Instance get(int index) {
                 return this.data.get(index);
+            }
+
+            public List<DType.Instance> data() {
+                return this.data;
             }
 
             @Override

@@ -1,6 +1,5 @@
 package jp4js.nf2.tpl;
 
-import jp4js.nf2.DType;
 import jp4js.utils.Utils;
 
 import java.util.Deque;
@@ -31,29 +30,13 @@ public class DHeaderBuilder {
         }
     }
 
-    public DHeaderBuilder put(String fieldname, DType type) {
-        DHeader dHeader = this.getOrReplaceCurrentUnatomicHeader();
-        dHeader.put(fieldname, new DSingularHeader(type));
-        return this;
-    }
-
-    public DHeaderBuilder put(DType type) {
-        DHeader header = this.headerPath.pop();
-        switch(header.headerType()) {
-            case SINGULAR:
-                this.headerPath.push(new DSingularHeader(type));
-                break;
-            case REPEATABLE:
-                this.headerPath.push(new DRepeatableHeader(type));
-                break;
-            default:
-                Utils.CanNotBeHere("Unknown DHeaderType");
-        }
+    public DHeaderBuilder put(String fieldname) {
+        DHeader dHeader = this.headerPath.peek();
+        dHeader.put(fieldname, null);
         return this;
     }
 
     public DHeaderBuilder enter(String fieldname) {
-        this.getOrReplaceCurrentUnatomicHeader();
         this.headerPath.push(new DRepeatableHeader());
         this.fieldPath.push(fieldname);
         return this;
@@ -63,7 +46,7 @@ public class DHeaderBuilder {
         if (this.headerPath.size() <= 1) 
             throw new IllegalArgumentException();
         DHeader header = this.headerPath.pop();
-        DHeader cHeader = this.getOrReplaceCurrentUnatomicHeader();
+        DHeader cHeader = this.headerPath.peek();
         cHeader.put(this.fieldPath.pop(), header);
         return this;
     }
@@ -72,23 +55,5 @@ public class DHeaderBuilder {
         if (this.headerPath.size() != 1) 
             throw new IllegalArgumentException();
         return this.headerPath.pop();
-    }
-
-    private DHeader getOrReplaceCurrentUnatomicHeader() {
-        DHeader header = this.headerPath.peek();
-        if (header.isAtomic()) {
-            this.headerPath.pop();
-            switch(header.headerType()) {
-                case SINGULAR:
-                    this.headerPath.push(new DSingularHeader());
-                    break;
-                case REPEATABLE:
-                    this.headerPath.push(new DRepeatableHeader());
-                    break;
-                default:
-                    Utils.CanNotBeHere("Unknown DHeaderType");
-            }
-        }
-        return header;
     }
 }

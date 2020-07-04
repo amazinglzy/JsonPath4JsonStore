@@ -1,7 +1,5 @@
 package jp4js.nf2.tpl;
 
-import jp4js.nf2.Scalar;
-
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,53 +9,42 @@ public class DHeaderBuilderTest {
     @Test
     public void testNestedRelationBuilderFlat01() {
         DHeader relation = new DHeaderBuilder()
-            .put("age", Scalar.dInt)
-            .put("name", Scalar.dString)
+            .put("age")
+            .put("name")
             .build();
         System.out.println(relation.toString());
-        assertThat(relation.toString()).isEqualTo("[age(DInt), name(DString)]");
+        assertThat(relation.toString()).isEqualTo("[age, name]");
     }
 
     @Test
     public void testNestedRelationBuilderNested01() {
         DHeader relation = new DHeaderBuilder()
-            .put("age", Scalar.dInt)
-            .put("name", Scalar.dString)
+            .put("age")
+            .put("name")
             .enter("courses")
-                .put("course", Scalar.dString)
-                .put("score", Scalar.dInt)
+                .put("course")
+                .put("score")
             .exit()
             .build();
         System.out.println(relation.toString());
         assertThat(relation.toString()).isEqualTo(
-            "[age(DInt), courses[course(DString), score(DInt)], name(DString)]"
+            "[age, courses[course, score], name]"
         );
     }
 
     @Test
     public void testNestedRelationBuilderNested02() {
         DHeader relation = new DHeaderBuilder()
-            .put("field1", Scalar.dString)
-            .put("field2", Scalar.dInt)
-            .put("field3", Scalar.dDouble)
+            .put("field1")
+            .put("field2")
+            .put("field3")
             .enter("field4")
-                .put("field1", Scalar.dString)
-                .put("field2", Scalar.dDouble)
+                .put("field1")
+                .put("field2")
             .exit()
             .build();
         assertThat(relation.toString()).isEqualTo(
-            "[field1(DString), field2(DInt), field3(DDouble), field4[field1(DString), field2(DDouble)]]"
-        );
-    }
-
-    @Test
-    public void basic04_repeatableDString() {
-        DHeader header = new DHeaderBuilder()
-            .put(Scalar.dString)
-            .build();
-        System.out.println(header.toString());
-        assertThat(header.toString()).isEqualTo(
-            "[DString]"
+            "[field1, field2, field3, field4[field1, field2]]"
         );
     }
 }

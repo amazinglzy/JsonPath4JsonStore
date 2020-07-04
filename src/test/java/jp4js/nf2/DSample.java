@@ -9,8 +9,8 @@ import jp4js.nf2.tpl.DRepeatableBody;
 import jp4js.nf2.tpl.DSingularBody;
 
 public class DSample {
-    public static DHeader flatRel0, nestedRel0, nestedRel1;
-    public static DBody[] flatRel0_bodys, nestedRel0_bodys, nestedRel1_bodys;
+    public static final DHeader flatRel0, nestedRel0, nestedRel1;
+    public static final DBody[] flatRel0_bodys, nestedRel0_bodys;
     static {
         /*
         (
@@ -33,8 +33,8 @@ public class DSample {
 
         */
         flatRel0 = new DHeaderBuilder()
-            .put("age", Scalar.dInt)
-            .put("name", Scalar.dString)
+            .put("age")
+            .put("name")
             .build();
         flatRel0_bodys = new DBody[] {
             new DRepeatableBody(new LinkedList<DBody>() {{
@@ -60,11 +60,11 @@ public class DSample {
         };
         
         nestedRel0 = new DHeaderBuilder()
-            .put("age",Scalar.dInt)
-            .put("name", Scalar.dString)
+            .put("age")
+            .put("name")
             .enter("courses")
-                .put("course", Scalar.dString)
-                .put("score", Scalar.dInt)
+                .put("course")
+                .put("score")
             .exit()
             .build();
         nestedRel0_bodys = new DBody[] {
@@ -88,10 +88,10 @@ public class DSample {
 
         nestedRel1 = new DHeaderBuilder()
             .enter("customer")
-                .put("name.first.[str]", Scalar.dString)
-                .put("name.last.[str]", Scalar.dString)
+                .put("name.first.[str]")
+                .put("name.last.[str]")
                 .enter("address")
-                    .put("[str]", Scalar.dString)
+                    .put("[str]")
                 .exit()
             .exit()
             .build();

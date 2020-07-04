@@ -19,6 +19,10 @@ public class RepeatableSL extends StructureList {
         return this.lst != null;
     }
 
+    public RepeatableSL elemType() {
+        return this.lst;
+    }
+
     @Override
     public StructureType type() {
         return StructureType.REPEATABLE;

@@ -23,6 +23,13 @@ public class Match {
 
     private boolean tryMatch(DHeader header, DBody documentSet, boolean typeSense) {
         if (documentSet == null) return true;
+        if (header == null) {
+            if (documentSet instanceof DRepeatableBody) 
+                return false;
+            if (!((DSingularBody)documentSet).isAtomic())
+                return false;
+            return true;
+        }
         if (typeSense) {
             switch(header.headerType()) {
                 case SINGULAR:
@@ -46,22 +53,16 @@ public class Match {
     }
 
     private boolean tryMatchSingular(DHeader header, DSingularBody body) {
-        if (header.isAtomic() != body.isAtomic()) 
-            return false;
-        if (header.isAtomic() && body.isAtomic()) {
-            return header.dType() == body.data().type();
-        } else {
-            for (String fieldname: header) {
-                if (body.contains(header.index(fieldname))) {
-                    if (!this.tryMatch(header.get(fieldname), body.get(header.index(fieldname)), true)) {
-                        return false;
-                    }
-                } else {
+        for (String fieldname: header) {
+            if (body.contains(header.index(fieldname))) {
+                if (!this.tryMatch(header.get(fieldname), body.get(header.index(fieldname)), true)) {
                     return false;
                 }
+            } else {
+                return false;
             }
-            return true;
         }
+        return true;
     }
 
     private boolean tryMatchRepeatable(DHeader header, DRepeatableBody body) {
