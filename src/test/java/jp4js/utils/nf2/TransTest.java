@@ -2,12 +2,10 @@ package jp4js.utils.nf2;
 
 import org.junit.Test;
 
-import jp4js.JsonData;
 import jp4js.data.Goessener;
 import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
-import jp4js.query.JsonPathSample;
 import jp4js.utils.Configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -2,26 +2,27 @@ package jp4js.utils.query;
 
 import org.junit.Test;
 
-import jp4js.query.JsonPathSample;
+import jp4js.data.Goessener;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PathCompilerTest {
     @Test
     public void basic01_() {
-        assertThat(JsonPathSample.lst1.toString()).isEqualTo(
+        Goessener data = new Goessener();
+        assertThat(data.query(0).toString()).isEqualTo(
             "(.store(.book[.author()]))"
         );
-        assertThat(JsonPathSample.lst2.toString()).isEqualTo(
+        assertThat(data.query(1).toString()).isEqualTo(
             "(..author())"
         );
-        assertThat(JsonPathSample.lst3.toString()).isEqualTo(
+        assertThat(data.query(2).toString()).isEqualTo(
             "(.store(.*()))"
         );
-        assertThat(JsonPathSample.lst4.toString()).isEqualTo(
+        assertThat(data.query(3).toString()).isEqualTo(
             "(.store(..price()))"
         );
-        assertThat(JsonPathSample.lst5.toString()).isEqualTo(
+        assertThat(data.query(4).toString()).isEqualTo(
             "(..book[])"
         );
 

@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import jp4js.data.Goessener;
 import jp4js.nf2.op.Split;
-import jp4js.query.JsonPathSample;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +14,7 @@ public class SplitTest {
     public void basic01_() {
         DType.Instance instance = new Goessener().instance();
 
-        Split split = new Split(instance, JsonPathSample.lst1);
+        Split split = new Split(instance, new Goessener().query(0));
         try {
             Match match = split.open();
             assertThat(match.isValid()).isTrue();
