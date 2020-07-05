@@ -4,20 +4,16 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import jp4js.JsonData;
+import jp4js.data.Goessener;
 import jp4js.nf2.op.Split;
 import jp4js.query.JsonPathSample;
-import jp4js.utils.Configuration;
-import jp4js.utils.nf2.Trans;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SplitTest {
     @Test
     public void basic01_() {
-        Configuration configuration = Configuration.defaultConfiguration();
-        Object example01 = JsonData.createJson(JsonData.EXAPMLE01, configuration);
-        DType.Instance instance = Trans.fromJSON(example01, configuration);
+        DType.Instance instance = new Goessener().instance();
 
         Split split = new Split(instance, JsonPathSample.lst1);
         try {

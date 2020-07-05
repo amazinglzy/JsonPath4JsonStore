@@ -3,6 +3,10 @@ package jp4js.utils.nf2;
 import org.junit.Test;
 
 import jp4js.JsonData;
+import jp4js.data.Goessener;
+import jp4js.data.JsonPathWebsite;
+import jp4js.data.NestedFieldname;
+import jp4js.data.NestedSameFieldname;
 import jp4js.query.JsonPathSample;
 import jp4js.utils.Configuration;
 
@@ -16,20 +20,21 @@ public class TransTest {
         // System.out.println(Trans.fromSL(JsonPathSample.lst3).toString());
         // System.out.println(Trans.fromSL(JsonPathSample.lst4).toString());
         // System.out.println(Trans.fromSL(JsonPathSample.lst5).toString());
-        assertThat(Trans.fromSL(JsonPathSample.lst1).toString()).isEqualTo("(store(book[author()]))");
-        assertThat(Trans.fromSL(JsonPathSample.lst2).toString()).isEqualTo("(author())");
-        assertThat(Trans.fromSL(JsonPathSample.lst3).toString()).isEqualTo("(store(*()))");
-        assertThat(Trans.fromSL(JsonPathSample.lst4).toString()).isEqualTo("(store(price()))");
-        assertThat(Trans.fromSL(JsonPathSample.lst5).toString()).isEqualTo("(book[])");
+        Goessener data = new Goessener();
+        assertThat(Trans.fromSL(data.query(0)).toString()).isEqualTo("(store(book[author()]))");
+        assertThat(Trans.fromSL(data.query(1)).toString()).isEqualTo("(author())");
+        assertThat(Trans.fromSL(data.query(2)).toString()).isEqualTo("(store(*()))");
+        assertThat(Trans.fromSL(data.query(3)).toString()).isEqualTo("(store(price()))");
+        assertThat(Trans.fromSL(data.query(4)).toString()).isEqualTo("(book[])");
     }
 
     @Test
     public void basic02_FromJSON2DTypeInstance() {
         Configuration configuration = Configuration.defaultConfiguration();
-        Object example01 = JsonData.createJson(JsonData.EXAPMLE01, configuration);
-        Object example02 = JsonData.createJson(JsonData.EXAMPLE02, configuration);
-        Object example03 = JsonData.createJson(JsonData.EXAMPLE03, configuration);
-        Object example04 = JsonData.createJson(JsonData.EXAMPLE04, configuration);
+        Object example01 = new Goessener().json();
+        Object example02 = new NestedFieldname().json();
+        Object example03 = new JsonPathWebsite().json();
+        Object example04 = new NestedSameFieldname().json();
         // System.out.println(Trans.fromJSON(example01, configuration).toString());
         // System.out.println(Trans.fromJSON(example02, configuration).toString());
         // System.out.println(Trans.fromJSON(example03, configuration).toString());
