@@ -10,16 +10,16 @@ public class PathCompilerTest {
     @Test
     public void basic01_() {
         assertThat(JsonPathSample.lst1.toString()).isEqualTo(
-            "(.store(.book[.author]))"
+            "(.store(.book[.author()]))"
         );
         assertThat(JsonPathSample.lst2.toString()).isEqualTo(
-            "(..author)"
+            "(..author())"
         );
         assertThat(JsonPathSample.lst3.toString()).isEqualTo(
-            "(.store(.*))"
+            "(.store(.*()))"
         );
         assertThat(JsonPathSample.lst4.toString()).isEqualTo(
-            "(.store(..price))"
+            "(.store(..price()))"
         );
         assertThat(JsonPathSample.lst5.toString()).isEqualTo(
             "(..book[])"

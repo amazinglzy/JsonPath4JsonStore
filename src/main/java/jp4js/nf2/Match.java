@@ -21,6 +21,14 @@ public class Match {
         return this.valid;
     }
 
+    public DHeader header() {
+        return this.template;
+    }
+
+    public DBody body() {
+        return this.documentSet;
+    }
+
     private boolean tryMatch(DHeader header, DBody documentSet, boolean typeSense) {
         if (documentSet == null) return true;
         if (header == null) {

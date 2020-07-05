@@ -47,6 +47,8 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
     @Override 
     public StructureList visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
         StructureList nLst = new SingularSL();
+        if (this.lst == null) 
+            this.lst = new SingularSL();
         nLst.put(ctx.jsonFieldName().getText(), this.lst, StructureRelation.PC);
         this.lst = nLst;
         return this.lst;
@@ -55,6 +57,8 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
     @Override
     public StructureList visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
         StructureList nLst = new SingularSL();
+        if (this.lst == null) 
+            this.lst = new SingularSL();
         nLst.put("*", this.lst, StructureRelation.PC);
         this.lst = nLst;
         return this.lst;
@@ -63,6 +67,8 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
     @Override
     public StructureList visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
         StructureList nLst = new SingularSL();
+        if (this.lst == null) 
+            this.lst = new SingularSL();
         nLst.put(ctx.jsonFieldName().getText(), this.lst, StructureRelation.AD);
         this.lst = nLst;
         return this.lst;
