@@ -29,13 +29,14 @@ public class JsonPathWebsite extends BaseDataSuite {
     @Override
     public String[] querySet() {
         return new String[] {
-            "$[@.firstname && @.lastname].phoneNumbers[*][@.type && @.name]"
+            "$.phoneNumbers[*][?(@.type && @.number)]"
         };
     }
 
     @Override
     public String[] res() {
         return new String[] {
+            "([(\"0123-4567-8888\", \"iPhone\"), (\"0123-4567-8910\", \"home\")])"
         };
     }
 }

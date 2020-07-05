@@ -8,6 +8,9 @@ import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
 import jp4js.data.JsonArray;
 import jp4js.data.JsonArrayMulti;
+import jp4js.data.JsonPathWebsite;
+import jp4js.data.NestedFieldname;
+import jp4js.data.NestedSameFieldname;
 import jp4js.nf2.op.Split;
 import jp4js.nf2.op.structure.StructureList;
 
@@ -68,5 +71,20 @@ public class SplitTest {
     @Test
     public void basic03_DataSuite_JsonArrayMulti() {
         forDataSuite(new JsonArrayMulti());
+    }
+
+    @Test
+    public void basic04_DataSuite_JsonPathWebsite() {
+        forDataSuite(new JsonPathWebsite());
+    }
+
+    @Test
+    public void basic05_DataSuite_NestedFieldname() {
+        forDataSuite(new NestedFieldname());
+    }
+
+    @Test
+    public void basic05_DataSuite_NestedSameFieldname() {
+        forDataSuite(new NestedSameFieldname());
     }
 }

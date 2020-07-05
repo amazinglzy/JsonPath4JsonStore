@@ -27,6 +27,9 @@ public class NestedFieldname extends BaseDataSuite {
     @Override
     public String[] res() {
         return new String[] {
+            "((\"field2-field1\"))",
+            "(([3]))",
+            "({field1=[3]})"
         };
     }
 }

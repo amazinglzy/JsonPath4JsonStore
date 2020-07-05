@@ -23,6 +23,7 @@ public class NestedSameFieldname extends BaseDataSuite {
     @Override
     public String[] res() {
         return new String[] {
+            "((1))"
         };
     }
 }
