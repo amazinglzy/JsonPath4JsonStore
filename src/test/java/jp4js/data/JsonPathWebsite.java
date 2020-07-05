@@ -32,4 +32,10 @@ public class JsonPathWebsite extends BaseDataSuite {
             "$[@.firstname && @.lastname].phoneNumbers[*][@.type && @.name]"
         };
     }
+
+    @Override
+    public String[] res() {
+        return new String[] {
+        };
+    }
 }

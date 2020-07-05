@@ -85,53 +85,55 @@ public class Split {
         int index = 0;
         for (String fieldname: lst) {
             StructureRelation rel = lst.rel(fieldname);
-            if (rel == StructureRelation.PC) {
-                if (!(ins instanceof DMapping.Instance))
-                    throw new MatchException("can not be matchec");
-                DMapping.Instance mapping = (DMapping.Instance)ins;
-                if (!mapping.contains(fieldname)) {
-                    ret.clear();
-                } else {
-                    for (DSingularBody body: ret)
-                        body.put(
-                            index, 
-                            findMatch(mapping.get(fieldname), lst.structure(fieldname)));
-                }
-            } else {
-                List<DBody> candidates = iterateInstanceAndMatch(ins, fieldname, lst.structure(fieldname));
-                List<DSingularBody> update = new LinkedList<>();
-                for (DSingularBody row: ret) {
-                    for (DBody cell: candidates) {
-                        DSingularBody newRow = new DSingularBody(lst.size());
-                        for (int i = 0; i < index; i++) {
-                            newRow.put(i, row.get(i));
-                        }
-                        newRow.put(index, cell);
-                        update.add(newRow);
+            boolean nested = rel == StructureRelation.AD;
+            List<DBody> candidates = iterateInstanceAndMatch(ins, fieldname, lst.structure(fieldname), nested);
+            List<DSingularBody> update = new LinkedList<>();
+            for (DSingularBody row: ret) {
+                for (DBody cell: candidates) {
+                    DSingularBody newRow = new DSingularBody(lst.size());
+                    for (int i = 0; i < index; i++) {
+                        newRow.put(i, row.get(i));
                     }
+                    newRow.put(index, cell);
+                    update.add(newRow);
                 }
-                ret = update;
             }
+            ret = update;
             index ++;
         }
         return ret;
     }
 
-    public List<DBody> iterateInstanceAndMatch(DType.Instance ins, String fieldname, StructureList lst) throws MatchException {
+    public List<DBody> iterateInstanceAndMatch(DType.Instance ins, String fieldname, StructureList lst, boolean nested) throws MatchException {
         return new LinkedList<>() {{
             if (ins instanceof DMapping.Instance) {
                 DMapping.Instance mapping = (DMapping.Instance)ins;
-                if (mapping.contains(fieldname)) {
-                    add(findMatch(mapping.get(fieldname), lst));
+                if (fieldname.equals("*")) {
+                    for (String field: mapping) {
+                        try {
+                            add(findMatch(mapping.get(field), lst));
+                        } catch (Split.MatchException e) {
+
+                        }
+                    }
+                } else if (mapping.contains(fieldname)) {
+                    try {
+                        add(findMatch(mapping.get(fieldname), lst));
+                    } catch (Split.MatchException e) {
+
+                    }
                 }
-                for (String field: mapping) {
-                    addAll(iterateInstanceAndMatch(mapping.get(field), fieldname, lst));
-                }
+                if (nested)
+                    for (String field: mapping) {
+                        addAll(iterateInstanceAndMatch(mapping.get(field), fieldname, lst, true));
+                    }
             }
             if (ins instanceof DList.Instance) {
-                DList.Instance lstIns = (DList.Instance)ins;
-                for (DType.Instance insElem: lstIns) 
-                    addAll(iterateInstanceAndMatch(insElem, fieldname, lst));
+                if (nested) {
+                    DList.Instance lstIns = (DList.Instance)ins;
+                    for (DType.Instance insElem: lstIns) 
+                        addAll(iterateInstanceAndMatch(insElem, fieldname, lst, true));
+                }
             }
         }};
     }

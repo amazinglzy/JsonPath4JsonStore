@@ -10,9 +10,6 @@ public class JsonArray extends BaseDataSuite {
             "            \"obj\":{\"innerArr\": [" +
             "                {" +
             "                    \"val\": \"bla_0\"" +
-            "                }," +
-            "                {" +
-            "                    \"val\": null" +
             "                }" +
             "            ]}" +
             "        }," +
@@ -36,6 +33,15 @@ public class JsonArray extends BaseDataSuite {
             "$.arr[*].obj.innerArr[*].val",
             "$..val",
             "$..innerArr[*].val"
+        };
+    }
+
+    @Override
+    public String[] res() {
+        return new String[] {
+            "([(([(\"bla_0\")])), (([(\"bla_4\"), (\"bla_5\")]))])",
+            "(\"bla_0\")",
+            "([(\"bla_0\")])"
         };
     }
 }

@@ -19,4 +19,10 @@ public class NestedSameFieldname extends BaseDataSuite {
             "$..a.b"
         };
     }
+
+    @Override
+    public String[] res() {
+        return new String[] {
+        };
+    }
 }

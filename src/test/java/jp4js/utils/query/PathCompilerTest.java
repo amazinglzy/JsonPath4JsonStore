@@ -3,6 +3,7 @@ package jp4js.utils.query;
 import org.junit.Test;
 
 import jp4js.data.Goessener;
+import jp4js.data.JsonArrayMulti;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,6 +26,11 @@ public class PathCompilerTest {
         assertThat(data.query(4).toString()).isEqualTo(
             "(..book[])"
         );
+    }
 
+    @Test
+    public void basic02_() {
+        JsonArrayMulti data = new JsonArrayMulti();
+        assertThat(data.query(0).toString()).isEqualTo("(.embedded(..count(), ..difference()))");
     }
 }

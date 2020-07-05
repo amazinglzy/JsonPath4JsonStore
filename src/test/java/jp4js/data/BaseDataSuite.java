@@ -9,6 +9,7 @@ import jp4js.utils.query.PathCompiler;
 public abstract class BaseDataSuite {
     public abstract String data();
     public abstract String[] querySet();
+    public abstract String[] res();
 
     public Configuration configuration() {
         return Configuration.defaultConfiguration();

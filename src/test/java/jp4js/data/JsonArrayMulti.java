@@ -5,7 +5,7 @@ public class JsonArrayMulti extends BaseDataSuite {
     public String data() {
         return
             "{" +
-            "    \"_embedded\": {" +
+            "    \"embedded\": {" +
             "      \"mandates\": [" +
             "        {" +
             "          \"count\": \"0\"," +
@@ -57,14 +57,20 @@ public class JsonArrayMulti extends BaseDataSuite {
             "        }" +
             "      ]" +
             "    }" +
-            "  }" +
             "}";
     }
 
     @Override
     public String[] querySet() {
         return new String[] {
-            "$[@..count && @..difference]"
+            "$.embedded[?(@..count && @..difference)]"
+        };
+    }
+
+    @Override
+    public String[] res() {
+        return new String[] {
+            "((\"0\", \"+0\"))"
         };
     }
 }

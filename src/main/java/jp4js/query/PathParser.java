@@ -36,12 +36,13 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override 
     public StructureList visitJsonStep(JsonPathParser.JsonStepContext ctx) { 
-        this.visit(ctx.getChild(0) );
+        if (this.lst == null)
+            this.lst = new SingularSL();
         if (ctx.jsonFilterExpr() != null) {
             StructureList children = new FilterPathParser().visit(ctx.jsonFilterExpr());
             this.lst.mergeIn(children);
         }
-        return this.lst;
+        return this.visit(ctx.getChild(0) );
     }
 
     @Override 

@@ -23,4 +23,10 @@ public class NestedFieldname extends BaseDataSuite {
             "$..field1"
         };
     }
+
+    @Override
+    public String[] res() {
+        return new String[] {
+        };
+    }
 }
