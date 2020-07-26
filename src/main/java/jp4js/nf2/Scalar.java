@@ -37,7 +37,7 @@ public class Scalar {
     
 
     public static class DString implements DType {
-        public class Instance implements DType.Instance {
+        public class Instance implements DType.Instance, Comparable<DString.Instance> {
             private final String data;
 
             public Instance(String data) {
@@ -61,6 +61,19 @@ public class Scalar {
             public String toString() {
                 return "\"" + this.data + "\""; 
             }
+
+            @Override
+            public int compareTo(DString.Instance o) {
+                return data.compareTo(o.data());
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                if (obj instanceof DString.Instance) {
+                    return this.compareTo((DString.Instance)obj) == 0;
+                }
+                return false;
+            }
         }
 
         public Instance create(String data) {
@@ -74,7 +87,7 @@ public class Scalar {
     }
 
     public static class DInt implements DType {
-        public class Instance implements DType.Instance {
+        public class Instance implements DType.Instance, Comparable<DInt.Instance> {
             private final int data;
 
             public Instance(int data) {
@@ -98,6 +111,19 @@ public class Scalar {
             public String toString() {
                 return String.valueOf(this.data);
             }
+
+            @Override
+            public int compareTo(DInt.Instance o) {
+                return this.data - o.data();
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                if (obj instanceof DInt.Instance) {
+                    return this.compareTo((DInt.Instance)obj) == 0;
+                }
+                return false;
+            }
         }
 
         public Instance create(int data) {
@@ -111,7 +137,7 @@ public class Scalar {
     }
 
     public static class DDouble implements DType {
-        public class Instance implements DType.Instance {
+        public class Instance implements DType.Instance, Comparable<DDouble.Instance> {
             private final double data;
 
             public Instance(double data) {
@@ -135,6 +161,21 @@ public class Scalar {
             public String toString() {
                 return String.valueOf(this.data);
             }
+
+            @Override
+            public int compareTo(DDouble.Instance o) {
+                double c = this.data - o.data();
+                if (c == 0) return 0;
+                return c > 0 ? 1: -1;
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                if (obj instanceof DDouble.Instance) {
+                    return this.compareTo((DDouble.Instance)obj) == 0;
+                }
+                return false;
+            }
         }
 
         public Instance create(double data) {
@@ -149,7 +190,7 @@ public class Scalar {
     }
 
     public static class DMapping implements DType {
-        public class Instance implements DType.Instance, Iterable<String> {
+        public class Instance implements DType.Instance, Iterable<String>, Comparable<DMapping.Instance> {
             private final TreeMap<String, DType.Instance> data;
 
             public Instance() {
@@ -186,6 +227,16 @@ public class Scalar {
             public String toString() {
                 return this.data.toString();
             }
+
+            @Override
+            public int compareTo(DMapping.Instance o) {
+                return 0;
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                return true;
+            }
         }
 
         public Instance create() {
@@ -199,7 +250,7 @@ public class Scalar {
     }
 
     public static class DList implements DType {
-        public class Instance implements DType.Instance, Iterable<DType.Instance> {
+        public class Instance implements DType.Instance, Iterable<DType.Instance>, Comparable<DList.Instance> {
             private final LinkedList<DType.Instance> data;
 
             public Instance() {
@@ -234,6 +285,16 @@ public class Scalar {
             @Override
             public String toString() {
                 return this.data.toString();
+            }
+
+            @Override
+            public int compareTo(DList.Instance o) {
+                return 0;
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                return true;
             }
         }
 

@@ -1,18 +1,20 @@
 package jp4js.storage.node;
 
-import jp4js.utils.Utils;
 import java.util.List;
 import java.util.LinkedList;
 
+import jp4js.nf2.DType;
+import jp4js.utils.Utils;
+
 public class LabelArray extends LabelNode {
     private long index;
-    public LabelArray(String path, long index, Object value, Object rootDocument) {
-        super(path, -1, -1, -1, value, rootDocument);
+    public LabelArray(String path, long index, DType.Instance value) {
+        super(path, -1, -1, -1, value);
         this.index = index;
     }
 
-    public LabelArray(String path, long index, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
-        super(path, firstVisit, lastVisit, level, value, rootDocument);
+    public LabelArray(String path, long index, long firstVisit, long lastVisit, int level, DType.Instance value) {
+        super(path, firstVisit, lastVisit, level, value);
         this.index = index;
     }
 

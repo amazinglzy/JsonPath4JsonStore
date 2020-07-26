@@ -2,20 +2,20 @@ package jp4js.storage.node;
 
 import java.util.Comparator;
 
+import jp4js.nf2.DType;
+
 public class LabelNode implements Comparable<LabelNode> {
     private String path;
-    private Object value;
-    private Object rootDocument;
+    private DType.Instance value;
     private long firstVisit, lastVisit;
     private int level;
 
-    public LabelNode(String path, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
+    public LabelNode(String path, long firstVisit, long lastVisit, int level, DType.Instance value) {
         this.path = ""; 
         this.value = value;
         this.firstVisit = firstVisit;
         this.lastVisit = lastVisit;
         this.level = level;
-        this.rootDocument = rootDocument;
     }
 
     public Object getValue() {
@@ -34,15 +34,11 @@ public class LabelNode implements Comparable<LabelNode> {
         return level;
     }
 
-    public Object getRootDocument() {
-        return rootDocument;
-    }
-
     public String getPath() {
         return path;
     }
 
-    public void setValue(Object value) {
+    public void setValue(DType.Instance value) {
         this.value = value;
     }
 
@@ -56,10 +52,6 @@ public class LabelNode implements Comparable<LabelNode> {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public void setRootDocument(Object rootDocument) {
-        this.rootDocument = rootDocument;
     }
 
     @Override

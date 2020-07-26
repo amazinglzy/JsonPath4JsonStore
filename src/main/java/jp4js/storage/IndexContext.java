@@ -3,7 +3,6 @@ package jp4js.storage;
 import jp4js.storage.node.LabelArray.ArraySelections;
 import jp4js.storage.node.LabelNode;
 import jp4js.storage.node.SingleNodeIterator;
-import jp4js.utils.Configuration;
 import jp4js.utils.iter.Iter;
 import jp4js.utils.iter.MIter;
 
@@ -14,12 +13,10 @@ import java.util.Map;
 public class IndexContext {
     private Map<String, LinkedList<LabelNode>> objectsPartitions;
     private Map<Long, LinkedList<LabelNode>> arraysPartitions;
-    private Configuration configuration;
 
-    public IndexContext(Map<String, LinkedList<LabelNode>> objectPartitions, Map<Long, LinkedList<LabelNode>> arrayPartitions, Configuration configuration){
+    public IndexContext(Map<String, LinkedList<LabelNode>> objectPartitions, Map<Long, LinkedList<LabelNode>> arrayPartitions){
         this.objectsPartitions = objectPartitions;
         this.arraysPartitions = arrayPartitions;
-        this.configuration = configuration;
     }
 
     public Iter<LabelNode> openAll() {
@@ -71,10 +68,6 @@ public class IndexContext {
             }
             return iter;
         }
-    }
-
-    public Configuration configuration() {
-        return this.configuration;
     }
 
     private Iter<LabelNode> getObjectOrEmptyStream(String objectLabel) {

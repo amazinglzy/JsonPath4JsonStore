@@ -1,5 +1,6 @@
 package jp4js.query;
 
+import jp4js.nf2.Scalar;
 import jp4js.storage.IndexContext;
 import jp4js.storage.Indexer;
 import jp4js.storage.node.LabelNode;
@@ -37,7 +38,7 @@ public class IndexArrayScanTest {
         Iter<LabelNode> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
-        assertThat(iter.read().getValue()).isEqualTo(2);
+        assertThat(iter.read().getValue()).isEqualToComparingFieldByField(Scalar.createDInt(2));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class IndexArrayScanTest {
         Iter<LabelNode> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
-        assertThat(iter.read().getValue()).isEqualTo(1);
+        assertThat(iter.read().getValue()).isEqualToComparingFieldByField(Scalar.createDInt(1));
     }
     
     @Test

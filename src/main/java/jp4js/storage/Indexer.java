@@ -1,6 +1,10 @@
 package jp4js.storage;
 
 import jp4js.utils.Configuration;
+import jp4js.utils.nf2.Trans;
+import jp4js.nf2.DType;
+import jp4js.nf2.Scalar.DMapping;
+import jp4js.nf2.Scalar.DList;
 import jp4js.storage.node.LabelArray;
 import jp4js.storage.node.LabelNode;
 import jp4js.storage.node.LabelObject;
@@ -22,86 +26,86 @@ public class Indexer {
     }
 
     public static IndexContext index(Object json, Configuration configuration) {
+        DType.Instance ins = Trans.fromJSON(json, configuration);
+        return index(ins);
+    }
+
+    private static IndexContext index(DType.Instance ins) {
         Map<String, LinkedList<LabelNode>> objectsPartitions = new HashMap<String, LinkedList<LabelNode>>();
         Map<Long, LinkedList<LabelNode>> arraysPartitions = new HashMap<Long, LinkedList<LabelNode>>();
-        iterateJsonObject("$", "$", json, json, configuration, new Timestamp(), 0, objectsPartitions, arraysPartitions);
-        return new IndexContext(objectsPartitions, arraysPartitions, configuration);
+        iterateJsonObject("$", "$", ins, new Timestamp(), 0, objectsPartitions, arraysPartitions);
+        return new IndexContext(objectsPartitions, arraysPartitions);
     }
 
     private static void iterateJsonObject(String key,
                                           String path,
-                                          Object json,
-                                          Object rootDocument,
-                                          Configuration configuration,
+                                          DType.Instance mapping,
                                           Timestamp timestamp,
                                           int level,
                                           Map<String, LinkedList<LabelNode>> objectsPartitions,
                                           Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelObject node = new LabelObject(path, key, json, rootDocument);
+        LabelObject node = new LabelObject(path, key, mapping);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
         if (!objectsPartitions.containsKey(key)) objectsPartitions.put(key, new LinkedList<LabelNode>());
         objectsPartitions.get(key).add(node);
-        iterateJson(path, json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
+        iterateJson(path, mapping, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
     }
 
     private static void iterateJsonArray(long index,
                                          String path,
-                                         Object json,
-                                         Object rootDocument,
-                                         Configuration configuration,
+                                         DType.Instance ins,
                                          Timestamp timestamp,
                                          int level,
                                          Map<String, LinkedList<LabelNode>> objectsPartitions,
                                          Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelArray node = new LabelArray(path, index, json, rootDocument);
+        LabelArray node = new LabelArray(path, index, ins);
         node.setFirstVisit(timestamp.getTimestamp()); timestamp.inc();
         node.setLevel(level);
         if (!arraysPartitions.containsKey(index)) arraysPartitions.put(index, new LinkedList<LabelNode>());
         arraysPartitions.get(index).add(node);
-        iterateJson(path, json, rootDocument, configuration, timestamp, level, objectsPartitions, arraysPartitions);
+        iterateJson(path, ins, timestamp, level, objectsPartitions, arraysPartitions);
         node.setLastVisit(timestamp.getTimestamp()); timestamp.inc();
     }
 
     private static void iterateJson(
             String path,
-            Object json,
-            Object rootDocument,
-            Configuration configuration,
+            DType.Instance ins,
             Timestamp timestamp,
             int level,
             Map<String, LinkedList<LabelNode>> objectsPartitions,
             Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        if (configuration.jsonProvider().isMap(json)) {
-            List<String> properties = new ArrayList<String>(configuration.jsonProvider().getPropertyKeys(json));
+        if (ins instanceof DMapping.Instance) {
+            List<String> properties = new ArrayList<String>() {{
+                for (String fieldname: (DMapping.Instance)ins) {
+                    add(fieldname);
+                }
+            }};
             properties.sort(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
                     return o1.compareTo(o2);
                 }
             });
+            DMapping.Instance mapping = (DMapping.Instance)ins;
             for (String property: properties) {
                 iterateJsonObject(
                         property,
                         path + "." + property ,
-                        configuration.jsonProvider().getMapValue(json, property),
-                        rootDocument,
-                        configuration,
+                        mapping.get(property),
                         timestamp,
                         level + 1,
                         objectsPartitions,
                         arraysPartitions);
             }
-        } else if (configuration.jsonProvider().isArray(json)) {
+        } else if (ins instanceof DList.Instance) {
             long index = 0;
-            for (Object obj: configuration.jsonProvider().toIterable(json)) {
+            for (DType.Instance item: (DList.Instance)ins) {
                 iterateJsonArray(
                         index,
                         path + "[" + String.valueOf(index) + "]",
-                        obj,
-                        rootDocument,
-                        configuration,
+                        item,
                         timestamp,
                         level + 1,
                         objectsPartitions,
