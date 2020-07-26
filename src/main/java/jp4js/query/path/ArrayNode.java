@@ -1,6 +1,6 @@
 package jp4js.query.path;
 
-import jp4js.index.node.LabelArray.ArraySelections;
+import jp4js.storage.node.LabelArray.ArraySelections;
 
 public class ArrayNode extends PathNode {
     private ArraySelections selections;

@@ -1,11 +1,11 @@
-package jp4js.index;
+package jp4js.storage;
 
-import jp4js.index.node.LabelNode;
+import jp4js.storage.node.LabelArray.ArraySelections;
+import jp4js.storage.node.LabelNode;
+import jp4js.storage.node.SingleNodeIterator;
 import jp4js.utils.Configuration;
 import jp4js.utils.iter.Iter;
 import jp4js.utils.iter.MIter;
-import jp4js.index.node.SingleNodeIterator;
-import jp4js.index.node.LabelArray.ArraySelections;
 
 import java.util.LinkedList;
 import java.util.List;

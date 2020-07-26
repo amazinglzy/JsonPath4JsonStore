@@ -1,11 +1,13 @@
 package jp4js.query;
 
-import jp4js.index.IndexContext;
-import jp4js.index.node.LabelNode;
 import jp4js.utils.iter.Iter;
+
+import static jp4js.storage.node.LabelArray.ArraySelections;
+
 import jp4js.query.PlanOperator;
+import jp4js.storage.IndexContext;
+import jp4js.storage.node.LabelNode;
 import jp4js.utils.Utils;
-import static jp4js.index.node.LabelArray.ArraySelections;
 
 
 public class IndexArrayScan implements PlanOperator<LabelNode> {

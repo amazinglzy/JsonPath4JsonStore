@@ -1,9 +1,9 @@
-package jp4js.index;
+package jp4js.storage;
 
 import jp4js.utils.Configuration;
-import jp4js.index.node.LabelArray;
-import jp4js.index.node.LabelNode;
-import jp4js.index.node.LabelObject;
+import jp4js.storage.node.LabelArray;
+import jp4js.storage.node.LabelNode;
+import jp4js.storage.node.LabelObject;
 
 import java.util.*;
 

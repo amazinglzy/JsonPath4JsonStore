@@ -1,4 +1,4 @@
-package jp4js.index;
+package jp4js.storage;
 
 public class IndexContextTest {
 

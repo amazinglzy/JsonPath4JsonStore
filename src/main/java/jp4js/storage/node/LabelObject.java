@@ -1,6 +1,4 @@
-package jp4js.index.node;
-
-import jp4js.index.node.LabelNode;
+package jp4js.storage.node;
 
 public class LabelObject extends LabelNode {
     private String nodeName;

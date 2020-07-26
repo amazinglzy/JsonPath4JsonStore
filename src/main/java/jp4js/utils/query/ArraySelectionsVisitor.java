@@ -2,9 +2,9 @@ package jp4js.utils.query;
 
 import java.util.LinkedList;
 
-import jp4js.index.node.LabelArray.*;
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
+import jp4js.storage.node.LabelArray.*;
 
 
 public class ArraySelectionsVisitor extends JsonPathBaseVisitor<ArraySelections> {

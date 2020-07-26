@@ -2,7 +2,7 @@ package jp4js.query.path;
 
 import java.util.List;
 
-import jp4js.index.node.LabelArray.ArraySelections;
+import jp4js.storage.node.LabelArray.ArraySelections;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

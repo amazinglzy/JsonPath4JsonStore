@@ -1,5 +1,8 @@
-package jp4js.index.node;
+package jp4js.storage.node;
 
+import jp4js.storage.node.LabelNode;
+import jp4js.storage.node.NodeFactory;
+import jp4js.storage.node.SingleNodeIterator;
 import jp4js.utils.iter.Iter;
 
 import java.util.LinkedList;

@@ -1,6 +1,10 @@
-package jp4js.index.node;
+package jp4js.storage.node;
 
 import org.junit.Test;
+
+import jp4js.storage.node.LabelNode;
+import jp4js.storage.node.NodeFactory;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LabelNodeTest {

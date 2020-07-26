@@ -1,4 +1,4 @@
-package jp4js.index.node;
+package jp4js.storage.node;
 
 public class NodeFactory {
     public static LabelObject create(String path, String nodeName, long firstVisit, long lastVisit, int level, Object value, Object rootDocument) {
