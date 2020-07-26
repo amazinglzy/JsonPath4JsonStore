@@ -12,25 +12,25 @@ public class PathCompilerTest {
     public void basic01_() {
         Goessener data = new Goessener();
         assertThat(data.query(0).toString()).isEqualTo(
-            "(.store(.book[.author()]))"
+            "asynomous(.store:asynomous(.book:asynomous[.author:asynomous()]))"
         );
         assertThat(data.query(1).toString()).isEqualTo(
-            "(..author())"
+            "asynomous(..author:asynomous())"
         );
         assertThat(data.query(2).toString()).isEqualTo(
-            "(.store(.*()))"
+            "asynomous(.store:asynomous(.*:asynomous()))"
         );
         assertThat(data.query(3).toString()).isEqualTo(
-            "(.store(..price()))"
+            "asynomous(.store:asynomous(..price:asynomous()))"
         );
         assertThat(data.query(4).toString()).isEqualTo(
-            "(..book[])"
+            "asynomous(..book:asynomous[])"
         );
     }
 
     @Test
     public void basic02_() {
         JsonArrayMulti data = new JsonArrayMulti();
-        assertThat(data.query(0).toString()).isEqualTo("(.embedded(..count(), ..difference()))");
+        assertThat(data.query(0).toString()).isEqualTo("asynomous(.embedded:asynomous(..count:asynomous(), ..difference:asynomous()))");
     }
 }

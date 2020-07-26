@@ -11,6 +11,7 @@ import jp4js.nf2.op.structure.RepeatableSL;
 import jp4js.nf2.op.structure.SingularSL;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.op.structure.StructureRelation;
+import jp4js.nf2.op.structure.StructureSteps;
 import jp4js.nf2.tpl.DBody;
 import jp4js.nf2.tpl.DRepeatableBody;
 import jp4js.nf2.tpl.DSingularBody;
@@ -70,7 +71,7 @@ public class Split {
     public DSingularBody findSingular(DType.Instance ins, SingularSL lst) throws MatchException {
         List<DSingularBody> ret = find(ins, lst);
         if (ret.size() > 0) return ret.get(0);
-        throw new MatchException("Match None");
+        return null;
     }
 
     public List<DSingularBody> find(DType.Instance ins, StructureList lst) throws MatchException {
@@ -83,13 +84,13 @@ public class Split {
         List<DSingularBody> ret = new LinkedList<>();
         ret.add(new DSingularBody(lst.size()));
         int index = 0;
-        for (String fieldname: lst) {
-            StructureRelation rel = lst.rel(fieldname);
-            boolean nested = rel == StructureRelation.AD;
-            List<DBody> candidates = iterateInstanceAndMatch(ins, fieldname, lst.structure(fieldname), nested);
+        for (StructureList.StructureItem item: lst) {
+            List<DType.Instance> candidates = iterateInstance(ins, item.steps, 0);
             List<DSingularBody> update = new LinkedList<>();
             for (DSingularBody row: ret) {
-                for (DBody cell: candidates) {
+                for (DType.Instance candidate: candidates) {
+                    DBody cell = findMatch(candidate, item.lst);
+                    if (cell == null) continue;
                     DSingularBody newRow = new DSingularBody(lst.size());
                     for (int i = 0; i < index; i++) {
                         newRow.put(i, row.get(i));
@@ -104,35 +105,41 @@ public class Split {
         return ret;
     }
 
-    public List<DBody> iterateInstanceAndMatch(DType.Instance ins, String fieldname, StructureList lst, boolean nested) throws MatchException {
+    public List<DType.Instance> iterateInstance(DType.Instance ins, StructureSteps steps, int currentStep) {
+        if (currentStep >= steps.size()) {
+            return new LinkedList<>() {{
+                add(ins);
+            }};
+        }
+
+        StructureRelation rel = steps.type(currentStep);
+        String fieldname = steps.fieldname(currentStep);
+
         return new LinkedList<>() {{
             if (ins instanceof DMapping.Instance) {
                 DMapping.Instance mapping = (DMapping.Instance)ins;
-                if (fieldname.equals("*")) {
+                if (fieldname == "*") {
                     for (String field: mapping) {
-                        try {
-                            add(findMatch(mapping.get(field), lst));
-                        } catch (Split.MatchException e) {
-
-                        }
+                        addAll(iterateInstance(mapping.get(field), steps, currentStep+1));
                     }
-                } else if (mapping.contains(fieldname)) {
-                    try {
-                        add(findMatch(mapping.get(fieldname), lst));
-                    } catch (Split.MatchException e) {
-
+                } else {
+                    if (mapping.contains(fieldname)) {
+                        addAll(iterateInstance(mapping.get(fieldname), steps, currentStep+1));
                     }
                 }
-                if (nested)
+                if (rel == StructureRelation.AD) {
                     for (String field: mapping) {
-                        addAll(iterateInstanceAndMatch(mapping.get(field), fieldname, lst, true));
+                        addAll(iterateInstance(mapping.get(field), steps, currentStep));
                     }
+                }
             }
+
             if (ins instanceof DList.Instance) {
-                if (nested) {
+                if (rel == StructureRelation.AD) {
                     DList.Instance lstIns = (DList.Instance)ins;
-                    for (DType.Instance insElem: lstIns) 
-                        addAll(iterateInstanceAndMatch(insElem, fieldname, lst, true));
+                    for (DType.Instance insElem: lstIns) {
+                        addAll(iterateInstance(insElem, steps, currentStep));
+                    }
                 }
             }
         }};

@@ -10,8 +10,8 @@ public class RepeatableSL extends StructureList {
     }
 
     public RepeatableSL(SingularSL lst) {
-        for (String fieldname: lst) {
-            this.put(fieldname, lst.structure(fieldname), lst.rel(fieldname));
+        for (StructureList.StructureItem item: lst) {
+            this.put(item);
         }
     }
 
@@ -31,7 +31,7 @@ public class RepeatableSL extends StructureList {
     @Override
     public String toString() {
         if (this.isNested())
-            return "[" + this.lst.toString() + "]";
-        return "[" + super.toString() + "]";
+            return super.name() + "[" + this.lst.toString() + "]";
+        return super.name() + "[" + super.toString() + "]";
     }
 }

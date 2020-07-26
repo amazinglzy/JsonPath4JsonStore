@@ -36,7 +36,7 @@ public class JsonPathWebsite extends BaseDataSuite {
     @Override
     public String[] res() {
         return new String[] {
-            "([(\"0123-4567-8888\", \"iPhone\"), (\"0123-4567-8910\", \"home\")])"
+            "([(\"iPhone\", \"0123-4567-8888\"), (\"home\", \"0123-4567-8910\")])"
         };
     }
 }

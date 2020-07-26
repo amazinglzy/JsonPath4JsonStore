@@ -8,6 +8,6 @@ public class SingularSL extends StructureList {
 
     @Override
     public String toString() {
-        return "(" + super.toString() + ")";
+        return super.name() + "(" + super.toString() + ")";
     }
 }

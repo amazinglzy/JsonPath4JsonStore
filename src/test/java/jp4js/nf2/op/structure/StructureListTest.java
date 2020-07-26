@@ -13,7 +13,7 @@ public class StructureListTest {
         }};
         // System.out.println(lst.toString());
         assertThat(lst.toString()).isEqualTo(
-            "[.addr[], ..first, ..last]"
+            "asynomous[..first, ..last, .addr:asynomous[]]"
         );
     }
 
@@ -29,7 +29,7 @@ public class StructureListTest {
         lst1.mergeIn(lst2);
         // System.out.println(lst1.toString());
         assertThat(lst1.toString()).isEqualTo(
-            "[.addr[], ..first, ..last]"
+            "asynomous[..first, ..last, .addr:asynomous[]]"
         );
     }
 }
