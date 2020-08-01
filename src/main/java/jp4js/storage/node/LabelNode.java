@@ -18,7 +18,7 @@ public class LabelNode implements Comparable<LabelNode> {
         this.level = level;
     }
 
-    public Object getValue() {
+    public DType.Instance getValue() {
         return value;
     }
 

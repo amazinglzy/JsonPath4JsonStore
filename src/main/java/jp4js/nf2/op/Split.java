@@ -18,16 +18,7 @@ import jp4js.nf2.tpl.DSingularBody;
 import jp4js.utils.Utils;
 import jp4js.utils.nf2.Trans;
 
-public class Split {
-    public class MatchException extends Exception {
-        public MatchException() {
-            super();
-        }
-
-        public MatchException(String msg) {
-            super(msg);
-        }
-    }
+public class Split extends BaseSplit {
 
     private DType.Instance data;
     private StructureList lst;
