@@ -7,7 +7,7 @@ import jp4js.nf2.DType;
 import jp4js.utils.Utils;
 
 public class LabelArray extends LabelNode {
-    private long index;
+    public long index;
     public LabelArray(String path, long index, DType.Instance value) {
         super(path, -1, -1, -1, value);
         this.index = index;
@@ -17,11 +17,6 @@ public class LabelArray extends LabelNode {
         super(path, firstVisit, lastVisit, level, value);
         this.index = index;
     }
-
-    public long getIndex() {
-        return this.index;
-    }
-
 
     public interface ArraySelections {
         List<Integer> select();

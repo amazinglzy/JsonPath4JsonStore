@@ -5,59 +5,23 @@ import java.util.Comparator;
 import jp4js.nf2.DType;
 
 public class LabelNode implements Comparable<LabelNode> {
-    private String path;
-    private DType.Instance value;
-    private long firstVisit, lastVisit;
-    private int level;
+    public String path;
+    public DType.Instance value;
+    public long first_visit, last_visit;
+    public int level;
 
     public LabelNode(String path, long firstVisit, long lastVisit, int level, DType.Instance value) {
         this.path = ""; 
         this.value = value;
-        this.firstVisit = firstVisit;
-        this.lastVisit = lastVisit;
-        this.level = level;
-    }
-
-    public DType.Instance getValue() {
-        return value;
-    }
-
-    public long getFirstVisit() {
-        return firstVisit;
-    }
-
-    public long getLastVisit() {
-        return lastVisit;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setValue(DType.Instance value) {
-        this.value = value;
-    }
-
-    public void setFirstVisit(long firstVisit) {
-        this.firstVisit = firstVisit;
-    }
-
-    public void setLastVisit(long lastVisit) {
-        this.lastVisit = lastVisit;
-    }
-
-    public void setLevel(int level) {
+        this.first_visit = firstVisit;
+        this.last_visit = lastVisit;
         this.level = level;
     }
 
     @Override
     public int compareTo(LabelNode o) {
-        if (this.getFirstVisit() != o.getFirstVisit()) {
-            return this.getFirstVisit() < o.getFirstVisit() ? -1: 1;
+        if (this.first_visit != o.first_visit) {
+            return this.first_visit < o.first_visit ? -1: 1;
         }
         return 0;
     }

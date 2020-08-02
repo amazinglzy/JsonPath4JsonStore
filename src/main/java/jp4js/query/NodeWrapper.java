@@ -24,7 +24,7 @@ public class NodeWrapper implements Iterator<Record> {
     public Record next() {
         LabelNode node = this.iter.read();
         this.iter.next();
-        Record record = this.recordSet.new Record("", node.getValue());
+        Record record = this.recordSet.new Record("", node.value);
         this.recordSet.append(record);
         return record;
     }

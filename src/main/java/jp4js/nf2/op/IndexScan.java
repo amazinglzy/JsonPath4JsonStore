@@ -18,7 +18,7 @@ public class IndexScan {
         if (stepIndex >= steps.size()) {
             return new LinkedList<DType.Instance>() {{
                 for (LabelNode node: sortedNodes) {
-                    add(node.getValue());
+                    add(node.value);
                 }
             }};
         }
@@ -33,7 +33,7 @@ public class IndexScan {
             for (LabelNode node: sortedNodes) {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
-                    if (inode.getLastVisit() < node.getFirstVisit()) {
+                    if (inode.last_visit < node.first_visit) {
                         iter.next();
                     } else {
                         break;
@@ -42,11 +42,11 @@ public class IndexScan {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();
-                    if (inode.getFirstVisit() > node.getLastVisit()) {
+                    if (inode.first_visit > node.last_visit) {
                         break;
                     } else {
-                        if (node.getFirstVisit() <= inode.getFirstVisit() && inode.getLastVisit() <= node.getLastVisit()) {
-                            if (node.getLevel() + 1 == inode.getLevel()) {
+                        if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
+                            if (node.level + 1 == inode.level) {
                                 add(inode);
                             }
                         }
@@ -62,7 +62,7 @@ public class IndexScan {
             for (LabelNode node: sortedNodes) {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
-                    if (inode.getLastVisit() < node.getFirstVisit()) {
+                    if (inode.last_visit < node.first_visit) {
                         iter.next();
                     } else {
                         break;
@@ -71,11 +71,11 @@ public class IndexScan {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();
-                    if (inode.getFirstVisit() > node.getLastVisit()) {
+                    if (inode.first_visit > node.last_visit) {
                         break;
                     } else {
-                        if (node.getFirstVisit() <= inode.getFirstVisit() && inode.getLastVisit() <= node.getLastVisit()) {
-                            if (node.getLevel() + 1 == inode.getLevel()) {
+                        if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
+                            if (node.level + 1 == inode.level) {
                                 add(inode);
                             }
                         }
@@ -91,7 +91,7 @@ public class IndexScan {
             for (LabelNode node: sortedNodes) {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
-                    if (inode.getLastVisit() < node.getFirstVisit()) {
+                    if (inode.last_visit < node.first_visit) {
                         iter.next();
                     } else {
                         break;
@@ -100,10 +100,10 @@ public class IndexScan {
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();
-                    if (inode.getFirstVisit() > node.getLastVisit()) {
+                    if (inode.first_visit > node.last_visit) {
                         break;
                     } else {
-                        if (node.getFirstVisit() <= inode.getFirstVisit() && inode.getLastVisit() <= node.getLastVisit()) {
+                        if (node.first_visit <= inode.first_visit && inode.last_visit<= node.last_visit) {
                             add(inode);
                         }
                     }

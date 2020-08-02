@@ -45,14 +45,14 @@ public class Indexer {
             int level, Map<String, LinkedList<LabelNode>> objectsPartitions,
             Map<Long, LinkedList<LabelNode>> arraysPartitions) {
         LabelObject node = new LabelObject(path, key, mapping);
-        node.setFirstVisit(timestamp.getTimestamp());
+        node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
-        node.setLevel(level);
+        node.level = level;
         if (!objectsPartitions.containsKey(key))
             objectsPartitions.put(key, new LinkedList<LabelNode>());
         objectsPartitions.get(key).add(node);
         iterateJson(path, mapping, timestamp, level, objectsPartitions, arraysPartitions);
-        node.setLastVisit(timestamp.getTimestamp());
+        node.last_visit = timestamp.getTimestamp();
         timestamp.inc();
         return node;
     }
@@ -61,14 +61,14 @@ public class Indexer {
             int level, Map<String, LinkedList<LabelNode>> objectsPartitions,
             Map<Long, LinkedList<LabelNode>> arraysPartitions) {
         LabelArray node = new LabelArray(path, index, ins);
-        node.setFirstVisit(timestamp.getTimestamp());
+        node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
-        node.setLevel(level);
+        node.level = level;
         if (!arraysPartitions.containsKey(index))
             arraysPartitions.put(index, new LinkedList<LabelNode>());
         arraysPartitions.get(index).add(node);
         iterateJson(path, ins, timestamp, level, objectsPartitions, arraysPartitions);
-        node.setLastVisit(timestamp.getTimestamp());
+        node.last_visit = timestamp.getTimestamp();
         timestamp.inc();
         return node;
     }

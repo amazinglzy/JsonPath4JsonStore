@@ -32,8 +32,8 @@ public class IndexPropertyScanTest {
         Iter<LabelNode> iter = scan.iterator();
 
         assertThat(iter.hasNext()).isTrue();
-        assertThat(iter.read().getValue()).isEqualToComparingFieldByField(Scalar.createDInt(1));
+        assertThat(iter.read().value).isEqualToComparingFieldByField(Scalar.createDInt(1));
         iter.next();
-        assertThat(iter.read().getValue()).isEqualToComparingFieldByField(Scalar.createDInt(2));
+        assertThat(iter.read().value).isEqualToComparingFieldByField(Scalar.createDInt(2));
     }
 }

@@ -68,7 +68,7 @@ public class SSplit extends BaseSplit {
     public List<DSingularBody> find(LabelNode u, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
             return new LinkedList<>() {{
-                add(new DSingularBody(u.getValue()));
+                add(new DSingularBody(u.value));
             }};
         }
 
