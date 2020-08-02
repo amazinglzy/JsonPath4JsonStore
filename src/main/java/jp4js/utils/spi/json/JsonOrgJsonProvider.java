@@ -1,7 +1,5 @@
 package jp4js.utils.spi.json;
 
-import jp4js.utils.err.InvalidJsonException;
-import jp4js.utils.err.JsonPathException;
 import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +7,9 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
+
+import jp4js.utils.exception.InvalidJsonException;
+import jp4js.utils.exception.JsonPathException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -14,12 +14,12 @@
  */
 package jp4js.utils;
 
-import jp4js.utils.err.JsonPathException;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Iterator;
+
+import jp4js.utils.exception.JsonPathException;
 
 public final class Utils {
 

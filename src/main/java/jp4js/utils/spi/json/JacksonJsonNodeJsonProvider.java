@@ -1,14 +1,14 @@
 package jp4js.utils.spi.json;
 
-import jp4js.utils.err.InvalidJsonException;
-import jp4js.utils.err.JsonPathException;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+
+import jp4js.utils.exception.InvalidJsonException;
+import jp4js.utils.exception.JsonPathException;
 
 import java.io.IOException;
 import java.io.InputStream;

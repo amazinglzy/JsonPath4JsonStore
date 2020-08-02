@@ -14,10 +14,10 @@
  */
 package jp4js.utils.spi.json;
 
-import jp4js.utils.err.InvalidJsonException;
-
 import java.io.InputStream;
 import java.util.Collection;
+
+import jp4js.utils.exception.InvalidJsonException;
 
 public interface JsonProvider {
 

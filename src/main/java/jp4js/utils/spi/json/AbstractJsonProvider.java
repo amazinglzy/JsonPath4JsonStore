@@ -14,11 +14,11 @@
  */
 package jp4js.utils.spi.json;
 
-import jp4js.utils.err.JsonPathException;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import jp4js.utils.exception.JsonPathException;
 
 public abstract class AbstractJsonProvider implements JsonProvider {
 

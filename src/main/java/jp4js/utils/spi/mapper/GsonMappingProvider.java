@@ -15,8 +15,8 @@
 package jp4js.utils.spi.mapper;
 
 import jp4js.utils.Configuration;
-import jp4js.utils.err.JsonPathException;
 import jp4js.utils.TypeRef;
+import jp4js.utils.exception.JsonPathException;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

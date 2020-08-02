@@ -14,7 +14,7 @@
  */
 package jp4js.utils.spi.mapper;
 
-import jp4js.utils.err.JsonPathException;
+import jp4js.utils.exception.JsonPathException;
 
 public class MappingException extends JsonPathException {
 

@@ -14,9 +14,6 @@
  */
 package jp4js.utils.spi.json;
 
-import jp4js.utils.err.InvalidJsonException;
-import jp4js.utils.err.JsonPathException;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -36,6 +33,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.internal.LazilyParsedNumber;
+
+import jp4js.utils.exception.InvalidJsonException;
+import jp4js.utils.exception.JsonPathException;
 
 public class GsonJsonProvider extends AbstractJsonProvider {
 

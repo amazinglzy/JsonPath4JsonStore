@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp4js.utils.err;
+package jp4js.utils.exception;
 
 
 public class InvalidJsonException extends JsonPathException {

@@ -12,22 +12,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp4js.utils.err;
+package jp4js.utils.exception;
 
-public class JsonPathException extends RuntimeException {
+public class ValueCompareException extends JsonPathException {
 
-    public JsonPathException() {
+    public ValueCompareException() {
     }
 
-    public JsonPathException(String message) {
+    /**
+     * Construct the exception with message capturing the classes for two objects.
+     *
+     * @param left first object
+     * @param right second object
+     */
+    public ValueCompareException(final Object left, final Object right) {
+        super(String.format("Can not compare a %1s with a %2s", left.getClass().getName(), right.getClass().getName()));
+    }
+
+    public ValueCompareException(String message) {
         super(message);
     }
 
-    public JsonPathException(String message, Throwable cause) {
+    public ValueCompareException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public JsonPathException(Throwable cause) {
-        super(cause);
-    }
 }

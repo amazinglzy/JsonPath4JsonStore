@@ -12,22 +12,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp4js.utils.err;
+package jp4js.utils.exception;
 
-public class PathNotFoundException extends InvalidPathException {
+public class JsonPathException extends RuntimeException {
 
-    public PathNotFoundException() {
+    public JsonPathException() {
     }
 
-    public PathNotFoundException(String message) {
+    public JsonPathException(String message) {
         super(message);
     }
 
-    public PathNotFoundException(String message, Throwable cause) {
+    public JsonPathException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public PathNotFoundException(Throwable cause) {
+    public JsonPathException(Throwable cause) {
         super(cause);
     }
 }
