@@ -47,7 +47,7 @@ public class MIter<E> implements Iter<E> {
     }
 
     @Override
-    public Iter<E> cloneCurrentIterator() {
-        return new MIter<E>(this.iter1.cloneCurrentIterator(), this.iter2.cloneCurrentIterator(), c);
+    public Iter<E> clone() {
+        return new MIter<E>(this.iter1.clone(), this.iter2.clone(), c);
     }
 }

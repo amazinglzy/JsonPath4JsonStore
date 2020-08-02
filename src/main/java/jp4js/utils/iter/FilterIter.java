@@ -40,7 +40,7 @@ public class FilterIter<E> implements Iter<E> {
     }
 
     @Override
-    public FilterIter<E> cloneCurrentIterator() {
-        return new FilterIter<>(this.iter.cloneCurrentIterator(), this.filter);
+    public FilterIter<E> clone() {
+        return new FilterIter<>(this.iter.clone(), this.filter);
     }
 }

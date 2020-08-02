@@ -38,7 +38,7 @@ public class SingleNodeIterator implements Iter<LabelNode> {
     }
 
     @Override
-    public Iter<LabelNode> cloneCurrentIterator() {
+    public Iter<LabelNode> clone() {
         return new SingleNodeIterator(this.data, this.idx);
     }
 }

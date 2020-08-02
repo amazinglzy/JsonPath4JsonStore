@@ -22,5 +22,5 @@ public interface Iter<E> {
      */
     boolean hasNext();
 
-    Iter<E> cloneCurrentIterator();
+    Iter<E> clone();
 }

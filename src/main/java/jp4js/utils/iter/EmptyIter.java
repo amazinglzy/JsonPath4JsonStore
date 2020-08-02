@@ -21,7 +21,7 @@ public class EmptyIter<E> implements Iter<E> {
     }
 
     @Override
-    public Iter<E> cloneCurrentIterator() {
+    public Iter<E> clone() {
         return new EmptyIter<>();
     }
 }

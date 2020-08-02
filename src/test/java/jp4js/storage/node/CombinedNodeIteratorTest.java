@@ -47,7 +47,7 @@ public class CombinedNodeIteratorTest {
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(null, 0, 0, 10, 1, null));
 
-        Iter<LabelNode> iterCopy = iter.cloneCurrentIterator();
+        Iter<LabelNode> iterCopy = iter.clone();
         iter.next();
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(null, 0, 1, 5, 2, null));

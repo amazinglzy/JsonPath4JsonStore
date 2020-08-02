@@ -58,10 +58,10 @@ public class GeneralPlanOp {
             }
 
             @Override
-            public SelfIter<E> cloneCurrentIterator() {
+            public SelfIter<E> clone() {
                 List<Iter<E>> itersCopy = new LinkedList<>() {{
                     for (Iter<E> iter : iters) {
-                        add(iter.cloneCurrentIterator());
+                        add(iter.clone());
                     }
                 }};
                 return new SelfIter<E>(itersCopy);
