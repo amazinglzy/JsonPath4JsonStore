@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CombinedNodeIteratorTest {
+public class MIterTest {
     @Test
     public void testCombinedNodeIteratorSanity() {
         LinkedList<LabelNode> l1 = new LinkedList<LabelNode>() {{

@@ -31,14 +31,7 @@ public class IndexScan {
         return new LinkedList<>() {{
             Iter<LabelNode> iter = indexContext.openAll();
             for (LabelNode node: sortedNodes) {
-                while (iter.hasNext()) {
-                    LabelNode inode = iter.read();
-                    if (inode.last_visit < node.first_visit) {
-                        iter.next();
-                    } else {
-                        break;
-                    }
-                }
+                iter.seek(node.first_visit);
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();
@@ -60,14 +53,7 @@ public class IndexScan {
         return new LinkedList<>() {{
             Iter<LabelNode> iter = indexContext.openObject(new LinkedList<String>(){{add(fieldname); }});
             for (LabelNode node: sortedNodes) {
-                while (iter.hasNext()) {
-                    LabelNode inode = iter.read();
-                    if (inode.last_visit < node.first_visit) {
-                        iter.next();
-                    } else {
-                        break;
-                    }
-                }
+                iter.seek(node.first_visit);
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();
@@ -89,14 +75,7 @@ public class IndexScan {
         return new LinkedList<>() {{
             Iter<LabelNode> iter = indexContext.openObject(new LinkedList<String>(){{add(fieldname); }});
             for (LabelNode node: sortedNodes) {
-                while (iter.hasNext()) {
-                    LabelNode inode = iter.read();
-                    if (inode.last_visit < node.first_visit) {
-                        iter.next();
-                    } else {
-                        break;
-                    }
-                }
+                iter.seek(node.first_visit);
                 while (iter.hasNext()) {
                     LabelNode inode = iter.read();
                     iter.next();

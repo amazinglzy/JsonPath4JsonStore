@@ -38,4 +38,9 @@ public class FilterIter<E> implements Iter<E> {
         skip();
         return this.iter.hasNext();
     }
+
+    @Override
+    public void seek(long visit) {
+        iter.seek(visit);
+    }
 }

@@ -21,7 +21,7 @@ public class EmptyIter<E> implements Iter<E> {
     }
 
     @Override
-    public Iter<E> clone() {
-        return new EmptyIter<>();
+    public void seek(long visit) {
+
     }
 }

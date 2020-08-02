@@ -45,4 +45,10 @@ public class MIter<E> implements Iter<E> {
     public boolean hasNext() {
         return (this.iter1.hasNext() || this.iter2.hasNext());
     }
+
+    @Override
+    public void seek(long visit) {
+        this.iter1.seek(visit);
+        this.iter2.seek(visit);
+    }
 }

@@ -20,4 +20,6 @@ public interface Iter<E> {
 
      */
     boolean hasNext();
+
+    void seek(long visit);
 }

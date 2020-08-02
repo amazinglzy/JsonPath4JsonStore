@@ -31,4 +31,18 @@ public class SingleNodeIterator implements Iter<LabelNode> {
     public boolean hasNext() {
         return this.idx < this.data.size();
     }
+
+    @Override
+    public void seek(long visit) {
+        int left = -1, right = data.size();
+        while (right - left > 1) {
+            int mid = ( left + right ) / 2;
+            if (data.get(mid).first_visit < visit) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        this.idx = right;
+    }
 }
