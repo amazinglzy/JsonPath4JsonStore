@@ -45,9 +45,4 @@ public class MIter<E> implements Iter<E> {
     public boolean hasNext() {
         return (this.iter1.hasNext() || this.iter2.hasNext());
     }
-
-    @Override
-    public Iter<E> clone() {
-        return new MIter<E>(this.iter1.clone(), this.iter2.clone(), c);
-    }
 }

@@ -14,11 +14,6 @@ public class SingleNodeIterator implements Iter<LabelNode> {
         this.idx = 0;
     }
 
-    private SingleNodeIterator(ArrayList<LabelNode> data, int idx) {
-        this.data = data;
-        this.idx = idx;
-    }
-
     @Override
     public LabelNode read() {
         return this.data.get(this.idx);
@@ -35,10 +30,5 @@ public class SingleNodeIterator implements Iter<LabelNode> {
     @Override
     public boolean hasNext() {
         return this.idx < this.data.size();
-    }
-
-    @Override
-    public Iter<LabelNode> clone() {
-        return new SingleNodeIterator(this.data, this.idx);
     }
 }

@@ -56,16 +56,6 @@ public class GeneralPlanOp {
                 popEmpty();
                 return this.iters.size() > 0;
             }
-
-            @Override
-            public SelfIter<E> clone() {
-                List<Iter<E>> itersCopy = new LinkedList<>() {{
-                    for (Iter<E> iter : iters) {
-                        add(iter.clone());
-                    }
-                }};
-                return new SelfIter<E>(itersCopy);
-            }
         }
     }
 }

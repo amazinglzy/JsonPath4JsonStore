@@ -38,9 +38,4 @@ public class FilterIter<E> implements Iter<E> {
         skip();
         return this.iter.hasNext();
     }
-
-    @Override
-    public FilterIter<E> clone() {
-        return new FilterIter<>(this.iter.clone(), this.filter);
-    }
 }

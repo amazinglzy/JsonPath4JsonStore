@@ -22,24 +22,4 @@ public class SingleNodeIteratorTest {
         iter.next();
         assertThat(iter.hasNext()).isEqualTo(false);
     }
-
-    @Test
-    public void testSingleNodeIteratorClone() {
-        LinkedList<LabelNode> l = new LinkedList<LabelNode>() {{
-            add(NodeFactory.create(null, 0, 0, 10, 1, null));
-            add(NodeFactory.create(null, 0, 1, 5, 2, null));
-        }};
-
-        Iter<LabelNode> iter = new SingleNodeIterator(l);
-
-        assertThat(iter.hasNext()).isTrue();
-        assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(null, 0, 0, 10, 1, null));
-
-        Iter<LabelNode> iterCopy = iter.clone();
-
-        iter.next();
-        assertThat(iter.hasNext()).isTrue();
-        assertThat(iter.read()).isEqualToIgnoringNullFields(NodeFactory.create(null, 0, 1, 5, 2, null));
-        assertThat(iterCopy.read()).isEqualToIgnoringNullFields(NodeFactory.create(null, 0, 0, 10, 1, null));
-    }
 }

@@ -5,7 +5,6 @@ public interface Iter<E> {
     E read();
     void next();
     boolean hasNext();
-    Iter<E> cloneCurrentIterator();
     */
     /*
     return the current node of the iterator
@@ -21,6 +20,4 @@ public interface Iter<E> {
 
      */
     boolean hasNext();
-
-    Iter<E> clone();
 }
