@@ -56,7 +56,7 @@ public class SSplit extends BaseSplit {
                 bodyData.addAll(find(childnode, lst));
             }
         }
-        return null;
+        return new DRepeatableBody(bodyData);
     }
 
     public DSingularBody findSingular(LabelNode u, SingularSL lst) throws MatchException {
@@ -109,8 +109,13 @@ public class SSplit extends BaseSplit {
         List<LabelNode> current;
         switch(rel) {
             case PC:
-                current = IndexScan.children(
-                    SSplit.this.indexContext, sortedNodes, fieldname);
+                if (fieldname == "*") {
+                    current = IndexScan.children(
+                        SSplit.this.indexContext, sortedNodes);
+                } else {
+                    current = IndexScan.children(
+                        SSplit.this.indexContext, sortedNodes, fieldname);
+                }
                 return iterateNode(current, steps, currentStep + 1);
             case AD:
                 current = IndexScan.descendents(

@@ -34,7 +34,7 @@ public class Indexer {
         return index(ins);
     }
 
-    private static IndexContext index(DType.Instance ins) {
+    public static IndexContext index(DType.Instance ins) {
         Map<String, LinkedList<LabelNode>> objectsPartitions = new HashMap<String, LinkedList<LabelNode>>();
         Map<Long, LinkedList<LabelNode>> arraysPartitions = new HashMap<Long, LinkedList<LabelNode>>();
         LabelNode node = iterateJsonObject("$", "$", ins, new Timestamp(), 0, objectsPartitions, arraysPartitions);
