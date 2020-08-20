@@ -2,8 +2,6 @@ package jp4js.nf2;
 
 import static org.junit.Assert.assertFalse;
 
-import org.junit.Test;
-
 import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
 import jp4js.data.JsonArray;
@@ -11,12 +9,14 @@ import jp4js.data.JsonArrayMulti;
 import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
+import jp4js.data.XMarkSample;
 import jp4js.nf2.op.Split;
 import jp4js.nf2.op.SSplit;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.storage.IndexContext;
 import jp4js.storage.Indexer;
 
+import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SplitTest {
@@ -144,5 +144,10 @@ public class SplitTest {
     @Test
     public void basic13_DataSuiteSSplit_NestedSameFieldname() {
         forDataSuiteSSplit(new NestedSameFieldname());
+    }
+
+    @Test
+    public void basic14_DataSuiteSplit_XMarkSample() {
+        forDataSuiteSplit(new XMarkSample());
     }
 }
