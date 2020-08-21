@@ -16,7 +16,9 @@ public class NaiveJsonPath implements JsonPath {
 
     @Override
     public void index(String json) {
-        this.instance = Trans.fromJSON(json, NaiveJsonPath.configuration);
+        this.instance = Trans.fromJSON(
+            NaiveJsonPath.configuration.jsonProvider().parse(json),
+            NaiveJsonPath.configuration);
     }
 
     @Override

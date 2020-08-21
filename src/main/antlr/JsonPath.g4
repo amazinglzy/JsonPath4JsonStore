@@ -38,5 +38,5 @@ WILDCARD: '*';
 LOGIC_AND: '&&';
 DIGIT: [0-9];
 POSITIVEDIGIT: [1-9];
-LETTER: [A-Z] | [a-z];
+LETTER: [A-Z] | [a-z] | [_];
 WS: [ \t\r\n]+ -> skip;

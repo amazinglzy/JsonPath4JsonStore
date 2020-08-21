@@ -16,7 +16,9 @@ public class IndexJsonPath implements JsonPath {
 
     @Override
     public void index(String json) {
-        this.indexContext = Indexer.index(json, IndexJsonPath.configuration);
+        this.indexContext = Indexer.index(
+            IndexJsonPath.configuration.jsonProvider().parse(json),
+            IndexJsonPath.configuration);
     }
     
     @Override

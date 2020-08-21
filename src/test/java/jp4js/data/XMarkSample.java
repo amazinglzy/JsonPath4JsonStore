@@ -6,7 +6,7 @@ public class XMarkSample extends BaseDataSuite {
         return new String[]{
             "$.closed_auctions[*].price",
             "$.region..location",
-            "$.people[*].gender",
+            "$.people[*].name",
             "$.open_auctions[*].reserve"
         };
     }
@@ -14,10 +14,10 @@ public class XMarkSample extends BaseDataSuite {
     @Override
     public String[] res() {
         return new String[]{
-            "",
-            "",
-            "",
-            ""
+            "([(\"45.13\")])",
+            "((\"United States\"))",
+            "([(\"Johnathan Senouci\")])",
+            "([(\"542.00\")])"
         };
     }
     
