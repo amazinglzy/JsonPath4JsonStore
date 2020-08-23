@@ -109,18 +109,6 @@ public interface JsonPathVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JsonPathParser#jsonArraySelection}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJsonArraySelection(JsonPathParser.JsonArraySelectionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link JsonPathParser#jsonArrayIndex}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJsonArrayIndex(JsonPathParser.JsonArrayIndexContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link JsonPathParser#jsonArraySlice}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

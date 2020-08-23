@@ -35,6 +35,13 @@ public abstract class StructureList implements Iterable<StructureList.StructureI
         this.items.add(item);
     }
 
+    public void put(StructureSteps steps, StructureList lst) {
+        StructureItem item = new StructureItem();
+        item.steps = steps;
+        item.lst = lst;
+        this.items.add(item);
+    }
+
     public void put(StructureList.StructureItem item) {
         this.items.add(item);
     }

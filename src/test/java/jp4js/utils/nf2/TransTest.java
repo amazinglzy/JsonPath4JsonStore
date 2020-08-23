@@ -13,17 +13,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TransTest {
     @Test
     public void basic01_FromSL2DHeader() {
-        // System.out.println(Trans.fromSL(JsonPathSample.lst1).toString());
-        // System.out.println(Trans.fromSL(JsonPathSample.lst2).toString());
-        // System.out.println(Trans.fromSL(JsonPathSample.lst3).toString());
-        // System.out.println(Trans.fromSL(JsonPathSample.lst4).toString());
-        // System.out.println(Trans.fromSL(JsonPathSample.lst5).toString());
         Goessener data = new Goessener();
-        assertThat(Trans.fromSL(data.query(0)).toString()).isEqualTo("(store(book[author()]))");
-        assertThat(Trans.fromSL(data.query(1)).toString()).isEqualTo("(author())");
-        assertThat(Trans.fromSL(data.query(2)).toString()).isEqualTo("(store(*()))");
-        assertThat(Trans.fromSL(data.query(3)).toString()).isEqualTo("(store(price()))");
-        assertThat(Trans.fromSL(data.query(4)).toString()).isEqualTo("(book[])");
+        // System.out.println(Trans.fromSL(data.query(0)).toString());
+        // System.out.println(Trans.fromSL(data.query(1)).toString());
+        // System.out.println(Trans.fromSL(data.query(2)).toString());
+        // System.out.println(Trans.fromSL(data.query(3)).toString());
+        // System.out.println(Trans.fromSL(data.query(4)).toString());
+        assertThat(Trans.fromSL(data.query(0)).toString()).isEqualTo("[.store.book.*.author[]]");
+        assertThat(Trans.fromSL(data.query(1)).toString()).isEqualTo("[..author[]]");
+        assertThat(Trans.fromSL(data.query(2)).toString()).isEqualTo("[.store.*[]]");
+        assertThat(Trans.fromSL(data.query(3)).toString()).isEqualTo("[.store..price[]]");
+        assertThat(Trans.fromSL(data.query(4)).toString()).isEqualTo("[..book.{2,3}[]]");
     }
 
     @Test

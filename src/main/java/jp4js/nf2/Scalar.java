@@ -277,6 +277,10 @@ public class Scalar {
                 return this.data;
             }
 
+            public int size() {
+                return this.data.size();
+            }
+
             @Override
             public DList type() {
                 return DList.this;

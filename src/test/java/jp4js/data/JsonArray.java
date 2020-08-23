@@ -39,9 +39,9 @@ public class JsonArray extends BaseDataSuite {
     @Override
     public String[] res() {
         return new String[] {
-            "([(([(\"bla_0\")])), (([(\"bla_4\"), (\"bla_5\")]))])",
-            "(\"bla_0\")",
-            "([(\"bla_0\")])"
+            "[([\"bla_0\"]), ([\"bla_4\"]), ([\"bla_5\"])]",
+            "[([\"bla_0\"]), ([\"bla_4\"]), ([\"bla_5\"])]",
+            "[([\"bla_0\"]), ([\"bla_4\"]), ([\"bla_5\"])]",
         };
     }
 }

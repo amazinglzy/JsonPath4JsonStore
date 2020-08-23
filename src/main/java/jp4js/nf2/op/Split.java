@@ -43,12 +43,7 @@ public class Split extends BaseSplit {
 
     public DRepeatableBody findRepeatable(DType.Instance ins, RepeatableSL lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
-        List<DType.Instance> elems;
-        if (ins instanceof DList.Instance) {
-            elems = ((DList.Instance)ins).data();
-        } else {
-            elems = new LinkedList<DType.Instance>() {{ add(ins); }};
-        }
+        List<DType.Instance> elems = new LinkedList<DType.Instance>() {{ add(ins); }};
         if (lst.isNested()) {
             for (DType.Instance subIns: elems) 
                 bodyData.add(findRepeatable(subIns, lst.elemType()));
@@ -103,33 +98,53 @@ public class Split extends BaseSplit {
             }};
         }
 
-        StructureRelation rel = steps.type(currentStep);
-        String fieldname = steps.fieldname(currentStep);
+        StructureSteps.Step step = steps.step(currentStep);
+        StructureRelation rel = step.rel;
 
         return new LinkedList<>() {{
             if (ins instanceof DMapping.Instance) {
                 DMapping.Instance mapping = (DMapping.Instance)ins;
-                if (fieldname == "*") {
-                    for (String field: mapping) {
-                        addAll(iterateInstance(mapping.get(field), steps, currentStep+1));
+                if (step instanceof StructureSteps.PropertyStep) {
+                    StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
+                    String fieldname = pstep.fieldname;
+                    if (fieldname == "*") {
+                        for (String field: mapping) {
+                            addAll(iterateInstance(mapping.get(field), steps, currentStep+1));
+                        }
+                    } else {
+                        if (mapping.contains(fieldname)) {
+                            addAll(iterateInstance(mapping.get(fieldname), steps, currentStep+1));
+                        }
                     }
-                } else {
-                    if (mapping.contains(fieldname)) {
-                        addAll(iterateInstance(mapping.get(fieldname), steps, currentStep+1));
-                    }
-                }
-                if (rel == StructureRelation.AD) {
-                    for (String field: mapping) {
-                        addAll(iterateInstance(mapping.get(field), steps, currentStep));
+                    if (rel == StructureRelation.AD) {
+                        for (String field: mapping) {
+                            addAll(iterateInstance(mapping.get(field), steps, currentStep));
+                        }
                     }
                 }
             }
 
             if (ins instanceof DList.Instance) {
-                if (rel == StructureRelation.AD) {
-                    DList.Instance lstIns = (DList.Instance)ins;
-                    for (DType.Instance insElem: lstIns) {
-                        addAll(iterateInstance(insElem, steps, currentStep));
+                DList.Instance lstIns = (DList.Instance)ins;
+                if (step instanceof StructureSteps.PropertyStep) {
+                    StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
+                    String fieldname = pstep.fieldname;
+                    if (fieldname == "*") {
+                        for (DType.Instance insElem: lstIns) {
+                            addAll(iterateInstance(insElem, steps, currentStep+1));
+                        }
+                    }
+
+                    if (rel == StructureRelation.AD) {
+                        for (DType.Instance insElem: lstIns) {
+                            addAll(iterateInstance(insElem, steps, currentStep));
+                        }
+                    }
+                } 
+                if (step instanceof StructureSteps.IndexStep) {
+                    StructureSteps.IndexStep istep = (StructureSteps.IndexStep)step;
+                    for (int i = istep.from; i < istep.to && i < lstIns.size(); i++) {
+                        addAll(iterateInstance(lstIns.get(i), steps, currentStep + 1));
                     }
                 }
             }

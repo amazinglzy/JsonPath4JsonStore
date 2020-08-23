@@ -69,13 +69,13 @@ public class SplitTest {
         try {
             Match match = split.open();
             assertThat(match.isValid()).isTrue();
-            // System.out.println(match.header().toString());
-            // System.out.println(match.body().toString());
+            System.out.println(match.header().toString());
+            System.out.println(match.body().toString());
             assertThat(match.header().toString()).isEqualTo(
-                "(store(book[author()]))"
+                "[.store.book.*.author[]]"
             );
             assertThat(match.body().toString()).isEqualTo(
-                "(([(\"Nigel Rees\"), (\"Evelyn Waugh\"), (\"Herman Melville\"), (\"J. R. R. Tolkien\")]))"
+                "[([\"Nigel Rees\"]), ([\"Evelyn Waugh\"]), ([\"Herman Melville\"]), ([\"J. R. R. Tolkien\"])]"
             );
         } catch (Split.MatchException e) {
             assertFalse(e.toString(), true);
@@ -149,5 +149,10 @@ public class SplitTest {
     @Test
     public void basic14_DataSuiteSplit_XMarkSample() {
         forDataSuiteSplit(new XMarkSample());
+    }
+
+    @Test
+    public void basic15_DataSuiteSSplit_XMarkSample() {
+        forDataSuiteSSplit(new XMarkSample());
     }
 }

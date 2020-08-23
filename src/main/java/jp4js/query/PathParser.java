@@ -3,17 +3,17 @@ package jp4js.query;
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
 import jp4js.nf2.op.structure.RepeatableSL;
-import jp4js.nf2.op.structure.SingularSL;
-// import jp4js.utils.query.ArraySelectionsVisitor;
-// import jp4js.index.node.LabelArray.ArraySelections;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.op.structure.StructureRelation;
+import jp4js.nf2.op.structure.StructureSteps;
 
 
 public class PathParser extends JsonPathBaseVisitor<StructureList> {
-    private StructureList lst;
+    private RepeatableSL lst;
+    private StructureSteps steps;
     public PathParser() {
-        this.lst = null;
+        this.lst = new RepeatableSL();
+        this.steps = null;
     }
 
     @Override
@@ -21,8 +21,14 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
         for (int i = ctx.jsonSteps().jsonStep().size() - 1; i >= 0; i--) {
             this.visit(ctx.jsonSteps().jsonStep(i));
         }
-        if (lst != null) return lst;
-        return new SingularSL();
+        if (steps != null) {
+            steps.reverse();
+            RepeatableSL ret = new RepeatableSL();
+            ret.put(steps, this.lst);
+            return ret;
+        } else {
+            return new RepeatableSL(this.lst);
+        }
     }
 
     @Override 
@@ -30,49 +36,59 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
         for (int i = ctx.jsonSteps().jsonStep().size() - 1; i >= 0; i--) {
             this.visit(ctx.jsonSteps().jsonStep(i));
         }
-        if (lst != null) return lst;
-        return new SingularSL();
+        if (steps != null) {
+            steps.reverse();
+            RepeatableSL ret = new RepeatableSL();
+            ret.put(steps, this.lst);
+            return ret;
+        } else {
+            return this.lst;
+        }
     }
 
     @Override 
     public StructureList visitJsonStep(JsonPathParser.JsonStepContext ctx) { 
-        if (this.lst == null)
-            this.lst = new SingularSL();
         if (ctx.jsonFilterExpr() != null) {
-            StructureList children = new FilterPathParser().visit(ctx.jsonFilterExpr());
-            this.lst.mergeIn(children);
+            if (this.steps != null) {
+                RepeatableSL nlst = new RepeatableSL();
+                this.steps.reverse();
+                nlst.put(steps, this.lst);
+                this.lst = nlst;
+                this.steps = null;
+            }
+
+            StructureList brothers = new FilterPathParser().visit(ctx.jsonFilterExpr());
+            this.lst.mergeIn(brothers);
         }
-        return this.visit(ctx.getChild(0) );
+        this.visit(ctx.getChild(0) );
+        return null;
     }
 
     @Override 
     public StructureList visitJsonObjectFieldNameStep(JsonPathParser.JsonObjectFieldNameStepContext ctx) {
-        StructureList nLst = new SingularSL();
-        if (this.lst == null) 
-            this.lst = new SingularSL();
-        nLst.put(ctx.jsonFieldName().getText(), this.lst, StructureRelation.PC);
-        this.lst = nLst;
-        return this.lst;
+        if (this.steps == null) {
+            this.steps = new StructureSteps();
+        }
+        this.steps.addStep(StructureRelation.PC, ctx.jsonFieldName().getText());
+        return null;
     }
 
     @Override
     public StructureList visitJsonObjectWildcardStep(JsonPathParser.JsonObjectWildcardStepContext ctx) { 
-        StructureList nLst = new SingularSL();
-        if (this.lst == null) 
-            this.lst = new SingularSL();
-        nLst.put("*", this.lst, StructureRelation.PC);
-        this.lst = nLst;
-        return this.lst;
+        if (this.steps == null) {
+            this.steps = new StructureSteps();
+        }
+        this.steps.addStep(StructureRelation.PC, "*");
+        return null;
     }
 
     @Override
     public StructureList visitJsonDescendentStep(JsonPathParser.JsonDescendentStepContext ctx) {
-        StructureList nLst = new SingularSL();
-        if (this.lst == null) 
-            this.lst = new SingularSL();
-        nLst.put(ctx.jsonFieldName().getText(), this.lst, StructureRelation.AD);
-        this.lst = nLst;
-        return this.lst;
+        if (this.steps == null) {
+            this.steps = new StructureSteps();
+        }
+        this.steps.addStep(StructureRelation.AD, ctx.jsonFieldName().getText());
+        return null;
     }
 
     @Override 
@@ -85,29 +101,22 @@ public class PathParser extends JsonPathBaseVisitor<StructureList> {
 
     @Override
     public StructureList visitJsonArrayWildcardStep(JsonPathParser.JsonArrayWildcardStepContext ctx) { 
-        StructureList nLst;
-        if (this.lst == null) 
-            nLst = new RepeatableSL();
-        else if (this.lst instanceof RepeatableSL) 
-            nLst = new RepeatableSL((RepeatableSL)this.lst);
-        else
-            nLst = new RepeatableSL((SingularSL)this.lst);
-        this.lst = nLst;
-        return this.lst;
+        if (this.steps == null) {
+            this.steps = new StructureSteps();
+        }
+        this.steps.addStep(StructureRelation.PC, "*");
+        return null;
     }
 
 	@Override
     public StructureList visitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx) {
-        // ArraySelectionsVisitor visitor = new ArraySelectionsVisitor();
-        // ArraySelections selections = visitor.visit(ctx);
-        StructureList nLst;
-        if (this.lst == null) 
-            nLst = new RepeatableSL();
-        else if (this.lst instanceof RepeatableSL) 
-            nLst = new RepeatableSL((RepeatableSL)this.lst);
-        else
-            nLst = new RepeatableSL((SingularSL)this.lst);
-        this.lst = nLst;
-        return this.lst;
+        if (this.steps == null) {
+            this.steps = new StructureSteps();
+        }
+        int from = Integer.parseInt(ctx.jsonArraySlice().NATRUAL_INTEGER(0).getText());
+        int to = Integer.parseInt(ctx.jsonArraySlice().NATRUAL_INTEGER(1).getText());
+        StructureSteps.IndexStep istep = new StructureSteps.IndexStep(from, to);
+        this.steps.addStep(istep);
+        return null;
     }
 }

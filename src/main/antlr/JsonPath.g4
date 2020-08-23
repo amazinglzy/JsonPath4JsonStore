@@ -20,9 +20,7 @@ jsonFieldName: IDENTIFIER ;
 
 jsonArrayStep: ARRAY_BEGIN (jsonArrayWildcardStep | jsonArraySelectionsStep) ARRAY_END ;
 jsonArrayWildcardStep: WILDCARD;
-jsonArraySelectionsStep: jsonArraySelection (',' jsonArraySelection)* ;
-jsonArraySelection: jsonArrayIndex | jsonArraySlice ;
-jsonArrayIndex: NATRUAL_INTEGER ;
+jsonArraySelectionsStep: jsonArraySlice ;
 jsonArraySlice: NATRUAL_INTEGER ':' NATRUAL_INTEGER ;
 
 JSON_STRING: '"' (~["\\])* '"';

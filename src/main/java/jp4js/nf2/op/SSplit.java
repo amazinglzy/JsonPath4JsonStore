@@ -45,8 +45,7 @@ public class SSplit extends BaseSplit {
 
     public DRepeatableBody findRepeatable(LabelNode u, RepeatableSL lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
-        List<LabelNode> elems = IndexScan.children(
-            this.indexContext, new LinkedList<>(){{ add(u); }});
+        List<LabelNode> elems = new LinkedList<>(){{ add(u);}};
         if (lst.isNested()) {
             for (LabelNode childnode: elems) {
                 bodyData.add(findRepeatable(childnode, lst.elemType()));
@@ -103,23 +102,34 @@ public class SSplit extends BaseSplit {
             return sortedNodes;
         }
 
-        StructureRelation rel = steps.type(currentStep);
-        String fieldname = steps.fieldname(currentStep);
+        StructureSteps.Step step = steps.step(currentStep);
+        StructureRelation rel = step.rel;
 
         List<LabelNode> current;
         switch(rel) {
             case PC:
-                if (fieldname == "*") {
-                    current = IndexScan.children(
-                        SSplit.this.indexContext, sortedNodes);
-                } else {
-                    current = IndexScan.children(
-                        SSplit.this.indexContext, sortedNodes, fieldname);
+                if (step instanceof StructureSteps.PropertyStep) {
+                    StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
+                    if (pstep.fieldname == "*") {
+                        current = IndexScan.children(
+                            SSplit.this.indexContext, sortedNodes);
+                    } else {
+                        current = IndexScan.children(
+                            SSplit.this.indexContext, sortedNodes, pstep);
+                    }
+                    return iterateNode(current, steps, currentStep + 1);
                 }
-                return iterateNode(current, steps, currentStep + 1);
+
+                if (step instanceof StructureSteps.IndexStep) {
+                    StructureSteps.IndexStep istep = (StructureSteps.IndexStep)step;
+                    current = IndexScan.children(SSplit.this.indexContext, sortedNodes, istep);
+                    return iterateNode(current, steps, currentStep + 1);
+                }
+                break;
             case AD:
+                assert(step instanceof StructureSteps.PropertyStep);
                 current = IndexScan.descendents(
-                    SSplit.this.indexContext, sortedNodes, fieldname);
+                    SSplit.this.indexContext, sortedNodes, (StructureSteps.PropertyStep)step);
                 return iterateNode(current, steps, currentStep + 1);
             default:
                 Utils.CanNotBeHere("Unkown Structure Relation Type");

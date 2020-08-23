@@ -172,26 +172,6 @@ public interface JsonPathListener extends ParseTreeListener {
 	 */
 	void exitJsonArraySelectionsStep(JsonPathParser.JsonArraySelectionsStepContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#jsonArraySelection}.
-	 * @param ctx the parse tree
-	 */
-	void enterJsonArraySelection(JsonPathParser.JsonArraySelectionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#jsonArraySelection}.
-	 * @param ctx the parse tree
-	 */
-	void exitJsonArraySelection(JsonPathParser.JsonArraySelectionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link JsonPathParser#jsonArrayIndex}.
-	 * @param ctx the parse tree
-	 */
-	void enterJsonArrayIndex(JsonPathParser.JsonArrayIndexContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link JsonPathParser#jsonArrayIndex}.
-	 * @param ctx the parse tree
-	 */
-	void exitJsonArrayIndex(JsonPathParser.JsonArrayIndexContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link JsonPathParser#jsonArraySlice}.
 	 * @param ctx the parse tree
 	 */

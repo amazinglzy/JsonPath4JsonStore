@@ -27,7 +27,7 @@ public class Trans {
     private static DSingularHeader fromSL(SingularSL lst) {
         DSingularHeader ret = new DSingularHeader();
         for (StructureList.StructureItem item: lst) {
-            String fieldname = item.steps.fieldname(0);
+            String fieldname = item.steps.toString();
             StructureList nestedLst = item.lst;
             if (nestedLst != null) 
                 ret.put(fieldname, Trans.fromSL(nestedLst));
@@ -45,7 +45,7 @@ public class Trans {
         } else {
             DRepeatableHeader ret = new DRepeatableHeader();
             for (StructureList.StructureItem item: lst) {
-                String fieldname = item.steps.fieldname(0);
+                String fieldname = item.steps.toString();
                 StructureList nestedLst = item.lst;
                 if (nestedLst != null) 
                     ret.put(fieldname, Trans.fromSL(nestedLst));
