@@ -15,12 +15,12 @@ public class MIter<E> implements Iter<E> {
 
     @Override
     public E read() {
-        if (this.iter1.hasNext() && this.iter2.hasNext()) {
+        if (this.iter1.valid() && this.iter2.valid()) {
             E n1 = this.iter1.read();
             E n2 = this.iter2.read();
             if (c.compare(n1, n2) < 0) return n1;
             else return n2;
-        } else if (this.iter1.hasNext()) {
+        } else if (this.iter1.valid()) {
             return this.iter1.read();
         } else {
             return this.iter2.read();
@@ -29,12 +29,12 @@ public class MIter<E> implements Iter<E> {
 
     @Override
     public void next() {
-        if (this.iter1.hasNext() && this.iter2.hasNext()) {
+        if (this.iter1.valid() && this.iter2.valid()) {
             E n1 = this.iter1.read();
             E n2 = this.iter2.read();
             if (c.compare(n1, n2) < 0) this.iter1.next();
             else this.iter2.next();
-        } else if (this.iter1.hasNext()) {
+        } else if (this.iter1.valid()) {
             this.iter1.next();
         } else {
             this.iter2.next();
@@ -42,8 +42,8 @@ public class MIter<E> implements Iter<E> {
     }
 
     @Override
-    public boolean hasNext() {
-        return (this.iter1.hasNext() || this.iter2.hasNext());
+    public boolean valid() {
+        return (this.iter1.valid() || this.iter2.valid());
     }
 
     @Override

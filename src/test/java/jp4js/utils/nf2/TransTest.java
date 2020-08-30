@@ -1,13 +1,12 @@
 package jp4js.utils.nf2;
 
-import org.junit.Test;
-
 import jp4js.data.Goessener;
 import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.utils.Configuration;
 
+import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TransTest {

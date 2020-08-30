@@ -1,96 +1,186 @@
 package jp4js.storage;
 
-import jp4js.storage.node.LabelArray.ArraySelections;
-import jp4js.storage.node.LabelNode;
-import jp4js.storage.node.SingleNodeIterator;
+import jp4js.nf2.op.structure.StructureSteps;
+import jp4js.storage.node.IndexNode;
+import jp4js.storage.node.SingularNode;
+import jp4js.storage.node.RepeatableNode;
 import jp4js.utils.iter.Iter;
-import jp4js.utils.iter.MIter;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class IndexContext {
-    private LabelNode rootNode;
-    private Map<String, LinkedList<LabelNode>> objectsPartitions;
-    private Map<Long, LinkedList<LabelNode>> arraysPartitions;
+    private IndexNode rootNode;
+    private ArrayList<SingularNode> allSingularNodes;
+    private ArrayList<RepeatableNode> allRepeatableNodes;
+    private ArrayList<SingularNode> singularNodes;
+    private ArrayList<RepeatableNode> repeatableNodes;
 
-    public IndexContext(LabelNode rootNode, Map<String, LinkedList<LabelNode>> objectPartitions,
-            Map<Long, LinkedList<LabelNode>> arrayPartitions) {
+    public IndexContext(IndexNode rootNode, 
+            ArrayList<SingularNode> allSingularNodes,
+            ArrayList<RepeatableNode> allRepeatableNodes,
+            TreeMap<String, LinkedList<SingularNode>> objectPartitions,
+            TreeMap<String, TreeMap<Long, LinkedList<RepeatableNode>>> arrayPartitions) {
         this.rootNode = rootNode;
-        this.objectsPartitions = objectPartitions;
-        this.arraysPartitions = arrayPartitions;
-    }
-
-    public Iter<LabelNode> openAll() {
-        Iter<LabelNode> iter = null;
-        for (String label : this.objectsPartitions.keySet()) {
-            if (iter == null) {
-                iter = getObjectOrEmptyStream(label);
-            } else {
-                iter = new MIter<LabelNode>(iter, getObjectOrEmptyStream(label), LabelNode.comparator());
+        this.allSingularNodes = allSingularNodes;
+        this.allRepeatableNodes = allRepeatableNodes;
+        this.singularNodes = new ArrayList<>();
+        this.repeatableNodes = new ArrayList<>();
+        for (String partition: objectPartitions.keySet()) {
+            this.singularNodes.addAll(objectPartitions.get(partition));
+        }
+        for (String partition: arrayPartitions.keySet()) {
+            for (LinkedList<RepeatableNode> nodes: arrayPartitions.get(partition).values()) {
+                this.repeatableNodes.addAll(nodes);
             }
         }
-        for (Long idx : this.arraysPartitions.keySet()) {
-            if (iter == null) {
-                iter = getArrayOrEmptyStream(idx);
-            } else {
-                iter = new MIter<LabelNode>(iter, getArrayOrEmptyStream(idx), LabelNode.comparator());
-            }
-        }
-        return iter;
     }
 
-    public Iter<LabelNode> openObject(String objectLabel) {
-        return getObjectOrEmptyStream(objectLabel);
-    }
-
-    public Iter<LabelNode> openArray(Long arrayIndex) {
-        return getArrayOrEmptyStream(arrayIndex);
-    }
-
-    public Iter<LabelNode> openObject(List<String> objectLabels) {
-        if (objectLabels.size() == 1)
-            return getObjectOrEmptyStream(objectLabels.get(0));
-        Iter<LabelNode> ret = new MIter<LabelNode>(getObjectOrEmptyStream(objectLabels.get(0)),
-                getObjectOrEmptyStream(objectLabels.get(1)), LabelNode.comparator());
-        for (int i = 2; i < objectLabels.size(); i++) {
-            ret = new MIter<LabelNode>(getObjectOrEmptyStream(objectLabels.get(i)), ret, LabelNode.comparator());
-        }
-        return ret;
-    }
-
-    public Iter<LabelNode> openArray(ArraySelections selections) {
-        List<Integer> indicies = selections.select();
-        if (indicies.size() == 0)
-            return new SingleNodeIterator(new LinkedList<>());
-        else {
-            Iter<LabelNode> iter = null;
-            for (Integer val : indicies) {
-                if (iter == null)
-                    iter = getArrayOrEmptyStream(Long.valueOf(val));
-                else
-                    iter = new MIter<LabelNode>(iter, getArrayOrEmptyStream(Long.valueOf(val)), LabelNode.comparator());
-            }
-            return iter;
-        }
-    }
-
-    public LabelNode rootNode() {
+    public IndexNode rootNode() {
         return this.rootNode;
     }
 
-    private Iter<LabelNode> getObjectOrEmptyStream(String objectLabel) {
-        LinkedList<LabelNode> ret = this.objectsPartitions.get(objectLabel);
-        if (ret == null)
-            ret = new LinkedList<LabelNode>();
-        return new SingleNodeIterator(ret);
+    public abstract class RangeIter<E extends IndexNode> implements Iter<E> {
+        protected ArrayList<E> nodes;
+        protected int rangeL;
+        protected int rangeR;
+        protected int idx;
+
+        public RangeIter(ArrayList<E> nodes) {
+            this.nodes = nodes;
+        }
+
+        public E read() {
+            return this.nodes.get(this.idx);
+        }
+
+        public void next() {
+            this.idx ++;
+        }
+
+        public boolean valid() {
+            return this.idx < this.rangeR;
+        }
+
+        public void seek(long visit) {
+            int left = this.rangeL - 1;
+            int right = this.rangeR;
+            while (right - left > 1) {
+                int mid = (left + right) / 2;
+                if (this.nodes.get(mid).first_visit < visit) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
+            }
+            this.idx = right;
+        }
     }
 
-    private Iter<LabelNode> getArrayOrEmptyStream(Long arrayIndex) {
-        LinkedList<LabelNode> ret = this.arraysPartitions.get(arrayIndex);
-        if (ret == null)
-            ret = new LinkedList<LabelNode>();
-        return new SingleNodeIterator(ret);
+    public class SingularIterator extends RangeIter<SingularNode> {
+        private String name;
+
+        public SingularIterator() {
+            super(IndexContext.this.allSingularNodes);
+            this.name = "*";
+            this.rangeL = 0;
+            this.rangeR = IndexContext.this.allSingularNodes.size();
+            this.idx = 0;
+        }
+
+        public SingularIterator(String name) {
+            super(IndexContext.this.singularNodes);
+            this.name = name;
+
+            int left, right;
+
+            left = -1;
+            right = IndexContext.this.singularNodes.size();
+            while (right - left > 1) {
+                int mid = (left + right) / 2;
+                if (IndexContext.this.singularNodes.get(mid).name.compareTo(this.name) < 0) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
+            }
+            this.rangeL = right;
+
+            left = -1;
+            right = IndexContext.this.singularNodes.size();
+            while (right - left > 1) {
+                int mid = (left + right) / 2;
+                if (IndexContext.this.singularNodes.get(mid).name.compareTo(this.name) > 0) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+            }
+            this.rangeR = right;
+
+            this.idx = this.rangeL;
+        }
+    }
+
+    public class RepeatableIterator extends RangeIter<RepeatableNode> {
+        private String name;
+        private StructureSteps.IndexStep step;
+
+        public RepeatableIterator() {
+            super(IndexContext.this.allRepeatableNodes);
+            this.name = "*";
+            this.rangeL = 0;
+            this.rangeR = IndexContext.this.allRepeatableNodes.size();
+            this.idx = 0;
+        }
+
+        public RepeatableIterator(String name, StructureSteps.IndexStep step) {
+            super(IndexContext.this.repeatableNodes);
+            this.name = name;
+            this.step = step;
+
+            int left, right;
+
+            left = -1;
+            right = IndexContext.this.repeatableNodes.size();
+            while (right - left > 1) {
+                int mid = (left + right) / 2;
+                int diff = IndexContext.this.repeatableNodes.get(mid).name.compareTo(this.name);
+                if (diff < 0) {
+                    left = mid;
+                } else if (diff == 0) {
+                    if (IndexContext.this.repeatableNodes.get(mid).index < this.step.from) {
+                        left = mid;
+                    } else {
+                        right = mid;
+                    }
+                } else {
+                    right = mid;
+                }
+            }
+            this.rangeL = right;
+
+            left = -1;
+            right = IndexContext.this.repeatableNodes.size();
+            while (right - left > 1) {
+                int mid = (left + right) / 2;
+                int diff = IndexContext.this.repeatableNodes.get(mid).name.compareTo(this.name);
+                if (diff > 0) {
+                    right = mid;
+                } else if (diff == 0) {
+                    if (IndexContext.this.repeatableNodes.get(mid).index >= this.step.to) {
+                        right = mid;
+                    } else {
+                        left = mid;
+                    }
+                } else {
+                    left = mid;
+                }
+            }
+            this.rangeR = right;
+
+            this.idx = this.rangeL;
+        }
     }
 }

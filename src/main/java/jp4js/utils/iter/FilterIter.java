@@ -12,7 +12,7 @@ public class FilterIter<E> implements Iter<E> {
     }
 
     private void skip() {
-        while (this.iter.hasNext()) {
+        while (this.iter.valid()) {
             if (!filter.accept(this.iter.read()))  {
                 this.iter.next();
             } else {
@@ -34,9 +34,9 @@ public class FilterIter<E> implements Iter<E> {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean valid() {
         skip();
-        return this.iter.hasNext();
+        return this.iter.valid();
     }
 
     @Override

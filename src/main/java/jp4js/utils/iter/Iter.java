@@ -19,7 +19,7 @@ public interface Iter<E> {
     /*
 
      */
-    boolean hasNext();
+    boolean valid();
 
     void seek(long visit);
 }

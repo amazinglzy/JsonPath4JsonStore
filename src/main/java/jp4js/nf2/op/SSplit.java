@@ -7,7 +7,7 @@ import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.op.structure.StructureRelation;
 import jp4js.nf2.op.structure.StructureSteps;
 import jp4js.storage.IndexContext;
-import jp4js.storage.node.LabelNode;
+import jp4js.storage.node.IndexNode;
 import jp4js.nf2.tpl.DBody;
 import jp4js.nf2.Match;
 import jp4js.utils.nf2.Trans;
@@ -34,7 +34,7 @@ public class SSplit extends BaseSplit {
         return new Match(Trans.fromSL(this.lst), dBody);
     }
 
-    public DBody findMatch(LabelNode u, StructureList lst) throws MatchException {
+    public DBody findMatch(IndexNode u, StructureList lst) throws MatchException {
         if (lst instanceof RepeatableSL) 
             return findRepeatable(u, (RepeatableSL)lst);
         if (lst instanceof SingularSL)
@@ -43,28 +43,28 @@ public class SSplit extends BaseSplit {
         return null;
     }
 
-    public DRepeatableBody findRepeatable(LabelNode u, RepeatableSL lst) throws MatchException {
+    public DRepeatableBody findRepeatable(IndexNode u, RepeatableSL lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
-        List<LabelNode> elems = new LinkedList<>(){{ add(u);}};
+        List<IndexNode> elems = new LinkedList<>(){{ add(u);}};
         if (lst.isNested()) {
-            for (LabelNode childnode: elems) {
+            for (IndexNode childnode: elems) {
                 bodyData.add(findRepeatable(childnode, lst.elemType()));
             }
         } else {
-            for (LabelNode childnode: elems) {
+            for (IndexNode childnode: elems) {
                 bodyData.addAll(find(childnode, lst));
             }
         }
         return new DRepeatableBody(bodyData);
     }
 
-    public DSingularBody findSingular(LabelNode u, SingularSL lst) throws MatchException {
+    public DSingularBody findSingular(IndexNode u, SingularSL lst) throws MatchException {
         List<DSingularBody> ret = find(u, lst);
         if (ret.size() > 0) return ret.get(0);
         return null;
     }
 
-    public List<DSingularBody> find(LabelNode u, StructureList lst) throws MatchException {
+    public List<DSingularBody> find(IndexNode u, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
             return new LinkedList<>() {{
                 add(new DSingularBody(u.value));
@@ -75,11 +75,11 @@ public class SSplit extends BaseSplit {
         ret.add(new DSingularBody(lst.size()));
         int index = 0;
         for (StructureList.StructureItem item: lst) {
-            List<LabelNode> candidates = iterateNode(
+            List<IndexNode> candidates = iterateNode(
                 new LinkedList<>(){{add(u);}}, item.steps, 0);
             List<DSingularBody> update = new LinkedList<>();
             for (DSingularBody row: ret) {
-                for (LabelNode candidate: candidates) {
+                for (IndexNode candidate: candidates) {
                     DBody cell = findMatch(candidate, item.lst);
                     if (cell == null) continue;
                     DSingularBody newRow = new DSingularBody(lst.size());
@@ -96,8 +96,8 @@ public class SSplit extends BaseSplit {
         return ret;
     }
 
-    List<LabelNode> iterateNode(
-        List<LabelNode> sortedNodes, StructureSteps steps, int currentStep) {
+    List<IndexNode> iterateNode(
+        List<IndexNode> sortedNodes, StructureSteps steps, int currentStep) {
         if (currentStep >= steps.size()) {
             return sortedNodes;
         }
@@ -105,7 +105,7 @@ public class SSplit extends BaseSplit {
         StructureSteps.Step step = steps.step(currentStep);
         StructureRelation rel = step.rel;
 
-        List<LabelNode> current;
+        List<IndexNode> current;
         switch(rel) {
             case PC:
                 if (step instanceof StructureSteps.PropertyStep) {

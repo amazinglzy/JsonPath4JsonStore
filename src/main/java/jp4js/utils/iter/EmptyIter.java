@@ -16,7 +16,7 @@ public class EmptyIter<E> implements Iter<E> {
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean valid() {
         return false;
     }
 

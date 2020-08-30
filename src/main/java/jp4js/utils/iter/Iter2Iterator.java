@@ -18,6 +18,6 @@ public class Iter2Iterator<E> implements Iterator<E> {
 
     @Override
     public boolean hasNext() {
-        return this.iter.hasNext();
+        return this.iter.valid();
     }
 }

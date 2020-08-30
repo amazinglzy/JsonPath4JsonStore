@@ -35,7 +35,7 @@ public class GeneralPlanOp {
             }
 
             private void popEmpty() {
-                while (this.iters.size() > 0 && !this.iters.get(0).hasNext()) {
+                while (this.iters.size() > 0 && !this.iters.get(0).valid()) {
                     this.iters.remove(0);
                 }
             }
@@ -53,7 +53,7 @@ public class GeneralPlanOp {
             }
 
             @Override
-            public boolean hasNext() {
+            public boolean valid() {
                 popEmpty();
                 return this.iters.size() > 0;
             }
@@ -63,7 +63,7 @@ public class GeneralPlanOp {
                 while (this.iters.size() > 0) {
                     Iter<E> iter = this.iters.get(0);
                     iter.seek(visit);
-                    if (iter.hasNext()) {
+                    if (iter.valid()) {
                         break;
                     }
                     this.iters.remove(0);

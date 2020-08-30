@@ -4,30 +4,36 @@ import java.util.Comparator;
 
 import jp4js.nf2.DType;
 
-public class LabelNode implements Comparable<LabelNode> {
+public class IndexNode implements Comparable<IndexNode> {
+    public String name;
     public DType.Instance value;
     public long first_visit, last_visit;
     public int level;
 
-    public LabelNode(long firstVisit, long lastVisit, int level, DType.Instance value) {
+    public IndexNode(String name, long firstVisit, long lastVisit, int level, DType.Instance value) {
+        this.name = name;
         this.value = value;
         this.first_visit = firstVisit;
         this.last_visit = lastVisit;
         this.level = level;
     }
 
+    public boolean isRepeatable() {
+        return false;
+    }
+
     @Override
-    public int compareTo(LabelNode o) {
+    public int compareTo(IndexNode o) {
         if (this.first_visit != o.first_visit) {
             return this.first_visit < o.first_visit ? -1: 1;
         }
         return 0;
     }
 
-    public static Comparator<LabelNode> comparator() {
-        return new Comparator<LabelNode>() {
+    public static Comparator<IndexNode> comparator() {
+        return new Comparator<IndexNode>() {
             @Override
-            public int compare(LabelNode o1, LabelNode n2) {
+            public int compare(IndexNode o1, IndexNode n2) {
                 return o1.compareTo(n2);
             }
         };
