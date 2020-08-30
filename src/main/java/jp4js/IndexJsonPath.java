@@ -3,6 +3,7 @@ package jp4js;
 import jp4js.nf2.Match;
 import jp4js.nf2.op.SSplit;
 import jp4js.nf2.op.structure.StructureList;
+import jp4js.nf2.tpl.DBody;
 import jp4js.storage.IndexContext;
 import jp4js.storage.Indexer;
 import jp4js.utils.Configuration;
@@ -22,13 +23,13 @@ public class IndexJsonPath implements JsonPath {
     }
     
     @Override
-    public String query(String query) {
+    public DBody query(String query) {
         StructureList lst = PathCompiler.fromString(query);
         SSplit split = new SSplit(this.indexContext, lst);
         try {
             Match match = split.open();
-            assert(match.isValid());
-            return match.body().toString();
+            // assert(match.isValid());
+            return match.body();
         } catch (SSplit.MatchException e) {
             e.printStackTrace();
         }

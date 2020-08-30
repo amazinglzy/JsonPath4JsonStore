@@ -10,11 +10,10 @@ import jp4js.storage.node.NodeFactory;
 import jp4js.storage.node.RepeatableNode;
 import jp4js.storage.node.SingularNode;
 
-import java.util.TreeMap;
-import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class Indexer {
     static class Timestamp {
@@ -40,62 +39,66 @@ public class Indexer {
     }
 
     public static IndexContext index(DType.Instance ins) {
-        ArrayList<SingularNode> allSingularNodes = new ArrayList<>();
-        ArrayList<RepeatableNode> allRepeatableNodes = new ArrayList<>();
-        TreeMap<String, LinkedList<SingularNode>> objectsPartitions = new TreeMap<>();
-        TreeMap<String, TreeMap<Long, LinkedList<RepeatableNode>>> arraysPartitions = new TreeMap<>();
+        ArrayList<IndexNode> allNodes = new ArrayList<>();
+        HashMap<String, ArrayList<SingularNode>> singularNodes = new HashMap<>();
+        ArrayList<ArrayList<SingularNode>> levelSingularNodes = new ArrayList<>();
+        ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes = new ArrayList<>();
         IndexNode node = iterateJsonObject(
-            "$", "$", ins, new Timestamp(), 0, allSingularNodes, allRepeatableNodes, 
-            objectsPartitions, arraysPartitions);
-        return new IndexContext(node, allSingularNodes, allRepeatableNodes, objectsPartitions, arraysPartitions);
+            "$", "$", ins, new Timestamp(), 0,
+            allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
+        return new IndexContext(node, allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
     }
 
     private static IndexNode iterateJsonObject(
             String key, String path, DType.Instance mapping, Timestamp timestamp,
-            int level, ArrayList<SingularNode> allSingularNodes, ArrayList<RepeatableNode> allRepeatableNodes,
-            TreeMap<String, LinkedList<SingularNode>> objectsPartitions,
-            TreeMap<String, TreeMap<Long, LinkedList<RepeatableNode>>> arraysPartitions) {
+            int level, ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
+            ArrayList<ArrayList<SingularNode>> levelSingularNodes,
+            ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes) {
         SingularNode node = NodeFactory.create(key, -1, -1, level, mapping);
         node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
         node.level = level;
-        if (!objectsPartitions.containsKey(key))
-            objectsPartitions.put(key, new LinkedList<SingularNode>());
-        allSingularNodes.add(node);
-        objectsPartitions.get(key).add(node);
-        iterateJson(key, path, mapping, timestamp, level, allSingularNodes, allRepeatableNodes, objectsPartitions, arraysPartitions);
+
+        if (!singularNodes.containsKey(key))
+            singularNodes.put(key, new ArrayList<SingularNode>());
+        singularNodes.get(key).add(node);
+        while (level >= levelSingularNodes.size()) 
+            levelSingularNodes.add(new ArrayList<>());
+        levelSingularNodes.get(level).add(node);
+        allNodes.add(node);
+
+        iterateJson(key, path, mapping, timestamp, level,
+            allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
         node.last_visit = timestamp.getTimestamp();
         timestamp.inc();
         return node;
     }
 
     private static IndexNode iterateJsonArray(String key, long index, String path, DType.Instance ins, Timestamp timestamp,
-            int level, ArrayList<SingularNode> allSingularNodes, ArrayList<RepeatableNode> allRepeatableNodes,
-            TreeMap<String, LinkedList<SingularNode>> objectsPartitions,
-            TreeMap<String, TreeMap<Long, LinkedList<RepeatableNode>>> arraysPartitions) {
+            int level, 
+            ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
+            ArrayList<ArrayList<SingularNode>> levelSingularNodes,
+            ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes) {
         RepeatableNode node = NodeFactory.create(key, index, -1, -1, level, ins);
         node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
         node.level = level;
-        if (!arraysPartitions.containsKey(key)) {
-            arraysPartitions.put(key, new TreeMap<>());
-        }
-        TreeMap<Long, LinkedList<RepeatableNode>> partition = arraysPartitions.get(key);
-        if (!partition.containsKey(index)) {
-            partition.put(index, new LinkedList<>());
-        }
-        partition.get(index).add(node);
-        allRepeatableNodes.add(node);
-        iterateJson(key, path, ins, timestamp, level, allSingularNodes, allRepeatableNodes, objectsPartitions, arraysPartitions);
+
+        while (level >= levelRepeatableNodes.size()) 
+            levelRepeatableNodes.add(new ArrayList<>());
+        levelRepeatableNodes.get(level).add(node);
+        allNodes.add(node);
+
+        iterateJson(key, path, ins, timestamp, level, allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
         node.last_visit = timestamp.getTimestamp();
         timestamp.inc();
         return node;
     }
 
     private static void iterateJson(String key, String path, DType.Instance ins, Timestamp timestamp, int level,
-        ArrayList<SingularNode> allSingularNodes, ArrayList<RepeatableNode> allRepeatableNodes,
-        TreeMap<String, LinkedList<SingularNode>> objectsPartitions,
-        TreeMap<String, TreeMap<Long, LinkedList<RepeatableNode>>> arraysPartitions) {
+            ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
+            ArrayList<ArrayList<SingularNode>> levelSingularNodes,
+            ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes) {
         if (ins instanceof DMapping.Instance) {
             List<String> properties = new ArrayList<String>() {
                 {
@@ -113,13 +116,13 @@ public class Indexer {
             DMapping.Instance mapping = (DMapping.Instance) ins;
             for (String property : properties) {
                 iterateJsonObject(property, path + "." + property, mapping.get(property), timestamp, level + 1,
-                        allSingularNodes, allRepeatableNodes, objectsPartitions, arraysPartitions);
+                    allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
             }
         } else if (ins instanceof DList.Instance) {
             long index = 0;
             for (DType.Instance item : (DList.Instance) ins) {
                 iterateJsonArray(key, index, path + "[" + String.valueOf(index) + "]", item, timestamp, level + 1,
-                        allSingularNodes, allRepeatableNodes, objectsPartitions, arraysPartitions);
+                    allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes);
                 index++;
             }
         }
