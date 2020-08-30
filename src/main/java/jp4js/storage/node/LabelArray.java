@@ -8,13 +8,13 @@ import jp4js.utils.Utils;
 
 public class LabelArray extends LabelNode {
     public long index;
-    public LabelArray(String path, long index, DType.Instance value) {
-        super(path, -1, -1, -1, value);
+    public LabelArray(long index, DType.Instance value) {
+        super(-1, -1, -1, value);
         this.index = index;
     }
 
-    public LabelArray(String path, long index, long firstVisit, long lastVisit, int level, DType.Instance value) {
-        super(path, firstVisit, lastVisit, level, value);
+    public LabelArray(long index, long firstVisit, long lastVisit, int level, DType.Instance value) {
+        super(firstVisit, lastVisit, level, value);
         this.index = index;
     }
 

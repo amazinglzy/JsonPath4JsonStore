@@ -9,8 +9,8 @@ public class LabelNodeTest {
 
     @Test
     public void TestSanity() {
-        LabelNode a = NodeFactory.create(null, 0, 1, 20, 2, null);
-        LabelNode b = NodeFactory.create(null, "label", 2, 19, 1, Scalar.createDString("df"));
+        LabelNode a = NodeFactory.create(0, 1, 20, 2, null);
+        LabelNode b = NodeFactory.create("label", 2, 19, 1, Scalar.createDString("df"));
         assertThat(a.first_visit).isEqualTo(1);
         assertThat(a.last_visit).isEqualTo(20);
         assertThat(b.level).isEqualTo(1);
@@ -19,8 +19,8 @@ public class LabelNodeTest {
 
     @Test
     public void TestComparable() {
-        LabelNode a = NodeFactory.create(null, 0, 1, 20, 2, null);
-        LabelNode b = NodeFactory.create(null, "label", 2, 19, 1, Scalar.createDString("df"));
+        LabelNode a = NodeFactory.create(0, 1, 20, 2, null);
+        LabelNode b = NodeFactory.create("label", 2, 19, 1, Scalar.createDString("df"));
         assertThat(a.compareTo(b)).isLessThan(0);
     }
 }

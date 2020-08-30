@@ -42,13 +42,13 @@ public class IndexerTest {
         final Configuration configuration = Configuration.defaultConfiguration();
         final IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
         assertThat(indexContext.openArray(1L).read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.d[1]", 1, 10, 11, 2, Scalar.createDInt(2))
+                NodeFactory.create(1, 10, 11, 2, Scalar.createDInt(2))
         );
         assertThat(indexContext.openObject("$").read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$", "$", 0, 15, 0, null)
+                NodeFactory.create("$", 0, 15, 0, null)
         );
         assertThat(indexContext.openArray(2L).read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.d[2]", 2, 12, 13, 2, Scalar.createDInt(3))
+                NodeFactory.create(2, 12, 13, 2, Scalar.createDInt(3))
         );
     }
 
@@ -73,11 +73,11 @@ public class IndexerTest {
         final IndexContext indexContext = Indexer.index(configuration.jsonProvider().parse(str), configuration);
         final Iter<LabelNode> iter = indexContext.openObject("a");
         assertThat(iter.read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.a", "a", 1, 6, 1, null)
+                NodeFactory.create("a", 1, 6, 1, null)
         );
         iter.next();
         assertThat(iter.read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.a.a", "a", 2, 5, 2, null)
+                NodeFactory.create("a", 2, 5, 2, null)
         );
     }
 
@@ -116,19 +116,19 @@ public class IndexerTest {
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.d[0]", 0, 8, 9, 2, null)
+                NodeFactory.create(0, 8, 9, 2, null)
         );
         iter.next();
 
         assertThat(iter.hasNext()).isTrue();
         assertThat(iter.read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.d[1]", 1, 10, 11, 2, null)
+                NodeFactory.create(1, 10, 11, 2, null)
         );
         iter.next();
 
         assertThat(iter.hasNext());
         assertThat(iter.read()).isEqualToIgnoringNullFields(
-                NodeFactory.create("$.d[2]", 2, 12, 13, 2, null)
+                NodeFactory.create(2, 12, 13, 2, null)
         );
         iter.next();
     }

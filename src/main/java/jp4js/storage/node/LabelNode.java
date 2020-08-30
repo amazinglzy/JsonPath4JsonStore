@@ -5,13 +5,11 @@ import java.util.Comparator;
 import jp4js.nf2.DType;
 
 public class LabelNode implements Comparable<LabelNode> {
-    public String path;
     public DType.Instance value;
     public long first_visit, last_visit;
     public int level;
 
-    public LabelNode(String path, long firstVisit, long lastVisit, int level, DType.Instance value) {
-        this.path = ""; 
+    public LabelNode(long firstVisit, long lastVisit, int level, DType.Instance value) {
         this.value = value;
         this.first_visit = firstVisit;
         this.last_visit = lastVisit;

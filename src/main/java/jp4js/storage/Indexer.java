@@ -44,7 +44,7 @@ public class Indexer {
     private static LabelNode iterateJsonObject(String key, String path, DType.Instance mapping, Timestamp timestamp,
             int level, Map<String, LinkedList<LabelNode>> objectsPartitions,
             Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelObject node = new LabelObject(path, key, mapping);
+        LabelObject node = new LabelObject(key, mapping);
         node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
         node.level = level;
@@ -60,7 +60,7 @@ public class Indexer {
     private static LabelNode iterateJsonArray(long index, String path, DType.Instance ins, Timestamp timestamp,
             int level, Map<String, LinkedList<LabelNode>> objectsPartitions,
             Map<Long, LinkedList<LabelNode>> arraysPartitions) {
-        LabelArray node = new LabelArray(path, index, ins);
+        LabelArray node = new LabelArray(index, ins);
         node.first_visit = timestamp.getTimestamp();
         timestamp.inc();
         node.level = level;
