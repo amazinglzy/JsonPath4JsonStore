@@ -15,30 +15,38 @@ import jp4js.utils.iter.Iter;
 public class IndexScan {
     public static List<IndexNode> children(IndexContext indexContext, List<IndexNode> sortedNodes) {
         LinkedList<IndexNode> ret = new LinkedList<>();
-            Iter<IndexNode> iter = indexContext.new AllIterator();
-            for (IndexNode node: sortedNodes) {
-                iter.seek(node.first_visit);
-                while (iter.valid()) {
-                    IndexNode inode = iter.read();
-                    iter.next();
-                    if (inode.first_visit > node.last_visit) {
-                        break;
-                    } else {
-                        if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
-                            if (node.level + 1 == inode.level) {
-                                ret.add(inode);
-                            }
-                        }
+        ArrayList<Iter<IndexNode>> iters = new ArrayList<>();
+        for (IndexNode node: sortedNodes) {
+            while (node.level+1 >= iters.size()) iters.add(null);
+            if (iters.get(node.level+1) == null) {
+                iters.set(node.level+1, indexContext.new LevelAllIterator(node.level+1));
+            }
+            Iter<IndexNode> iter = iters.get(node.level + 1);
+            iter.seek(node.first_visit);
+            while (iter.valid()) {
+                IndexNode inode = iter.read();
+                iter.next();
+                if (inode.first_visit > node.last_visit) {
+                    break;
+                } else {
+                    if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
+                        ret.add(inode);
                     }
                 }
             }
+        }
         return ret;
     }
 
     public static List<IndexNode> children(IndexContext indexContext, List<IndexNode> sortedNodes, StructureSteps.PropertyStep step) {
+        ArrayList<Iter<SingularNode>> iters = new ArrayList<>();
         return new LinkedList<>() {{
-            Iter<SingularNode> iter = indexContext.new SingularIterator(step.fieldname);
             for (IndexNode node: sortedNodes) {
+                while (node.level+1 >= iters.size()) iters.add(null);
+                if (iters.get(node.level+1) == null) {
+                    iters.set(node.level+1, indexContext.new LevelTagIterator(node.level+1, step.fieldname));
+                }
+                Iter<SingularNode> iter = iters.get(node.level + 1);
                 iter.seek(node.first_visit);
                 while (iter.valid()) {
                     IndexNode inode = iter.read();
@@ -58,25 +66,28 @@ public class IndexScan {
     }
 
     public static List<IndexNode> children(IndexContext indexContext, List<IndexNode> sortedNodes, StructureSteps.IndexStep step) {
-        ArrayList<Iter<RepeatableNode>> iters = new ArrayList<>();
+        ArrayList<IndexContext.RepeatableIterator> iters = new ArrayList<>();
         return new LinkedList<>() {{
             for (IndexNode node: sortedNodes) {
                 while (node.level+1 >= iters.size()) iters.add(null);
                 if (iters.get(node.level+1) == null) {
                     iters.set(node.level+1, indexContext.new RepeatableIterator(node.level+1));
                 }
-                Iter<RepeatableNode> iter = iters.get(node.level+1);
+                IndexContext.RepeatableIterator iter = iters.get(node.level+1);
                 iter.seek(node.first_visit);
+                iter.next(step.from);
                 while (iter.valid()) {
                     RepeatableNode inode = iter.read();
                     iter.next();
                     if (inode.first_visit > node.last_visit) {
                         break;
-                    } else {
-                        if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
-                            if (step.from <= inode.index && inode.index < step.to) {
-                                add(inode);
-                            }
+                    }
+                    if (inode.index >= step.to) {
+                        break;
+                    }
+                    if (node.first_visit <= inode.first_visit && inode.last_visit <= node.last_visit) {
+                        if (step.from <= inode.index && inode.index < step.to) {
+                            add(inode);
                         }
                     }
                 }

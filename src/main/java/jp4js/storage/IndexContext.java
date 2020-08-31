@@ -10,21 +10,28 @@ import java.util.HashMap;
 
 public class IndexContext {
     private IndexNode rootNode;
-    private ArrayList<IndexNode> allNodes;
-    private HashMap<String, ArrayList<SingularNode>> singularNodes;
-    private ArrayList<ArrayList<SingularNode>> levelSingularNodes;
-    private ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes;
+    private ArrayList<IndexNode> allNodes; // *
+    private HashMap<String, ArrayList<SingularNode>> singularNodes; // tag
+    private ArrayList<ArrayList<SingularNode>> levelSingularNodes; // level
+    private ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes; // level
+    private ArrayList<ArrayList<IndexNode>> levelAllNodes; // level + *
+    private HashMap<String, ArrayList<ArrayList<SingularNode>>> levelTagSingularNodes; // level + tag
 
     public IndexContext(IndexNode rootNode, 
             ArrayList<IndexNode> allNodes,
             HashMap<String, ArrayList<SingularNode>> singularNodes,
             ArrayList<ArrayList<SingularNode>> levelSingularNodes,
-            ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes) {
+            ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes,
+            ArrayList<ArrayList<IndexNode>> levelAllNodes,
+            HashMap<String, ArrayList<ArrayList<SingularNode>>> levelTagSingularNodes) {
         this.rootNode = rootNode;
         this.allNodes = allNodes;
         this.singularNodes = singularNodes;
         this.levelSingularNodes = levelSingularNodes;
         this.levelRepeatableNodes = levelRepeatableNodes;
+
+        this.levelAllNodes = levelAllNodes;
+        this.levelTagSingularNodes = levelTagSingularNodes;
     }
 
     public IndexNode rootNode() {
@@ -73,6 +80,24 @@ public class IndexContext {
         }
     }
 
+    public class LevelAllIterator extends RangeIter<IndexNode> {
+        public LevelAllIterator(int level) {
+            this.nodes = IndexContext.this.levelAllNodes.get(level);
+            this.rangeL = 0;
+            this.rangeR = this.nodes.size();
+            this.idx = 0;
+        }
+    }
+
+    public class LevelTagIterator extends RangeIter<SingularNode> {
+        public LevelTagIterator(int level, String tag) {
+            this.nodes = IndexContext.this.levelTagSingularNodes.get(tag).get(level);
+            this.rangeL = 0;
+            this.rangeR = this.nodes.size();
+            this.idx = 0;
+        }
+    }
+
     public class SingularIterator extends RangeIter<SingularNode> {
         public SingularIterator(String name) {
             ArrayList<SingularNode> nodes;
@@ -113,6 +138,10 @@ public class IndexContext {
             this.rangeR = nodes.size();
             this.idx = 0;
             this.nodes = nodes;
+        }
+
+        public void next(int step) {
+            this.idx += step;
         }
     }
 }
