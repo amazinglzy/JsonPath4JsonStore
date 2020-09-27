@@ -1,9 +1,10 @@
 package jp4js.nf2.op.structure;
 
 public class SingularSL extends StructureList {
-    @Override
-    public StructureType type() {
-        return StructureType.SINGULAR;
+
+    public SingularSL() {}
+    public SingularSL(StructureList lst) {
+        super(lst);
     }
 
     @Override

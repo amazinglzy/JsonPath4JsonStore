@@ -12,30 +12,31 @@ public class PathCompilerTest {
     public void basic01_() {
         Goessener data = new Goessener();
         // System.out.println(data.query(0).toString());
-        // System.out.println(data.query(0).toString());
-        // System.out.println(data.query(0).toString());
-        // System.out.println(data.query(0).toString());
+        System.out.println(data.query(1).toString());
+        System.out.println(data.query(2).toString());
+        System.out.println(data.query(3).toString());
         System.out.println(data.query(4).toString());
         assertThat(data.query(0).toString()).isEqualTo(
-            "asynomous[.store.book.*.author:asynomous[]]"
+            "[:asynomous(.store.book.*.author)]"
         );
         assertThat(data.query(1).toString()).isEqualTo(
-            "asynomous[..author:asynomous[]]"
+            "[:asynomous(..author)]"
         );
         assertThat(data.query(2).toString()).isEqualTo(
-            "asynomous[.store.*:asynomous[]]"
+            "[:asynomous(.store.*)]"
         );
         assertThat(data.query(3).toString()).isEqualTo(
-            "asynomous[.store..price:asynomous[]]"
+            "[:asynomous(.store..price)]"
         );
         assertThat(data.query(4).toString()).isEqualTo(
-            "asynomous[..book.{2,3}:asynomous[]]"
+            "[:asynomous(..book.{2,3})]"
         );
     }
 
     @Test
     public void basic02_() {
         JsonArrayMulti data = new JsonArrayMulti();
-        assertThat(data.query(0).toString()).isEqualTo("asynomous[.embedded:asynomous[..count:asynomous[], ..difference:asynomous[]]]");
+        System.out.println(data.query(0).toString());
+        assertThat(data.query(0).toString()).isEqualTo("[:asynomous(.embedded:asynomous(..count, ..difference))]");
     }
 }

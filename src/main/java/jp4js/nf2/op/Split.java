@@ -12,9 +12,10 @@ import jp4js.nf2.op.structure.SingularSL;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.op.structure.StructureRelation;
 import jp4js.nf2.op.structure.StructureSteps;
+import jp4js.nf2.tpl.AtomicValue;
 import jp4js.nf2.tpl.DBody;
-import jp4js.nf2.tpl.DRepeatableBody;
-import jp4js.nf2.tpl.DSingularBody;
+import jp4js.nf2.tpl.ListTuple;
+import jp4js.nf2.tpl.Tuple;
 import jp4js.utils.Utils;
 import jp4js.utils.nf2.Trans;
 
@@ -28,67 +29,72 @@ public class Split extends BaseSplit {
     }
 
     public Match open() throws MatchException {
-        DBody dBody = this.findMatch(data, lst);
+        List<DBody> dBody = this.findMatch(data, lst);
         return new Match(Trans.fromSL(this.lst), dBody);
     }
 
-    public DBody findMatch(DType.Instance ins, StructureList lst) throws MatchException  {
-        if (lst instanceof RepeatableSL) 
+    public List<DBody> findMatch(DType.Instance ins, StructureList lst) throws MatchException  {
+        if (lst == null) {
+            return new LinkedList<>() {{ add(new AtomicValue(ins.type(), ins));}};
+        }
+
+        if (lst instanceof RepeatableSL) {
             return findRepeatable(ins, (RepeatableSL)lst);
-        if (lst instanceof SingularSL)
-            return findSingular(ins, (SingularSL)lst);
+        } 
+
+        if (lst instanceof SingularSL) {
+            return find(ins, lst);
+        }
         Utils.CanNotBeHere("unkown StructureList type");
         return null;
     }
 
-    public DRepeatableBody findRepeatable(DType.Instance ins, RepeatableSL lst) throws MatchException {
+    public List<DBody> findRepeatable(DType.Instance ins, RepeatableSL lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
-        List<DType.Instance> elems = new LinkedList<DType.Instance>() {{ add(ins); }};
-        if (lst.isNested()) {
-            for (DType.Instance subIns: elems) 
-                bodyData.add(findRepeatable(subIns, lst.elemType()));
-        } else {
-            for (DType.Instance subIns: elems)
-                bodyData.addAll(find(subIns, lst));
+        List<DType.Instance> elems = iterateInstance(ins, lst.steps(), 0);
+        for (DType.Instance subins: elems) {
+            List<DBody> item = findMatch(subins, lst.elemType());
+            if (item != null) {
+                bodyData.addAll(item);
+            }
         }
-        return new DRepeatableBody(bodyData);
+        return new LinkedList<>(){{ add(new ListTuple(bodyData)); }};
     }
 
-    public DSingularBody findSingular(DType.Instance ins, SingularSL lst) throws MatchException {
-        List<DSingularBody> ret = find(ins, lst);
-        if (ret.size() > 0) return ret.get(0);
-        return null;
-    }
-
-    public List<DSingularBody> find(DType.Instance ins, StructureList lst) throws MatchException {
+    public List<DBody> find(DType.Instance ins, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
-            return new LinkedList<DSingularBody>() {{
-                add(new DSingularBody(ins));
+            return new LinkedList<DBody>() {{
+                add(new AtomicValue(ins.type(), ins));
             }};
         }
         
-        List<DSingularBody> ret = new LinkedList<>();
-        ret.add(new DSingularBody(lst.size()));
+        List<Tuple> ret = new LinkedList<>();
+        ret.add(new Tuple(lst.size()));
         int index = 0;
         for (StructureList.StructureItem item: lst) {
             List<DType.Instance> candidates = iterateInstance(ins, item.steps, 0);
-            List<DSingularBody> update = new LinkedList<>();
-            for (DSingularBody row: ret) {
-                for (DType.Instance candidate: candidates) {
-                    DBody cell = findMatch(candidate, item.lst);
-                    if (cell == null) continue;
-                    DSingularBody newRow = new DSingularBody(lst.size());
-                    for (int i = 0; i < index; i++) {
-                        newRow.put(i, row.get(i));
+            List<Tuple> update = new LinkedList<>();
+            for (DType.Instance candidate: candidates) {
+                List<DBody> cells = findMatch(candidate, item.lst);
+                for (DBody cell: cells) {
+                    for (Tuple row : ret) {
+                        Tuple newRow = new Tuple(lst.size());
+                        for (int i = 0; i < index; i++) {
+                            newRow.put(i, row.get(i));
+                        }
+                        newRow.put(index, cell);
+                        update.add(newRow);
+
                     }
-                    newRow.put(index, cell);
-                    update.add(newRow);
                 }
             }
             ret = update;
             index ++;
         }
-        return ret;
+
+        LinkedList<DBody> fret = new LinkedList<>();
+        fret.addAll(ret);
+        return fret;
     }
 
     public List<DType.Instance> iterateInstance(DType.Instance ins, StructureSteps steps, int currentStep) {

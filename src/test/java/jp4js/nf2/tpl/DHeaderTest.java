@@ -12,37 +12,37 @@ public class DHeaderTest {
     @Test
     public void testBasicUsageCreation01() {
         DHeader rel = new DHeaderBuilder()
-            .put("field1")
-            .put("field2")
-            .put("field3")
-            .enter("field4")
-                .put("field1")
-                .put("field2")
+            .put("field1", Scalar.dString)
+            .put("field2", Scalar.dString)
+            .put("field3", Scalar.dString)
+            .enter("field4", 1)
+                .put("field1", Scalar.dString)
+                .put("field2", Scalar.dString)
             .exit()
             .build();
         System.out.println(rel.toString());
         assertThat(rel.toString()).isEqualTo(
-            "[field1, field2, field3, field4[field1, field2]]"
+            "[(field1, field2, field3, field4[(field1, field2)])]"
         );
     }
 
     @Test
     public void testBasicUsageBuildInstance01() {
-        DRepeatableBody ins = new DRepeatableBody(
+        ListTuple ins = new ListTuple(
             new LinkedList<>() {{
                 add(
-                    new DSingularBody(
+                    new Tuple(
                         new DBody[] {
-                            new DSingularBody(Scalar.createDInt(20)),
-                            new DSingularBody(Scalar.createDString("Alice"))
+                            new Tuple(Scalar.createDInt(20)),
+                            new Tuple(Scalar.createDString("Alice"))
                         }
                     )
                 );
                 add(
-                    new DSingularBody(
+                    new Tuple(
                         new DBody[] {
-                            new DSingularBody(Scalar.createDInt(10)),
-                            new DSingularBody(Scalar.createDString("Alice"))
+                            new Tuple(Scalar.createDInt(10)),
+                            new Tuple(Scalar.createDString("Alice"))
                         }
                     )
                 );
@@ -56,29 +56,29 @@ public class DHeaderTest {
 
     @Test
     public void testBasicUsageBuildInstance02() {
-        DRepeatableBody instance = new DRepeatableBody(
+        ListTuple instance = new ListTuple(
             new LinkedList<>() {{
                 add(
-                    new DSingularBody(
+                    new Tuple(
                         new DBody[] {
-                            new DSingularBody(Scalar.createDInt(23)),
-                            new DRepeatableBody(
+                            new Tuple(Scalar.createDInt(23)),
+                            new ListTuple(
                                 new LinkedList<>() {{
-                                    add(new DSingularBody(
+                                    add(new Tuple(
                                         new DBody[]{
-                                            new DSingularBody(Scalar.createDString("English")),
-                                            new DSingularBody(Scalar.createDInt(100))
+                                            new Tuple(Scalar.createDString("English")),
+                                            new Tuple(Scalar.createDInt(100))
                                         }
                                     ));
-                                    add(new DSingularBody(
+                                    add(new Tuple(
                                         new DBody[]{
-                                            new DSingularBody(Scalar.createDString("Chinese")),
-                                            new DSingularBody(Scalar.createDInt(10))
+                                            new Tuple(Scalar.createDString("Chinese")),
+                                            new Tuple(Scalar.createDInt(10))
                                         }
                                     ));
                                 }}
                             ),
-                            new DSingularBody(Scalar.createDString("L"))
+                            new Tuple(Scalar.createDString("L"))
                         }
                     )
                 );

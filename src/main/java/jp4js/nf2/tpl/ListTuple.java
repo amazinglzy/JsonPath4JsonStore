@@ -3,10 +3,10 @@ package jp4js.nf2.tpl;
 import java.util.List;
 import java.util.Iterator;
 
-public class DRepeatableBody implements DBody, Iterable<DBody> {
+public class ListTuple implements DBody, Iterable<DBody> {
     private final List<DBody> data;
 
-    public DRepeatableBody(List<DBody> data) {
+    public ListTuple(List<DBody> data) {
         this.data = data;
     }
 

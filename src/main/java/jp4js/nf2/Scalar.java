@@ -6,6 +6,8 @@ import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.Iterator;
 
+import jp4js.nf2.tpl.AtomicValue;
+
 
 public class Scalar {
 
@@ -35,6 +37,30 @@ public class Scalar {
         return dList.create();
     }
     
+    public static AtomicValue createAtomicString(String data) {
+        DType.Instance ins = dString.create(data);
+        return new AtomicValue(dString, ins);
+    }
+
+    public static AtomicValue createAtomicInt(int data) {
+        DType.Instance ins = dInt.create(data);
+        return new AtomicValue(dInt, ins);
+    }
+
+    public static AtomicValue createAtomicDouble(double data) {
+        DType.Instance ins = dDouble.create(data);
+        return new AtomicValue(dDouble, ins);
+    }
+
+    public static AtomicValue createAtomicMapping() {
+        DType.Instance ins = dMapping.create();
+        return new AtomicValue(dMapping, ins);
+    }
+
+    public static AtomicValue createAtomicList() {
+        DType.Instance ins = dList.create();
+        return new AtomicValue(dList, ins);
+    }
 
     public static class DString implements DType {
         public class Instance implements DType.Instance, Comparable<DString.Instance> {

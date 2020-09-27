@@ -1,8 +1,9 @@
 package jp4js.utils.nf2;
 
+import jp4js.nf2.tpl.Template;
+import jp4js.nf2.tpl.ListTemplate;
+import jp4js.nf2.tpl.AtomicTemplate;
 import jp4js.nf2.tpl.DHeader;
-import jp4js.nf2.tpl.DRepeatableHeader;
-import jp4js.nf2.tpl.DSingularHeader;
 import jp4js.utils.Configuration;
 import jp4js.utils.Utils;
 import jp4js.nf2.DType;
@@ -24,36 +25,21 @@ public class Trans {
         return null;
     }
 
-    private static DSingularHeader fromSL(SingularSL lst) {
-        DSingularHeader ret = new DSingularHeader();
+    private static DHeader fromSL(SingularSL lst) {
+        Template ret = new Template();
         for (StructureList.StructureItem item: lst) {
             String fieldname = item.steps.toString();
             StructureList nestedLst = item.lst;
             if (nestedLst != null) 
                 ret.put(fieldname, Trans.fromSL(nestedLst));
             else
-                ret.put(fieldname, null);
+                ret.put(fieldname, new AtomicTemplate(null));
         }
         return ret;
     }
 
-    private static DRepeatableHeader fromSL(RepeatableSL lst) {
-        if (lst.isNested()) {
-            return new DRepeatableHeader(
-                Trans.fromSL(lst.elemType())
-            );
-        } else {
-            DRepeatableHeader ret = new DRepeatableHeader();
-            for (StructureList.StructureItem item: lst) {
-                String fieldname = item.steps.toString();
-                StructureList nestedLst = item.lst;
-                if (nestedLst != null) 
-                    ret.put(fieldname, Trans.fromSL(nestedLst));
-                else
-                    ret.put(fieldname, null);
-            }
-            return ret;
-        }
+    private static DHeader fromSL(RepeatableSL lst) {
+        return new ListTemplate(fromSL(lst.elemType()));
     }
 
     public static DType.Instance fromJSON(Object json, Configuration configuration) {

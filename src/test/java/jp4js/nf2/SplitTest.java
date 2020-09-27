@@ -72,10 +72,10 @@ public class SplitTest {
             System.out.println(match.header().toString());
             System.out.println(match.body().toString());
             assertThat(match.header().toString()).isEqualTo(
-                "[.store.book.*.author[]]"
+                "[(.store.book.*.author)]"
             );
             assertThat(match.body().toString()).isEqualTo(
-                "[([\"Nigel Rees\"]), ([\"Evelyn Waugh\"]), ([\"Herman Melville\"]), ([\"J. R. R. Tolkien\"])]"
+                "[[(\"Nigel Rees\"), (\"Evelyn Waugh\"), (\"Herman Melville\"), (\"J. R. R. Tolkien\")]]"
             );
         } catch (Split.MatchException e) {
             assertFalse(e.toString(), true);

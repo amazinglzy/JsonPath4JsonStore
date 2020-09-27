@@ -2,21 +2,21 @@ package jp4js.nf2.tpl;
 
 import jp4js.nf2.DType;
 
-public class DSingularBody implements DBody {
+public class Tuple implements DBody {
     private final DType.Instance data;
     private final DBody[] tuple;
 
-    public DSingularBody(int size) {
+    public Tuple(int size) {
         this.data = null;
         this.tuple = new DBody[size];
     }
 
-    public DSingularBody(DType.Instance data) {
+    public Tuple(DType.Instance data) {
         this.data = data;
         this.tuple = null;
     }
 
-    public DSingularBody(DBody[] tuple) {
+    public Tuple(DBody[] tuple) {
         this.data = null;
         this.tuple = tuple;
     }
@@ -39,6 +39,10 @@ public class DSingularBody implements DBody {
 
     public DType.Instance data() {
         return this.data;
+    }
+
+    public int size() {
+        return this.tuple.length;
     }
 
     @Override

@@ -18,11 +18,11 @@ public class TransTest {
         // System.out.println(Trans.fromSL(data.query(2)).toString());
         // System.out.println(Trans.fromSL(data.query(3)).toString());
         // System.out.println(Trans.fromSL(data.query(4)).toString());
-        assertThat(Trans.fromSL(data.query(0)).toString()).isEqualTo("[.store.book.*.author[]]");
-        assertThat(Trans.fromSL(data.query(1)).toString()).isEqualTo("[..author[]]");
-        assertThat(Trans.fromSL(data.query(2)).toString()).isEqualTo("[.store.*[]]");
-        assertThat(Trans.fromSL(data.query(3)).toString()).isEqualTo("[.store..price[]]");
-        assertThat(Trans.fromSL(data.query(4)).toString()).isEqualTo("[..book.{2,3}[]]");
+        assertThat(Trans.fromSL(data.query(0)).toString()).isEqualTo("[(.store.book.*.author)]");
+        assertThat(Trans.fromSL(data.query(1)).toString()).isEqualTo("[(..author)]");
+        assertThat(Trans.fromSL(data.query(2)).toString()).isEqualTo("[(.store.*)]");
+        assertThat(Trans.fromSL(data.query(3)).toString()).isEqualTo("[(.store..price)]");
+        assertThat(Trans.fromSL(data.query(4)).toString()).isEqualTo("[(..book.{2,3})]");
     }
 
     @Test

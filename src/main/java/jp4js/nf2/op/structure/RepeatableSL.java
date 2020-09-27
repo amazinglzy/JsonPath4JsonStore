@@ -1,37 +1,42 @@
 package jp4js.nf2.op.structure;
 
 public class RepeatableSL extends StructureList {
-    private RepeatableSL lst;
+    private StructureSteps steps;
+    private StructureList lst;
 
-    public RepeatableSL() {}
-
-    public RepeatableSL(RepeatableSL lst) {
+    public RepeatableSL(StructureSteps steps, StructureList lst) {
+        this.steps = steps;
         this.lst = lst;
     }
 
-    public RepeatableSL(SingularSL lst) {
-        for (StructureList.StructureItem item: lst) {
-            this.put(item);
-        }
-    }
-
-    public boolean isNested() {
-        return this.lst != null;
-    }
-
-    public RepeatableSL elemType() {
+    public StructureList elemType() {
         return this.lst;
     }
 
-    @Override
-    public StructureType type() {
-        return StructureType.REPEATABLE;
+    public StructureSteps steps() {
+        return this.steps;
+    }
+
+    public void mergeIn(StructureList olst) {
+        if (olst != null) {
+            this.lst.mergeIn(olst);
+        }
+    }
+    
+    public void mergeIn(RepeatableSL olst) {
+        if (olst != null) {
+            this.lst.mergeIn(olst.lst);
+        }
+    }
+
+    public void mergeTo(StructureList olst) {
+        if (olst != null) {
+            olst.mergeIn(this.lst);
+        }
     }
 
     @Override
     public String toString() {
-        if (this.isNested())
-            return super.name() + "[" + this.lst.toString() + "]";
-        return super.name() + "[" + super.toString() + "]";
+        return "[" + this.steps.toString() + ":" + this.lst.toString() + "]";
     }
 }

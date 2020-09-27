@@ -1,20 +1,35 @@
 package jp4js.nf2;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import jp4js.nf2.tpl.DBody;
+import jp4js.nf2.tpl.ListTemplate;
 import jp4js.nf2.tpl.DHeader;
-import jp4js.nf2.tpl.DRepeatableBody;
-import jp4js.nf2.tpl.DSingularBody;
+
+import jp4js.nf2.tpl.AtomicTemplate;
+import jp4js.nf2.tpl.AtomicValue;
+import jp4js.nf2.tpl.Template;
+import jp4js.nf2.tpl.ListTuple;
+import jp4js.nf2.tpl.Tuple;
 import jp4js.utils.Utils;
+
 
 public class Match {
     private DHeader template;
-    private DBody documentSet;
+    private List<DBody> documentSet;
     private boolean valid;
 
     public Match(DHeader template, DBody documentSet) {
         this.template = template;
+        this.documentSet = new LinkedList<>() {{add(documentSet);}};
+        this.valid = this.tryMatch(this.template, this.documentSet);
+    }
+
+    public Match(DHeader template, List<DBody> documentSet) {
+        this.template = template;
         this.documentSet = documentSet;
-        this.valid = this.tryMatch(this.template, this.documentSet, true);
+        this.valid = this.tryMatch(template, documentSet);
     }
 
     public boolean isValid() {
@@ -25,58 +40,84 @@ public class Match {
         return this.template;
     }
 
-    public DBody body() {
+    public List<DBody> body() {
         return this.documentSet;
     }
 
-    private boolean tryMatch(DHeader header, DBody documentSet, boolean typeSense) {
-        if (documentSet == null) return true;
-        if (header == null) {
-            if (documentSet instanceof DRepeatableBody) 
-                return false;
-            if (!((DSingularBody)documentSet).isAtomic())
-                return false;
+    private boolean tryMatch(DHeader header, List<DBody> documentSet) {
+        Utils.isTrue(documentSet != null, "documentset must not be null");
+        if (documentSet.size() == 0) {
             return true;
         }
-        if (typeSense) {
-            switch(header.headerType()) {
-                case SINGULAR:
-                    if (!(documentSet instanceof DSingularBody))
-                        return false;
-                    break;
-                case REPEATABLE:
-                    if (!(documentSet instanceof DRepeatableBody))
-                        return false;
-                    break;
-                default:
-                    Utils.CanNotBeHere("DHeader unkown type");
+        if (header == null) {
+            return false;
+        }
+        for (DBody item: documentSet) {
+            if (!tryMatch(header, item)) {
+                return false;
             }
         }
-        if (documentSet instanceof DSingularBody)
-            return tryMatchSingular(header, (DSingularBody)documentSet);
-        if (documentSet instanceof DRepeatableBody)
-            return tryMatchRepeatable(header, (DRepeatableBody)documentSet);
-        Utils.CanNotBeHere("Unkown DBody Type");
-        return false;
+        
+        return true;
     }
 
-    private boolean tryMatchSingular(DHeader header, DSingularBody body) {
-        for (String fieldname: header) {
-            if (body.contains(header.index(fieldname))) {
-                if (!this.tryMatch(header.get(fieldname), body.get(header.index(fieldname)), true)) {
-                    return false;
-                }
-            } else {
+    private boolean tryMatch(DHeader header, DBody document) {
+        if (header instanceof ListTemplate) {
+            if (!matchList((ListTemplate)header, document)) {
+                return false;
+            }
+        }
+
+        if (header instanceof Template) {
+            if (!matchComplex((Template)header, document)) {
+                return false;
+            }
+        }
+
+        if (header instanceof AtomicTemplate) {
+            if (!matchAtomic((AtomicTemplate)header, document)) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    private boolean matchList(ListTemplate tpl, DBody documentSet) {
+        if (!(documentSet instanceof ListTuple)) {
+            return false;
+        }
+        ListTuple data = (ListTuple)documentSet;
+        for (DBody item: data) {
+            if (!tryMatch(tpl.getHeader(), item)) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean tryMatchRepeatable(DHeader header, DRepeatableBody body) {
-        for (DBody dBody: body) {
-            if (!tryMatch(header, dBody, false))
+
+    private boolean matchAtomic(AtomicTemplate template, DBody documentSet) {
+        if (!(documentSet instanceof AtomicValue)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean matchComplex(Template template, DBody documentSet) {
+        if (!(documentSet instanceof Tuple)) {
+            return false;
+        }
+
+        Tuple t = (Tuple)documentSet;
+        if (template.size() != t.size()) {
+            return false;
+        }
+
+        for (String fieldname: template) {
+            if (!(tryMatch(template.get(fieldname), t.get(template.index(fieldname))))) {
                 return false;
+            }
         }
         return true;
     }
