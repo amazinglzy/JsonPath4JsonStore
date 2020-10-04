@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import jp4js.storage.IndexContext;
-import jp4js.storage.node.RepeatableNode;
-import jp4js.storage.node.SingularNode;
-import jp4js.storage.node.IndexNode;
+import jp4js.storage.region.IndexContext;
+import jp4js.storage.region.node.RepeatableNode;
+import jp4js.storage.region.node.SingularNode;
+import jp4js.storage.region.node.IndexNode;
 import jp4js.utils.iter.Iter;
 
 

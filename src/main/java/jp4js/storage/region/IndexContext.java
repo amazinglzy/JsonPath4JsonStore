@@ -1,8 +1,8 @@
-package jp4js.storage;
+package jp4js.storage.region;
 
-import jp4js.storage.node.IndexNode;
-import jp4js.storage.node.SingularNode;
-import jp4js.storage.node.RepeatableNode;
+import jp4js.storage.region.node.IndexNode;
+import jp4js.storage.region.node.SingularNode;
+import jp4js.storage.region.node.RepeatableNode;
 import jp4js.utils.iter.Iter;
 
 import java.util.ArrayList;

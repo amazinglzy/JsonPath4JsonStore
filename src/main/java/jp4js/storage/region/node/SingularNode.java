@@ -1,4 +1,4 @@
-package jp4js.storage.node;
+package jp4js.storage.region.node;
 
 import jp4js.nf2.DType;
 

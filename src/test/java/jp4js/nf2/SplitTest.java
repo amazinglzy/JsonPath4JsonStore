@@ -13,8 +13,8 @@ import jp4js.data.XMarkSample;
 import jp4js.nf2.op.Split;
 import jp4js.nf2.op.SSplit;
 import jp4js.nf2.op.structure.StructureList;
-import jp4js.storage.IndexContext;
-import jp4js.storage.Indexer;
+import jp4js.storage.region.IndexContext;
+import jp4js.storage.region.Indexer;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

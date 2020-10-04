@@ -6,8 +6,8 @@ import jp4js.nf2.Match;
 import jp4js.nf2.op.SSplit;
 import jp4js.nf2.op.structure.StructureList;
 import jp4js.nf2.tpl.DBody;
-import jp4js.storage.IndexContext;
-import jp4js.storage.Indexer;
+import jp4js.storage.region.IndexContext;
+import jp4js.storage.region.Indexer;
 import jp4js.utils.Configuration;
 import jp4js.utils.query.PathCompiler;
 
