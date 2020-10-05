@@ -1,4 +1,4 @@
-package jp4js.shell.ui;
+package jp4js.query.shell.ui;
 
 import java.util.ArrayList;
 import java.util.List;

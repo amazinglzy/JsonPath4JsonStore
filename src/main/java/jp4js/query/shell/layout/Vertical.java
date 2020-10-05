@@ -1,6 +1,6 @@
-package jp4js.shell.layout;
+package jp4js.query.shell.layout;
 
-import jp4js.shell.ui.CharMatrixDrawer;
+import jp4js.query.shell.ui.CharMatrixDrawer;
 import java.util.List;
 
 public class Vertical extends BaseContainer{

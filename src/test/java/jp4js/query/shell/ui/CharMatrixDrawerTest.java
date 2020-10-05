@@ -1,4 +1,4 @@
-package jp4js.shell.ui;
+package jp4js.query.shell.ui;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

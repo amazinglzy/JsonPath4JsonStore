@@ -1,4 +1,4 @@
-package jp4js.shell.layout;
+package jp4js.query.shell.layout;
 
 public abstract class BaseContainer implements Container {
     private WidthAllign width;

@@ -1,4 +1,4 @@
-package jp4js.shell.layout;
+package jp4js.query.shell.layout;
 
 import java.util.List;
 import java.util.LinkedList;
