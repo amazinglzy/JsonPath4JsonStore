@@ -2,7 +2,7 @@ package jp4js.storage.dewey;
 
 import java.util.LinkedList;
 
-import jp4js.nf2.DType;
+import jp4js.algebra.DType;
 
 public class IndexNode {
     public LinkedList<Integer> indexes;

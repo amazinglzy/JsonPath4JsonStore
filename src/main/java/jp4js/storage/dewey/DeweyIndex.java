@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
-import jp4js.nf2.DType;
-import jp4js.nf2.Scalar.DList;
-import jp4js.nf2.Scalar.DMapping;
-import jp4js.nf2.op.structure.StructureRelation;
-import jp4js.nf2.op.structure.StructureSteps;
+import jp4js.algebra.DType;
+import jp4js.algebra.Scalar.DList;
+import jp4js.algebra.Scalar.DMapping;
+import jp4js.algebra.op.structure.StructureRelation;
+import jp4js.algebra.op.structure.StructureSteps;
 
 public class DeweyIndex {
     public static class TreeNode {

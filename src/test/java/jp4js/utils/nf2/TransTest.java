@@ -5,6 +5,7 @@ import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.utils.Configuration;
+import jp4js.utils.algebra.Trans;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

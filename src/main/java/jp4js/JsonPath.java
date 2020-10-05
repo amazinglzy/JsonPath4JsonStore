@@ -1,7 +1,7 @@
 package jp4js;
 
 import java.util.List;
-import jp4js.nf2.tpl.DBody;
+import jp4js.algebra.tpl.DBody;
 
 public interface JsonPath {
     public void index(String json);

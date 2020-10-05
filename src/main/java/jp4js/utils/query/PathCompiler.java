@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 
-import jp4js.nf2.op.structure.StructureList;
+import jp4js.algebra.op.structure.StructureList;
 import jp4js.parser.JsonPathLexer;
 import jp4js.parser.JsonPathParser;
 import jp4js.query.PathParser;

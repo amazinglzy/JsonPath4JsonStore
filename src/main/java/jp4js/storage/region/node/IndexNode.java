@@ -2,7 +2,7 @@ package jp4js.storage.region.node;
 
 import java.util.Comparator;
 
-import jp4js.nf2.DType;
+import jp4js.algebra.DType;
 
 public class IndexNode implements Comparable<IndexNode> {
     public String name;

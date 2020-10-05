@@ -1,6 +1,6 @@
 package jp4js.storage.region.node;
 
-import jp4js.nf2.DType;
+import jp4js.algebra.DType;
 
 public class SingularNode extends IndexNode {
 

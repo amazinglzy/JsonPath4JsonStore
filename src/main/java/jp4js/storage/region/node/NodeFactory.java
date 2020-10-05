@@ -1,6 +1,6 @@
 package jp4js.storage.region.node;
 
-import jp4js.nf2.DType;
+import jp4js.algebra.DType;
 
 public class NodeFactory {
     public static SingularNode create(String name, long firstVisit, long lastVisit, int level, DType.Instance value) {

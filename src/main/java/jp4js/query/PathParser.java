@@ -2,11 +2,11 @@ package jp4js.query;
 
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
-import jp4js.nf2.op.structure.RepeatableSL;
-import jp4js.nf2.op.structure.SingularSL;
-import jp4js.nf2.op.structure.StructureList;
-import jp4js.nf2.op.structure.StructureRelation;
-import jp4js.nf2.op.structure.StructureSteps;
+import jp4js.algebra.op.structure.RepeatableSL;
+import jp4js.algebra.op.structure.SingularSL;
+import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.op.structure.StructureRelation;
+import jp4js.algebra.op.structure.StructureSteps;
 
 
 public class PathParser extends JsonPathBaseVisitor<RepeatableSL> {

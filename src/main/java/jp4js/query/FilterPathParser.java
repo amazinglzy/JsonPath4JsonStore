@@ -1,6 +1,6 @@
 package jp4js.query;
 
-import jp4js.nf2.op.structure.RepeatableSL;
+import jp4js.algebra.op.structure.RepeatableSL;
 import jp4js.parser.JsonPathBaseVisitor;
 import jp4js.parser.JsonPathParser;
 

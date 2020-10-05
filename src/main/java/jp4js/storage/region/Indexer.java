@@ -1,10 +1,10 @@
 package jp4js.storage.region;
 
 import jp4js.utils.Configuration;
-import jp4js.utils.nf2.Trans;
-import jp4js.nf2.DType;
-import jp4js.nf2.Scalar.DMapping;
-import jp4js.nf2.Scalar.DList;
+import jp4js.utils.algebra.Trans;
+import jp4js.algebra.DType;
+import jp4js.algebra.Scalar.DMapping;
+import jp4js.algebra.Scalar.DList;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.storage.region.node.NodeFactory;
 import jp4js.storage.region.node.RepeatableNode;

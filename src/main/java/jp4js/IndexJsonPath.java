@@ -2,10 +2,10 @@ package jp4js;
 
 import java.util.List;
 
-import jp4js.nf2.Match;
-import jp4js.nf2.op.SSplit;
-import jp4js.nf2.op.structure.StructureList;
-import jp4js.nf2.tpl.DBody;
+import jp4js.algebra.Match;
+import jp4js.algebra.op.SSplit;
+import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.tpl.DBody;
 import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.Indexer;
 import jp4js.utils.Configuration;

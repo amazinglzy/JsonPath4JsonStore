@@ -1,9 +1,9 @@
 package jp4js.data;
 
-import jp4js.nf2.DType;
-import jp4js.nf2.op.structure.StructureList;
+import jp4js.algebra.DType;
+import jp4js.algebra.op.structure.StructureList;
 import jp4js.utils.Configuration;
-import jp4js.utils.nf2.Trans;
+import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;
 
 public abstract class BaseDataSuite {

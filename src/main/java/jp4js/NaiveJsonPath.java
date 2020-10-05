@@ -2,13 +2,13 @@ package jp4js;
 
 import java.util.List;
 
-import jp4js.nf2.DType;
-import jp4js.nf2.Match;
-import jp4js.nf2.op.Split;
-import jp4js.nf2.op.structure.StructureList;
-import jp4js.nf2.tpl.DBody;
+import jp4js.algebra.DType;
+import jp4js.algebra.Match;
+import jp4js.algebra.op.Split;
+import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.tpl.DBody;
 import jp4js.utils.Configuration;
-import jp4js.utils.nf2.Trans;
+import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;
 
 public class NaiveJsonPath implements JsonPath {
