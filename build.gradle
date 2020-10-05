@@ -62,8 +62,8 @@ application {
 }
 
 generateGrammarSource {
-    outputDirectory = file("${project.projectDir}/src/main/java/jp4js/parser")
-    arguments += ["-package", "jp4js.parser", "-visitor"]
+    outputDirectory = file("${project.projectDir}/src/main/java/jp4js/query/parser")
+    arguments += ["-package", "jp4js.query.parser", "-visitor"]
 }
 
 run {

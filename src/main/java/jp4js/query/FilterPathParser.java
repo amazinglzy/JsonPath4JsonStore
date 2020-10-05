@@ -1,8 +1,8 @@
 package jp4js.query;
 
 import jp4js.algebra.op.structure.RepeatableSL;
-import jp4js.parser.JsonPathBaseVisitor;
-import jp4js.parser.JsonPathParser;
+import jp4js.query.parser.JsonPathBaseVisitor;
+import jp4js.query.parser.JsonPathParser;
 
 
 public class FilterPathParser extends JsonPathBaseVisitor<RepeatableSL> {

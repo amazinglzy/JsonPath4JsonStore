@@ -1,5 +1,5 @@
 // Generated from JsonPath.g4 by ANTLR 4.7
-package jp4js.parser;
+package jp4js.query.parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

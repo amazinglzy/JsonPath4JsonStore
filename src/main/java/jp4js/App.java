@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.*;
 
-import jp4js.parser.*;
+import jp4js.query.parser.*;
 
 
 public class App {
