@@ -12,10 +12,20 @@ import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 
 public class DeweyIndex {
-    public static class TreeNode {
+    public static class TreeNode implements Comparable<TreeNode> {
         public TreeNode holder;
         public HashMap<String, TreeNode> childs;
         public ArrayList<IndexNode> nodes;
+
+        public TreeNode() {
+            this.childs = new HashMap<>();
+            this.nodes = new ArrayList<>();
+        }
+
+        @Override
+        public int compareTo(TreeNode o) {
+            return hashCode() - o.hashCode();
+        }
     }
 
     private TreeNode root;
@@ -38,6 +48,11 @@ public class DeweyIndex {
                     StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
                     if (step.rel == StructureRelation.AD) {
                         addDescendants(node, second, pstep.fieldname);
+                    } else {
+                        TreeNode child = node.childs.get(pstep.fieldname);
+                        if (child != null) {
+                            second.add(child);
+                        }
                     }
                 }
             }
