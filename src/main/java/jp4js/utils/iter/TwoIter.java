@@ -3,11 +3,11 @@ package jp4js.utils.iter;
 import java.util.Comparator;
 
 
-public class MIter<E> implements Iter<E> {
+public class TwoIter<E> implements Iter<E> {
     private Iter<E> iter1, iter2;
     private Comparator<E> c;
     
-    public MIter(Iter<E> iter1, Iter<E> iter2, Comparator<E> c) {
+    public TwoIter(Iter<E> iter1, Iter<E> iter2, Comparator<E> c) {
         this.iter1 = iter1;
         this.iter2 = iter2;
         this.c = c;
