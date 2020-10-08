@@ -3,11 +3,11 @@ package jp4js;
 import java.util.List;
 
 import jp4js.algebra.Match;
-import jp4js.algebra.op.SSplit;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.tpl.DBody;
 import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.Indexer;
+import jp4js.storage.region.RegionScan;
 import jp4js.utils.Configuration;
 import jp4js.utils.query.PathCompiler;
 
@@ -27,12 +27,12 @@ public class IndexJsonPath implements JsonPath {
     @Override
     public List<DBody> query(String query) {
         StructureList lst = PathCompiler.fromString(query);
-        SSplit split = new SSplit(this.indexContext, lst);
+        RegionScan split = new RegionScan(this.indexContext, lst);
         try {
             Match match = split.open();
             // assert(match.isValid());
             return match.body();
-        } catch (SSplit.MatchException e) {
+        } catch (RegionScan.MatchException e) {
             e.printStackTrace();
         }
         return null;

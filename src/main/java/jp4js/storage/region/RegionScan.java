@@ -1,4 +1,4 @@
-package jp4js.algebra.op;
+package jp4js.storage.region;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,24 +6,24 @@ import java.util.List;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
-import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.DBody;
 import jp4js.algebra.Match;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.Utils;
+import jp4js.algebra.op.BaseScan;
 import jp4js.algebra.op.structure.RepeatableSL;
 import jp4js.algebra.op.structure.SingularSL;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 
 
-public class SSplit extends BaseSplit {
+public class RegionScan extends BaseScan {
     private IndexContext indexContext;
     private StructureList lst;
 
-    public SSplit(IndexContext indexContext, StructureList lst) {
+    public RegionScan(IndexContext indexContext, StructureList lst) {
         this.indexContext = indexContext;
         this.lst = lst;
     }
@@ -113,24 +113,24 @@ public class SSplit extends BaseSplit {
                     StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
                     if (pstep.fieldname == "*") {
                         current = IndexScan.children(
-                            SSplit.this.indexContext, sortedNodes);
+                            RegionScan.this.indexContext, sortedNodes);
                     } else {
                         current = IndexScan.children(
-                            SSplit.this.indexContext, sortedNodes, pstep);
+                            RegionScan.this.indexContext, sortedNodes, pstep);
                     }
                     return iterateNode(current, steps, currentStep + 1);
                 }
 
                 if (step instanceof StructureSteps.IndexStep) {
                     StructureSteps.IndexStep istep = (StructureSteps.IndexStep)step;
-                    current = IndexScan.children(SSplit.this.indexContext, sortedNodes, istep);
+                    current = IndexScan.children(RegionScan.this.indexContext, sortedNodes, istep);
                     return iterateNode(current, steps, currentStep + 1);
                 }
                 break;
             case AD:
                 assert(step instanceof StructureSteps.PropertyStep);
                 current = IndexScan.descendents(
-                    SSplit.this.indexContext, sortedNodes, (StructureSteps.PropertyStep)step);
+                    RegionScan.this.indexContext, sortedNodes, (StructureSteps.PropertyStep)step);
                 return iterateNode(current, steps, currentStep + 1);
             default:
                 Utils.CanNotBeHere("Unkown Structure Relation Type");

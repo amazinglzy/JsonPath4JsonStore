@@ -19,11 +19,11 @@ import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.Utils;
 import jp4js.utils.algebra.Trans;
 
-public class Split extends BaseSplit {
+public class FullScan extends BaseScan {
 
     private DType.Instance data;
     private StructureList lst;
-    public Split(DType.Instance data, StructureList lst) {
+    public FullScan(DType.Instance data, StructureList lst) {
         this.data = data;
         this.lst = lst;
     }

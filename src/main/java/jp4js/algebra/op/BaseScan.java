@@ -1,6 +1,6 @@
 package jp4js.algebra.op;
 
-public class BaseSplit {
+public class BaseScan {
     public class MatchException extends Exception {
         public MatchException() {
             super();
