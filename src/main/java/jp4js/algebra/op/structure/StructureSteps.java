@@ -1,8 +1,10 @@
 package jp4js.algebra.op.structure;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class StructureSteps {
     public static abstract class Step {
@@ -71,6 +73,14 @@ public class StructureSteps {
 
     public void reverse() {
         Collections.reverse(this.steps);
+    }
+
+    public Iterator<Step> iterator() {
+        return this.steps.iterator();
+    }
+
+    public ListIterator<Step> listIterator() {
+        return this.steps.listIterator();
     }
 
     @Override
