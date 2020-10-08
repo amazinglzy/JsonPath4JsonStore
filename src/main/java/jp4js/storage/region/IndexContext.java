@@ -3,7 +3,6 @@ package jp4js.storage.region;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.storage.region.node.SingularNode;
 import jp4js.storage.region.node.RepeatableNode;
-import jp4js.utils.iter.Iter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public class IndexContext {
         return this.rootNode;
     }
 
-    public abstract class RangeIter<E extends IndexNode> implements Iter<E> {
+    public abstract class RangeIter<E extends IndexNode> implements RegionIterator<E> {
         protected ArrayList<E> nodes;
         protected int rangeL;
         protected int rangeR;

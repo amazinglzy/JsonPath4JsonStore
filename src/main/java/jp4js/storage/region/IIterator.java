@@ -1,15 +1,13 @@
 package jp4js.storage.region;
 
-import jp4js.utils.iter.Iter;
-
 import jp4js.storage.region.node.IndexNode;
 import jp4js.storage.region.node.SingularNode;
 import jp4js.storage.region.node.RepeatableNode;
 
-public class IIterator implements Iter<IndexNode> {
-    private Iter<SingularNode> sIter;
-    private Iter<RepeatableNode> rIter;
-    public IIterator(Iter<SingularNode> sIter, Iter<RepeatableNode> rIter) {
+public class IIterator implements RegionIterator<IndexNode> {
+    private RegionIterator<SingularNode> sIter;
+    private RegionIterator<RepeatableNode> rIter;
+    public IIterator(RegionIterator<SingularNode> sIter, RegionIterator<RepeatableNode> rIter) {
         this.sIter = sIter;
         this.rIter = rIter;
     }

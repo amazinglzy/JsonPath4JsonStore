@@ -45,10 +45,4 @@ public class MIter<E> implements Iter<E> {
     public boolean valid() {
         return (this.iter1.valid() || this.iter2.valid());
     }
-
-    @Override
-    public void seek(long visit) {
-        this.iter1.seek(visit);
-        this.iter2.seek(visit);
-    }
 }

@@ -20,6 +20,4 @@ public interface Iter<E> {
 
      */
     boolean valid();
-
-    void seek(long visit);
 }

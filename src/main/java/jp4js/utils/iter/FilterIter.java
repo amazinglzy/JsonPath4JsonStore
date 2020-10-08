@@ -38,9 +38,4 @@ public class FilterIter<E> implements Iter<E> {
         skip();
         return this.iter.valid();
     }
-
-    @Override
-    public void seek(long visit) {
-        iter.seek(visit);
-    }
 }

@@ -19,9 +19,4 @@ public class EmptyIter<E> implements Iter<E> {
     public boolean valid() {
         return false;
     }
-
-    @Override
-    public void seek(long visit) {
-
-    }
 }
