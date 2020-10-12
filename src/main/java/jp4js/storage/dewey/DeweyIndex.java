@@ -14,6 +14,7 @@ import jp4js.algebra.op.structure.StructureSteps.IndexStep;
 import jp4js.algebra.op.structure.StructureSteps.PropertyStep;
 import jp4js.algebra.op.structure.StructureSteps.Step;
 import jp4js.utils.Utils;
+import jp4js.utils.iter.EmptyIter;
 import jp4js.utils.iter.Iter;
 import jp4js.utils.iter.MultiIter;
 
@@ -22,16 +23,25 @@ public class DeweyIndex {
         this.root = new TreeNode();
     }
 
-    public Iter<IndexNode> query(ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+    public Iter<IndexNode> query(StructureSteps steps) {
+        StructureSteps filter = new StructureSteps();
+        ListIterator<Step> iter = steps.listIterator();
+        Iter<IndexNode> ret = query(iter, this.root, filter);
+        if (ret == null) {
+            ret = new EmptyIter<>();
+        }
+        return ret;
+    }
+
+    private Iter<IndexNode> query(ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         Iter<IndexNode> ret = null;
         Step step = iter.next();
         if (step instanceof PropertyStep) {
             PropertyStep ps = (PropertyStep)step;
-            ret = query(ps, iter, u, filter);
+            ret = queryPropertyStep(ps, iter, u, filter);
         } else if (step instanceof IndexStep) {
             IndexStep is = (IndexStep)step;
-            filter.addStep(is);
-            ret = query(is, iter, u, filter);
+            ret = queryIndexStep(is, iter, u, filter);
         } else {
             Utils.CanNotBeHere("Unknown Step");
         }
@@ -39,7 +49,7 @@ public class DeweyIndex {
         return ret;
     }
 
-    public Iter<IndexNode> query(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+    private Iter<IndexNode> queryPropertyStep(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         if (step.rel == StructureRelation.PC) {
             return queryPCProperty(step, iter, u, filter);
         } else {
@@ -96,7 +106,7 @@ public class DeweyIndex {
         return new MultiIter<IndexNode>(iters, IndexNode.comparator(filter.size()));
     }
 
-    public Iter<IndexNode> queryADProperty(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+    private Iter<IndexNode> queryADProperty(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         ArrayList<Iter<IndexNode>> iters = new ArrayList<Iter<IndexNode>>();
 
         if (u.childs.containsKey(step.fieldname)) {
@@ -111,7 +121,7 @@ public class DeweyIndex {
         }
 
         for (TreeNode node: u.childs.values()) {
-            Iter<IndexNode> childIter = query(step, iter, node, filter);
+            Iter<IndexNode> childIter = queryPropertyStep(step, iter, node, filter);
             if (childIter != null) {
                 iters.add(childIter);
             }
@@ -119,7 +129,7 @@ public class DeweyIndex {
 
         if (u.holder != null) {
             filter.addStep(StructureRelation.PC, "*");
-            Iter<IndexNode> childIter = query(step, iter, u.holder, filter);
+            Iter<IndexNode> childIter = queryPropertyStep(step, iter, u.holder, filter);
             if (childIter != null) {
                 iters.add(childIter);
             }
@@ -133,7 +143,7 @@ public class DeweyIndex {
         return new MultiIter<IndexNode>(iters, IndexNode.comparator(filter.size()));
     }
 
-    public Iter<IndexNode> query(IndexStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+    private Iter<IndexNode> queryIndexStep(IndexStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         Iter<IndexNode> ret = null;
         if (u.holder == null) {
             return ret;

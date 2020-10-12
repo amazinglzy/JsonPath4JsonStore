@@ -41,7 +41,7 @@ public class StepsIterator implements Iter<IndexNode> {
             return false;
         }
 
-        if (this.steps.size() > 0) {
+        if (this.steps.size() == 0) {
             return true;
         }
 

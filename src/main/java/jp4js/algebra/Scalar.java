@@ -36,6 +36,14 @@ public class Scalar {
     public static DList.Instance createDList() {
         return dList.create();
     }
+
+    public static <T extends DType.Instance> DList.Instance createDListValues(List<T> data) {
+        DList.Instance ret = dList.create();
+        for (T val: data) {
+            ret.add(val);
+        }
+        return ret;
+    }
     
     public static AtomicValue createAtomicString(String data) {
         DType.Instance ins = dString.create(data);
