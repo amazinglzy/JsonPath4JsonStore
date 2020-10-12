@@ -1,17 +1,15 @@
 package jp4js.storage.dewey;
 
-import org.junit.Test;
 
 import jp4js.algebra.DType;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
-import jp4js.storage.dewey.DeweyIndex.TreeNode;
 import jp4js.utils.Configuration;
 import jp4js.utils.algebra.Trans;
 
+import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.TreeSet;
 
 
 public class DeweyIndexTest {

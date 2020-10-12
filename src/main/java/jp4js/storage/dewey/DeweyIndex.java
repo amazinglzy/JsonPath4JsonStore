@@ -1,11 +1,9 @@
 package jp4js.storage.dewey;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.TreeSet;
 
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar.DList;
@@ -15,10 +13,7 @@ import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.op.structure.StructureSteps.IndexStep;
 import jp4js.algebra.op.structure.StructureSteps.PropertyStep;
 import jp4js.algebra.op.structure.StructureSteps.Step;
-import jp4js.storage.region.IndexScan;
 import jp4js.utils.Utils;
-import jp4js.utils.iter.ArrayIter;
-import jp4js.utils.iter.EmptyIter;
 import jp4js.utils.iter.Iter;
 import jp4js.utils.iter.MultiIter;
 
@@ -27,68 +22,132 @@ public class DeweyIndex {
         this.root = new TreeNode();
     }
 
-    public Iter<IndexNode> query(ListIterator<Step> iter, TreeNode u, int level) {
+    public Iter<IndexNode> query(ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+        Iter<IndexNode> ret = null;
         Step step = iter.next();
         if (step instanceof PropertyStep) {
             PropertyStep ps = (PropertyStep)step;
-            return query(ps, iter, u, level);
+            ret = query(ps, iter, u, filter);
         } else if (step instanceof IndexStep) {
             IndexStep is = (IndexStep)step;
-            return query(is, iter, u, level);
+            filter.addStep(is);
+            ret = query(is, iter, u, filter);
+        } else {
+            Utils.CanNotBeHere("Unknown Step");
         }
-        Utils.CanNotBeHere("Unknown Step");
-        return null;
+        iter.previous();
+        return ret;
     }
 
-    public Iter<IndexNode> query(PropertyStep step, ListIterator<Step> iter, TreeNode u, int level) {
+    public Iter<IndexNode> query(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         if (step.rel == StructureRelation.PC) {
-            if (step.fieldname == "*") {
-                ArrayList<Iter<IndexNode>> iters = new ArrayList<Iter<IndexNode>>() {{
-                    for (TreeNode child: u.childs.values()) {
-                        add(new ArrayIter<>(child.nodes));
-                    }
-                    if (u.holder != null) {
-                        add(new ArrayIter<>(u.holder.nodes));
-                    }
-                }};
-                return new MultiIter<IndexNode>(iters, IndexNode.comparator(level));
-            } else {
+            return queryPCProperty(step, iter, u, filter);
+        } else {
+            return queryADProperty(step, iter, u, filter);
+        }
+    }
+
+    private Iter<IndexNode> queryPCProperty(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+        ArrayList<Iter<IndexNode>> iters = new ArrayList<Iter<IndexNode>>();
+        if (iter.hasNext()) {
+            if (step.fieldname != "*") {
                 if (u.childs.containsKey(step.fieldname)) {
-                    return new ArrayIter<>(u.childs.get(step.fieldname).nodes);
+                    return query(iter, u.childs.get(step.fieldname), filter);
                 }
                 return null;
+            }
+
+            for (TreeNode child: u.childs.values()) {
+                Iter<IndexNode> childIter = query(iter, child, filter);
+                if (childIter != null) {
+                    iters.add(childIter);
+                }
+            }
+
+            if (u.holder != null) {
+                filter.addStep(step);
+                Iter<IndexNode> childIter = query(iter, u.holder, filter);
+                filter.pop();
+
+                if (childIter != null) {
+                    iters.add(childIter);
+                }
             }
         } else {
-            ArrayList<Iter<IndexNode>> iters = new ArrayList<Iter<IndexNode>>() {{
+            if (step.fieldname != "*") {
                 if (u.childs.containsKey(step.fieldname)) {
-                    add(new ArrayIter<>(u.childs.get(step.fieldname).nodes));
+                    return new StepsIterator(filter, u.childs.get(step.fieldname).nodes);
                 }
-
-                for (TreeNode node: u.childs.values()) {
-                    Iter<IndexNode> res = query(step, iter, node, level);
-                    if (res != null) {
-                        add(res);
-                    }
-                }
-
-                if (u.holder != null) {
-                    Iter<IndexNode> res = query(step, iter, u.holder, level+1);
-                    if (res != null) {
-                        add(res);
-                    }
-                }
-            }};
-
-            if (iters.size() == 0) {
                 return null;
             }
 
-            return new MultiIter<IndexNode>(iters, IndexNode.comparator(level));
+
+            for (TreeNode child: u.childs.values()) {
+                iters.add(new StepsIterator(filter, child.nodes));
+            }
+
+            if (u.holder != null) {
+                filter.addStep(step);
+                iters.add(new StepsIterator(filter, u.holder.nodes));
+                filter.pop();
+            }
         }
+        
+        return new MultiIter<IndexNode>(iters, IndexNode.comparator(filter.size()));
     }
 
-    public Iter<IndexNode> query(IndexStep step, ListIterator<Step> iter, TreeNode u, int level) {
-        return null;
+    public Iter<IndexNode> queryADProperty(PropertyStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+        ArrayList<Iter<IndexNode>> iters = new ArrayList<Iter<IndexNode>>();
+
+        if (u.childs.containsKey(step.fieldname)) {
+            if (iter.hasNext()) {
+                Iter<IndexNode> childIter = query(iter, u.childs.get(step.fieldname), filter);
+                if (childIter != null) {
+                    iters.add(childIter);
+                }
+            } else {
+                iters.add(new StepsIterator(filter, u.childs.get(step.fieldname).nodes));
+            }
+        }
+
+        for (TreeNode node: u.childs.values()) {
+            Iter<IndexNode> childIter = query(step, iter, node, filter);
+            if (childIter != null) {
+                iters.add(childIter);
+            }
+        }
+
+        if (u.holder != null) {
+            filter.addStep(StructureRelation.PC, "*");
+            Iter<IndexNode> childIter = query(step, iter, u.holder, filter);
+            if (childIter != null) {
+                iters.add(childIter);
+            }
+            filter.pop();
+        }
+
+        if (iters.size() == 0) {
+            return null;
+        }
+
+        return new MultiIter<IndexNode>(iters, IndexNode.comparator(filter.size()));
+    }
+
+    public Iter<IndexNode> query(IndexStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+        Iter<IndexNode> ret = null;
+        if (u.holder == null) {
+            return ret;
+        }
+
+        filter.addStep(step);
+        if (iter.hasNext()) {
+            ret = query(iter, u.holder, filter);
+        } else {
+            ret = new StepsIterator(filter, u.holder.nodes);
+        }
+
+        filter.pop();
+        return ret;
     }
 
     private DeweyIndex(TreeNode root) {

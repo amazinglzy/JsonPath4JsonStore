@@ -71,6 +71,10 @@ public class StructureSteps {
         return this.steps.size();
     }
 
+    public Step pop() {
+        return this.steps.remove(this.steps.size() - 1);
+    }
+
     public void reverse() {
         Collections.reverse(this.steps);
     }
@@ -81,6 +85,12 @@ public class StructureSteps {
 
     public ListIterator<Step> listIterator() {
         return this.steps.listIterator();
+    }
+
+    public StructureSteps copy() {
+        StructureSteps ret = new StructureSteps();
+        ret.steps.addAll(this.steps);
+        return ret;
     }
 
     @Override

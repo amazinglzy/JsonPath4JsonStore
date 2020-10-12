@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import jp4js.algebra.DType;
-import jp4js.utils.Utils;
 
 public class IndexNode {
     public LinkedList<Integer> indexes;
@@ -14,6 +13,11 @@ public class IndexNode {
     public IndexNode(LinkedList<Integer> indexes, DType.Instance value) {
         this.indexes = indexes;
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return indexes.toString() + ":" + value.toString();
     }
 
     public static Comparator<IndexNode> comparator(int level) {
