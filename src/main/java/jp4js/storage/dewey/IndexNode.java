@@ -2,22 +2,29 @@ package jp4js.storage.dewey;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 import jp4js.algebra.DType;
+import jp4js.algebra.tpl.AtomicValue;
+import jp4js.algebra.tpl.DBody;
 
 public class IndexNode {
-    public LinkedList<Integer> indexes;
-    public DType.Instance value;
+    public List<Integer> indexes;
+    public DBody data;
 
-    public IndexNode(LinkedList<Integer> indexes, DType.Instance value) {
+    public IndexNode(List<Integer> indexes, DType.Instance value) {
         this.indexes = indexes;
-        this.value = value;
+        this.data = new AtomicValue(value.type(), value);
+    }
+
+    public IndexNode(List<Integer> indexes, DBody data) {
+        this.indexes = indexes;
+        this.data = data;
     }
 
     @Override
     public String toString() {
-        return indexes.toString() + ":" + value.toString();
+        return this.indexes.toString() + ":" + this.data.toString();
     }
 
     public static Comparator<IndexNode> comparator(int level) {

@@ -3,16 +3,21 @@ package jp4js.storage.dewey;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
+import jp4js.algebra.op.structure.RepeatableSL;
+import jp4js.algebra.op.structure.SingularSL;
+import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.op.structure.StructureSteps.IndexStep;
 import jp4js.algebra.op.structure.StructureSteps.PropertyStep;
 import jp4js.algebra.op.structure.StructureSteps.Step;
+import jp4js.algebra.tpl.DBody;
 import jp4js.utils.Utils;
 import jp4js.utils.iter.EmptyIter;
 import jp4js.utils.iter.Iter;
@@ -33,6 +38,16 @@ public class DeweyIndex {
         return ret;
     }
 
+    public List<DBody> query(StructureList lst) {
+        StructureSteps filter = new StructureSteps();
+        NodeOrderedList data = query(this.root, lst, filter);
+        return new LinkedList<>() {{
+            for (IndexNode node: data) {
+                add(node.data);
+            }
+        }};
+    }
+
     private Iter<IndexNode> query(ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
         Iter<IndexNode> ret = null;
         Step step = iter.next();
@@ -46,6 +61,23 @@ public class DeweyIndex {
             Utils.CanNotBeHere("Unknown Step");
         }
         iter.previous();
+        return ret;
+    }
+
+    private Iter<IndexNode> queryIndexStep(IndexStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
+        Iter<IndexNode> ret = null;
+        if (u.holder == null) {
+            return ret;
+        }
+
+        filter.addStep(step);
+        if (iter.hasNext()) {
+            ret = query(iter, u.holder, filter);
+        } else {
+            ret = new StepsIterator(filter, u.holder.nodes);
+        }
+
+        filter.pop();
         return ret;
     }
 
@@ -143,23 +175,189 @@ public class DeweyIndex {
         return new MultiIter<IndexNode>(iters, IndexNode.comparator(filter.size()));
     }
 
-    private Iter<IndexNode> queryIndexStep(IndexStep step, ListIterator<Step> iter, TreeNode u, StructureSteps filter) {
-        Iter<IndexNode> ret = null;
-        if (u.holder == null) {
+    private NodeOrderedList query(TreeNode n, StructureList lst, StructureSteps filter) {
+        if (lst == null) {
+            return new NodeOrderedList(
+                filter.size(),
+                new StepsIterator(filter, n.nodes)
+            );
+        }
+
+        if (lst instanceof RepeatableSL) {
+            return queryRepeatable(n, (RepeatableSL)lst, filter);
+        }
+
+        if (lst instanceof SingularSL) {
+            return querySingular(n, (SingularSL)lst, filter);
+        }
+
+        Utils.CanNotBeHere("unkown StructureList type");
+        return null;
+    }
+
+    private NodeOrderedList queryRepeatable(TreeNode n, RepeatableSL lst, StructureSteps filter) {
+        NodeOrderedList nodes = iterate(n, lst.steps().listIterator(), lst.elemType(), filter);
+        NodeOrderedList ret = new NodeOrderedList(filter.size(), nodes.iterator());
+        ret.shrink();
+        return ret;
+    }
+
+    private NodeOrderedList querySingular(TreeNode n, SingularSL lst, StructureSteps filter) {
+        if (lst.size() == 0) {
+            return new NodeOrderedList(
+                filter.size(),
+                new StepsIterator(filter, n.nodes)
+            );
+        }
+
+        NodeOrderedList ret = new NodeOrderedList(filter.size());
+        for (StructureList.StructureItem item: lst) {
+            NodeOrderedList colnodes = iterate(n, item.steps.listIterator(), item.lst, filter);
+            ret.crossProduct(colnodes);
+        }
+        return ret;
+    }
+
+    private NodeOrderedList iterate(TreeNode n, ListIterator<Step> iter, StructureList lst,
+                                    StructureSteps filter) {
+        if (iter.hasNext()) {
+            NodeOrderedList ret = null;
+            Step step = iter.next();
+            if (step instanceof PropertyStep) {
+                ret = iteratePropertyStep(n, (PropertyStep)step, iter, lst, filter);
+            }
+
+            if (step instanceof IndexStep) {
+                ret = iterateIndexStep(n, (IndexStep)step, iter, lst, filter);
+            }
+            iter.previous();
+            return ret;
+        } else {
+            return query(n, lst, filter);
+        }
+    }
+
+    private NodeOrderedList iterateIndexStep(TreeNode n, IndexStep step, ListIterator<Step> iter,
+                                             StructureList lst, StructureSteps filter) {
+        NodeOrderedList ret = null;
+        if (n.holder == null) {
             return ret;
         }
-
+    
         filter.addStep(step);
         if (iter.hasNext()) {
-            ret = query(iter, u.holder, filter);
+            ret = iterate(n.holder, iter, lst, filter);
         } else {
-            ret = new StepsIterator(filter, u.holder.nodes);
+            ret = query(n.holder, lst, filter);
         }
-
+    
         filter.pop();
         return ret;
     }
 
+    private NodeOrderedList iteratePropertyStep(TreeNode n, PropertyStep step, ListIterator<Step> iter,
+                                                StructureList lst, StructureSteps filter) {
+        if (step.rel == StructureRelation.PC) {
+            return iteratePCPropertyStep(n, step, iter, lst, filter);
+        } else {
+            return iterateADPropertyStep(n, step, iter, lst, filter);
+        }
+    }
+
+    private NodeOrderedList iteratePCPropertyStep(TreeNode n, PropertyStep step, ListIterator<Step> iter,
+                                                  StructureList lst, StructureSteps filter) {
+        NodeOrderedList ret = new NodeOrderedList(filter.size());
+        if (iter.hasNext()) {
+            if (step.fieldname != "*") {
+                if (n.childs.containsKey(step.fieldname)) {
+                    return iterate(n.childs.get(step.fieldname), iter, lst, filter);
+                }
+                return null;
+            }
+    
+            for (TreeNode child: n.childs.values()) {
+                NodeOrderedList childRet = iterate(child, iter, lst, filter);
+                if (childRet != null) {
+                    ret.addAll(childRet);
+                }
+            }
+    
+            if (n.holder != null) {
+                filter.addStep(step);
+                NodeOrderedList childRet = iterate(n.holder, iter, lst, filter);
+                filter.pop();
+    
+                if (childRet != null) {
+                    ret.addAll(childRet);
+                }
+            }
+        } else {
+            if (step.fieldname != "*") {
+                if (n.childs.containsKey(step.fieldname)) {
+                    return query(n.childs.get(step.fieldname), lst, filter);
+                }
+                return null;
+            }
+    
+    
+            for (TreeNode child: n.childs.values()) {
+                NodeOrderedList childRet = query(child, lst, filter);
+                if (childRet != null) {
+                    ret.addAll(childRet);
+                }
+            }
+    
+            if (n.holder != null) {
+                filter.addStep(step);
+                NodeOrderedList childRet = query(n.holder, lst, filter);
+                if (childRet != null) {
+                    ret.addAll(childRet);
+                }
+                filter.pop();
+            }
+        }
+        
+        return ret;
+    }
+
+    private NodeOrderedList iterateADPropertyStep(TreeNode n, PropertyStep step, ListIterator<Step> iter,
+                                                  StructureList lst, StructureSteps filter) {
+        NodeOrderedList ret = new NodeOrderedList(filter.size());
+
+        if (n.childs.containsKey(step.fieldname)) {
+            NodeOrderedList childRet = null;
+            if (iter.hasNext()) {
+                childRet = iterate(n.childs.get(step.fieldname), iter, lst, filter);
+            } else {
+                childRet = query(n.childs.get(step.fieldname), lst, filter);
+            }
+            if (childRet != null) {
+                ret.addAll(childRet);
+            }
+        }
+    
+        for (TreeNode node: n.childs.values()) {
+            NodeOrderedList childRet = iterateADPropertyStep(node, step, iter, lst, filter);
+            if (childRet != null) {
+                ret.addAll(childRet);
+            }
+        }
+    
+        if (n.holder != null) {
+            filter.addStep(StructureRelation.PC, "*");
+            NodeOrderedList childRet = iterateADPropertyStep(n.holder, step, iter, lst, filter);
+            if (childRet != null) {
+                ret.addAll(childRet);
+            }
+            filter.pop();
+        }
+    
+        return ret;
+    }
+
+    /*
+    Private Helper Functions below
+    */
     private DeweyIndex(TreeNode root) {
         this.root = root;
     }

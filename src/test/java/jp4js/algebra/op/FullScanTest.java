@@ -92,7 +92,7 @@ public class FullScanTest {
     }
 
     @Test
-    public void basic8_DataSuiteSplit_XMarkSample() {
+    public void basic08_DataSuiteSplit_XMarkSample() {
         forDataSuiteSplit(new XMarkSample());
     }
 }

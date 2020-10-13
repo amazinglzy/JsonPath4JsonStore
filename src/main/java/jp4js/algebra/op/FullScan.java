@@ -74,18 +74,20 @@ public class FullScan extends BaseScan {
         for (StructureList.StructureItem item: lst) {
             List<DType.Instance> candidates = iterateInstance(ins, item.steps, 0);
             List<Tuple> update = new LinkedList<>();
+            List<DBody> childRet = new LinkedList<>();
             for (DType.Instance candidate: candidates) {
                 List<DBody> cells = findMatch(candidate, item.lst);
-                for (DBody cell: cells) {
-                    for (Tuple row : ret) {
-                        Tuple newRow = new Tuple(lst.size());
-                        for (int i = 0; i < index; i++) {
-                            newRow.put(i, row.get(i));
-                        }
-                        newRow.put(index, cell);
-                        update.add(newRow);
-
+                childRet.addAll(cells);
+            }
+            for (Tuple row : ret) {
+                for (DBody cell: childRet) {
+                    Tuple newRow = new Tuple(lst.size());
+                    for (int i = 0; i < index; i++) {
+                        newRow.put(i, row.get(i));
                     }
+                    newRow.put(index, cell);
+                    update.add(newRow);
+
                 }
             }
             ret = update;

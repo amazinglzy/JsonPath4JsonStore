@@ -75,17 +75,19 @@ public class RegionScan extends BaseScan {
             List<IndexNode> candidates = iterateNode(
                 new LinkedList<>(){{add(u);}}, item.steps, 0);
             List<Tuple> update = new LinkedList<>();
+            List<DBody> childRet = new LinkedList<>();
             for (IndexNode candidate: candidates) {
-                for (Tuple row: ret) {
-                    List<DBody> cells = findMatch(candidate, item.lst);
-                    for (DBody cell: cells) {
-                        Tuple newRow = new Tuple(lst.size());
-                        for (int i = 0; i < index; i++) {
-                            newRow.put(i, row.get(i));
-                        }
-                        newRow.put(index, cell);
-                        update.add(newRow);
+                List<DBody> cells = findMatch(candidate, item.lst);
+                childRet.addAll(cells);
+            }
+            for (Tuple row: ret) {
+                for (DBody cell: childRet) {
+                    Tuple newRow = new Tuple(lst.size());
+                    for (int i = 0; i < index; i++) {
+                        newRow.put(i, row.get(i));
                     }
+                    newRow.put(index, cell);
+                    update.add(newRow);
                 }
             }
             ret = update;

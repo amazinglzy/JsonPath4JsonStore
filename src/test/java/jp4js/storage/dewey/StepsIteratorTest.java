@@ -4,6 +4,7 @@ import jp4js.algebra.DType;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.tpl.AtomicValue;
 import jp4js.utils.iter.CompareIter;
 
 import java.util.ArrayList;
@@ -41,7 +42,11 @@ public class StepsIteratorTest {
                 )
             ),
             (IndexNode node, DType.Instance ins) -> {
-                return node.value.equals(ins);
+                if (node.data instanceof AtomicValue) {
+                    AtomicValue av = (AtomicValue)node.data;
+                    return av.data().equals(ins);
+                }
+                return false;
             }
         );
     }
@@ -65,7 +70,11 @@ public class StepsIteratorTest {
                 )
             ),
             (IndexNode node, DType.Instance ins) -> {
-                return node.value.equals(ins);
+                if (node.data instanceof AtomicValue) {
+                    AtomicValue av = (AtomicValue)node.data;
+                    return av.data().equals(ins);
+                }
+                return false;
             }
         );
 
@@ -88,7 +97,11 @@ public class StepsIteratorTest {
                 )
             ),
             (IndexNode node, DType.Instance ins) -> {
-                return node.value.equals(ins);
+                if (node.data instanceof AtomicValue) {
+                    AtomicValue av = (AtomicValue)node.data;
+                    return av.data().equals(ins);
+                }
+                return false;
             }
         );
     }
@@ -112,7 +125,11 @@ public class StepsIteratorTest {
                 )
             ),
             (IndexNode node, DType.Instance ins) -> {
-                return node.value.equals(ins);
+                if (node.data instanceof AtomicValue) {
+                    AtomicValue av = (AtomicValue)node.data;
+                    return av.data().equals(ins);
+                }
+                return false;
             }
         );
     }

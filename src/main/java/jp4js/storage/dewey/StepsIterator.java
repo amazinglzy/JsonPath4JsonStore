@@ -45,7 +45,7 @@ public class StepsIterator implements Iter<IndexNode> {
             return true;
         }
 
-        return matchStep(this.steps.step(0), this.data.get(this.cursor).indexes.getFirst());
+        return matchStep(this.steps.step(0), this.data.get(this.cursor).indexes.get(0));
     }
 
     private boolean matchStep(StructureSteps.Step step, int index) {
@@ -91,7 +91,7 @@ public class StepsIterator implements Iter<IndexNode> {
             int left = -1, right = this.data.size();
             while (right - left > 1) {
                 int mid = (left + right) / 2;
-                if ( is.from <= data.get(mid).indexes.getFirst() ) {
+                if ( is.from <= data.get(mid).indexes.get(0) ) {
                     right = mid;
                 } else {
                     left = mid;
