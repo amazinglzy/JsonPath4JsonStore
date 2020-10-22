@@ -17,19 +17,19 @@ public class PathCompilerTest {
         System.out.println(data.query(3).toString());
         System.out.println(data.query(4).toString());
         assertThat(data.query(0).toString()).isEqualTo(
-            "[:asynomous(.store.book.*.author)]"
+            "[[@]:asy(.store.book.*.author)]"
         );
         assertThat(data.query(1).toString()).isEqualTo(
-            "[:asynomous(..author)]"
+            "[[@]:asy(..author)]"
         );
         assertThat(data.query(2).toString()).isEqualTo(
-            "[:asynomous(.store.*)]"
+            "[[@]:asy(.store.*)]"
         );
         assertThat(data.query(3).toString()).isEqualTo(
-            "[:asynomous(.store..price)]"
+            "[[@]:asy(.store..price)]"
         );
         assertThat(data.query(4).toString()).isEqualTo(
-            "[:asynomous(..book.{2,3})]"
+            "[[@]:asy(..book.{2,3})]"
         );
     }
 
@@ -37,6 +37,6 @@ public class PathCompilerTest {
     public void basic02_() {
         JsonArrayMulti data = new JsonArrayMulti();
         System.out.println(data.query(0).toString());
-        assertThat(data.query(0).toString()).isEqualTo("[:asynomous(.embedded:asynomous(..count, ..difference))]");
+        assertThat(data.query(0).toString()).isEqualTo("[[@]:asy(.embedded:asy(..count, ..difference))]");
     }
 }

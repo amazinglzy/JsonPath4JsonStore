@@ -13,8 +13,6 @@ import jp4js.algebra.Match;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.Utils;
 import jp4js.algebra.op.BaseScan;
-import jp4js.algebra.op.structure.RepeatableSL;
-import jp4js.algebra.op.structure.SingularSL;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 
@@ -39,15 +37,14 @@ public class RegionScan extends BaseScan {
         if (lst == null) {
             return new LinkedList<>() {{ add(new AtomicValue(u.value.type(), u.value));}};
         }
-        if (lst instanceof RepeatableSL) 
-            return findRepeatable(u, (RepeatableSL)lst);
-        if (lst instanceof SingularSL)
+        if (lst.isSingular()) {
             return find(u, lst);
-        Utils.CanNotBeHere("unkown StructureList type");
-        return null;
+        } else {
+            return findRepeatable(u, (StructureList)lst);
+        }
     }
 
-    public List<DBody> findRepeatable(IndexNode u, RepeatableSL lst) throws MatchException {
+    public List<DBody> findRepeatable(IndexNode u, StructureList lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
         List<IndexNode> elems = iterateNode(
             new LinkedList<>(){{add(u);}}, 

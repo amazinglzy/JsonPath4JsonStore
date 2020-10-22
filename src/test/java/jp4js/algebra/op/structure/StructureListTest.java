@@ -6,30 +6,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StructureListTest {
     @Test
     public void basic01_() {
-        StructureList lst = new RepeatableSL(new StructureSteps(), new SingularSL(){{
+        StructureList lst = new StructureList(new StructureSteps(), new StructureList(){{
             put("first", null, StructureRelation.AD);
             put("last", null, StructureRelation.AD);
-            put("addr", new RepeatableSL(new StructureSteps(), new SingularSL()), StructureRelation.PC);
+            put("addr", new StructureList(new StructureSteps(), new StructureList()), StructureRelation.PC);
         }});
-        // System.out.println(lst.toString());
+        System.out.println(lst.toString());
         assertThat(lst.toString()).isEqualTo(
-            "[:asynomous(..first, ..last, .addr:[:asynomous()])]"
+            "[[@]:asy(..first, ..last, .addr:[[@]:asy()])]"
         );
     }
 
     @Test
     public void basic02_() {
-        RepeatableSL lst1 = new RepeatableSL(new StructureSteps(), new SingularSL() {{
+        StructureList lst1 = new StructureList(new StructureSteps(), new StructureList() {{
             put("first", null, StructureRelation.AD);
             put("last", null, StructureRelation.AD);
         }});
-        SingularSL lst2 = new SingularSL(){{
-            put("addr", new RepeatableSL(new StructureSteps(), new SingularSL()), StructureRelation.PC);
+        StructureList lst2 = new StructureList(){{
+            put("addr", new StructureList(new StructureSteps(), new StructureList()), StructureRelation.PC);
         }};
         lst1.mergeIn(lst2);
         System.out.println(lst1.toString());
         assertThat(lst1.toString()).isEqualTo(
-            "[:asynomous(..first, ..last, .addr:[:asynomous()])]"
+            "[[@]:asy(..first, ..last, .addr:[[@]:asy()])]"
         );
     }
 }

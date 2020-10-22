@@ -100,6 +100,9 @@ public class StructureSteps {
             ret += steps.get(i).rel == StructureRelation.PC ? "." : "..";
             ret += steps.get(i).toString();
         }
+        if (ret.length() == 0) {
+            return "@";
+        }
         return ret;
     }
 }

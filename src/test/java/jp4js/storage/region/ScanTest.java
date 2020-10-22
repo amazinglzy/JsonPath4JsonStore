@@ -22,7 +22,7 @@ public class ScanTest {
             StructureList lst = suite.query(i);
             RegionScan split = new RegionScan(indexContext, lst);
             try {
-                Match match = split.open();
+                Match match = split.open(); match.match();
                 assertThat(match.isValid()).isTrue();
                 System.out.println(match.header().toString());
                 System.out.println(match.body().toString());

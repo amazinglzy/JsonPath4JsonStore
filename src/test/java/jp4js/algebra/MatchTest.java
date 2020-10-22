@@ -11,6 +11,7 @@ public class MatchTest {
             DSample.flatRel0,
             DSample.flatRel0_bodys[0]
         );
+        match.match();
         assertThat(match.isValid()).isTrue();
     }
 
@@ -20,6 +21,7 @@ public class MatchTest {
             DSample.nestedRel0,
             DSample.nestedRel0_bodys[0]
         );
+        match0.match();
         assertThat(match0.isValid()).isTrue();
     }
 }

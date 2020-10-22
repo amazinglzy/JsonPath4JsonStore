@@ -7,8 +7,6 @@ import jp4js.algebra.DType;
 import jp4js.algebra.Match;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
-import jp4js.algebra.op.structure.RepeatableSL;
-import jp4js.algebra.op.structure.SingularSL;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
@@ -16,7 +14,6 @@ import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.DBody;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
-import jp4js.utils.Utils;
 import jp4js.utils.algebra.Trans;
 
 public class FullScan extends BaseScan {
@@ -38,18 +35,14 @@ public class FullScan extends BaseScan {
             return new LinkedList<>() {{ add(new AtomicValue(ins.type(), ins));}};
         }
 
-        if (lst instanceof RepeatableSL) {
-            return findRepeatable(ins, (RepeatableSL)lst);
-        } 
-
-        if (lst instanceof SingularSL) {
+        if (lst.isSingular()) {
             return find(ins, lst);
-        }
-        Utils.CanNotBeHere("unkown StructureList type");
-        return null;
+        } else {
+            return findRepeatable(ins, lst);
+        } 
     }
 
-    public List<DBody> findRepeatable(DType.Instance ins, RepeatableSL lst) throws MatchException {
+    public List<DBody> findRepeatable(DType.Instance ins, StructureList lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
         List<DType.Instance> elems = iterateInstance(ins, lst.steps(), 0);
         for (DType.Instance subins: elems) {

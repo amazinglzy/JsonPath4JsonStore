@@ -9,8 +9,6 @@ import java.util.ListIterator;
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
-import jp4js.algebra.op.structure.RepeatableSL;
-import jp4js.algebra.op.structure.SingularSL;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
@@ -183,26 +181,21 @@ public class DeweyIndex {
             );
         }
 
-        if (lst instanceof RepeatableSL) {
-            return queryRepeatable(n, (RepeatableSL)lst, filter);
+        if (lst.isSingular()) {
+            return querySingular(n, lst, filter);
+        } else {
+            return queryRepeatable(n, (StructureList)lst, filter);
         }
-
-        if (lst instanceof SingularSL) {
-            return querySingular(n, (SingularSL)lst, filter);
-        }
-
-        Utils.CanNotBeHere("unkown StructureList type");
-        return null;
     }
 
-    private NodeOrderedList queryRepeatable(TreeNode n, RepeatableSL lst, StructureSteps filter) {
+    private NodeOrderedList queryRepeatable(TreeNode n, StructureList lst, StructureSteps filter) {
         NodeOrderedList nodes = iterate(n, lst.steps().listIterator(), lst.elemType(), filter);
         NodeOrderedList ret = new NodeOrderedList(filter.size(), nodes.iterator());
         ret.shrink();
         return ret;
     }
 
-    private NodeOrderedList querySingular(TreeNode n, SingularSL lst, StructureSteps filter) {
+    private NodeOrderedList querySingular(TreeNode n, StructureList lst, StructureSteps filter) {
         if (lst.size() == 0) {
             return new NodeOrderedList(
                 filter.size(),

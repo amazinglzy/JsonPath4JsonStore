@@ -24,6 +24,7 @@ public class FullScanTest {
             FullScan split = new FullScan(suite.instance(), lst);
             try {
                 Match match = split.open();
+                match.match();
                 assertThat(match.isValid()).isTrue();
                 System.out.println(match.header().toString());
                 System.out.println(match.body().toString());
@@ -45,6 +46,7 @@ public class FullScanTest {
         FullScan split = new FullScan(instance, new Goessener().query(0));
         try {
             Match match = split.open();
+            match.match();
             assertThat(match.isValid()).isTrue();
             System.out.println(match.header().toString());
             System.out.println(match.body().toString());

@@ -23,13 +23,11 @@ public class Match {
     public Match(DHeader template, DBody documentSet) {
         this.template = template;
         this.documentSet = new LinkedList<>() {{add(documentSet);}};
-        this.valid = this.tryMatch(this.template, this.documentSet);
     }
 
     public Match(DHeader template, List<DBody> documentSet) {
         this.template = template;
         this.documentSet = documentSet;
-        this.valid = this.tryMatch(template, documentSet);
     }
 
     public boolean isValid() {
@@ -42,6 +40,10 @@ public class Match {
 
     public List<DBody> body() {
         return this.documentSet;
+    }
+
+    public void match() {
+        this.valid = tryMatch(this.template, this.documentSet);
     }
 
     private boolean tryMatch(DHeader header, List<DBody> documentSet) {

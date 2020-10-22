@@ -10,22 +10,10 @@ import jp4js.algebra.DType;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
-import jp4js.algebra.op.structure.RepeatableSL;
-import jp4js.algebra.op.structure.SingularSL;
 import jp4js.algebra.op.structure.StructureList;
 
 public class Trans {
     public static DHeader fromSL(StructureList lst) {
-        if (lst instanceof SingularSL)
-            return fromSL((SingularSL)lst);
-        else if (lst instanceof RepeatableSL) 
-            return fromSL((RepeatableSL)lst);
-        else 
-            Utils.CanNotBeHere("Unkown StructureList Type");
-        return null;
-    }
-
-    private static DHeader fromSL(SingularSL lst) {
         Template ret = new Template();
         for (StructureList.StructureItem item: lst) {
             String fieldname = item.steps.toString();
@@ -35,11 +23,9 @@ public class Trans {
             else
                 ret.put(fieldname, new AtomicTemplate(null));
         }
-        return ret;
-    }
-
-    private static DHeader fromSL(RepeatableSL lst) {
-        return new ListTemplate(fromSL(lst.elemType()));
+        if (lst.isSingular())
+            return ret;
+        return new ListTemplate(ret);
     }
 
     public static DType.Instance fromJSON(Object json, Configuration configuration) {

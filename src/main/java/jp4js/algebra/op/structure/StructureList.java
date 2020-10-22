@@ -14,20 +14,32 @@ public class StructureList implements Iterable<StructureList.StructureItem> {
 
     private String name;
     private List<StructureItem> items;
+    protected List<StructureSteps> stepLst;
 
     public StructureList() {
-        this.name = "asynomous";
+        this.name = "asy";
         this.items = new LinkedList<>();
+        this.stepLst = new LinkedList<>();
     }
 
     public StructureList(String name) {
         this.name = name;
         this.items = new LinkedList<>();
+        this.stepLst = new LinkedList<>();
     }
 
     public StructureList(StructureList lst) {
         this.name = lst.name;
         this.items = lst.items;
+        this.stepLst = new LinkedList<>();
+    }
+
+    public StructureList(StructureSteps steps, StructureList lst) {
+        this.name = lst.name;
+        this.items = lst.items;
+        this.stepLst = new LinkedList<>() {{
+            add(steps);
+        }};
     }
 
     public void put(String fieldname, StructureList s, StructureRelation rel) {
@@ -67,17 +79,55 @@ public class StructureList implements Iterable<StructureList.StructureItem> {
         }
     }
 
+    public boolean isSingular() {
+        return this.stepLst == null || this.stepLst.size() == 0;
+    }
+
+    public StructureSteps steps() {
+        return this.stepLst.get(0);
+    }
+
+    public StructureList elemType() {
+        return new StructureList(this);
+    }
+
+    public void addStep(StructureSteps steps) {
+        this.stepLst.add(steps);
+    }
+
     @Override
     public String toString() {
-        String ret = "";
-        for (StructureItem item: this.items) {
-            if (ret.length() != 0) ret += ", ";
-
-            ret += item.steps.toString();
-            if (item.lst != null) {
-                ret += ":" + item.lst.toString();
-            }
+        StringBuilder builder = new StringBuilder();
+        if (!isSingular()) {
+            builder.append("[");
+            builder.append(this.stepLst.toString());
+            builder.append(":");
         }
-        return  ret;
+
+        builder.append(this.name);
+        builder.append("(");
+
+        boolean notFirst = false;
+        for (StructureItem item: this.items) {
+            if (notFirst) {
+                builder.append(", ");
+            } else {
+                notFirst = true;
+            }
+
+            builder.append(item.steps.toString());
+            if (item.lst != null) {
+                builder.append(":");
+                builder.append(item.lst.toString());
+            }
+
+        }
+
+        builder.append(")");
+
+        if (!isSingular()) {
+            builder.append("]");
+        }
+        return builder.toString();
     }
 }
