@@ -98,14 +98,7 @@ public class StructureList implements Iterable<StructureList.StructureItem> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        if (!isSingular()) {
-            builder.append("[");
-            builder.append(this.stepLst.toString());
-            builder.append(":");
-        }
-
-        builder.append(this.name);
-        builder.append("(");
+        builder.append("SELECT { ");
 
         boolean notFirst = false;
         for (StructureItem item: this.items) {
@@ -117,17 +110,24 @@ public class StructureList implements Iterable<StructureList.StructureItem> {
 
             builder.append(item.steps.toString());
             if (item.lst != null) {
-                builder.append(":");
+                builder.append(": ");
                 builder.append(item.lst.toString());
             }
 
         }
 
-        builder.append(")");
+        builder.append(" }");
 
         if (!isSingular()) {
-            builder.append("]");
+            builder.append(" NESTEDBY ");
+            builder.append(this.stepLst.toString());
         }
+
+        if (this.name != "asy") {
+            builder.append(" AS ");
+            builder.append(this.name);
+        }
+
         return builder.toString();
     }
 }

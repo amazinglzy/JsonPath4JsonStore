@@ -8,6 +8,9 @@ import java.io.InputStream;
 import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.op.structure.StructureListBuilder;
+import jp4js.algebra.op.structure.StructureRelation;
+import jp4js.algebra.op.structure.StructureSteps;
 
 public class Random implements DataSet {
     private Object data;
@@ -30,7 +33,62 @@ public class Random implements DataSet {
         };
 
         this.tplQuery = new StructureList[] {
-
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 1; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 2; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 3; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 4; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 5; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 6; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 7; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
+            new StructureListBuilder() {{
+                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                for (int i = 0; i < 8; i++) {
+                    addStep(StructureRelation.AD, "a");
+                }
+                enter().exit();
+            }}.build(),
         };
     }
 

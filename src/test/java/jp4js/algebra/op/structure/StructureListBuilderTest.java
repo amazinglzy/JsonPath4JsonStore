@@ -18,8 +18,8 @@ public class StructureListBuilderTest {
             .exit();
 
         StructureList lst = builder.build();
-        // System.out.println(lst.toString());
-        assertThat(lst.toString()).isEqualTo("[[.*]:asy(.f:asy(), .{1,5}:asy())]");
+        System.out.println(lst.toString());
+        assertThat(lst.toString()).isEqualTo("SELECT { .f: SELECT {  }, .{1,5}: SELECT {  } } NESTEDBY [.*]");
     }
 
     @Test
@@ -37,6 +37,19 @@ public class StructureListBuilderTest {
 
         StructureList lst = builder.build();
         // System.out.println(lst.toString());
-        assertThat(lst.toString()).isEqualTo("[[.*]:asy(.f:asy(.{1,5}:asy()))]");
+        assertThat(lst.toString()).isEqualTo("SELECT { .f: SELECT { .{1,5}: SELECT {  } } } NESTEDBY [.*]");
+    }
+
+    @Test
+    public void basic03_RandomExample() {
+        StructureList lst = new StructureListBuilder() {{
+            addSteps(new StructureSteps() {{addStep(StructureRelation.PC, "*");}});
+            for (int i = 0; i < 2; i++) {
+                addStep(StructureRelation.AD, "a");
+            }
+            enter().exit();
+        }}.build();
+        System.out.println(lst.toString());
+        assertThat(lst.toString()).isEqualTo("SELECT { ..a..a: SELECT {  } } NESTEDBY [.*]");
     }
 }

@@ -11,25 +11,25 @@ public class PathCompilerTest {
     @Test
     public void basic01_() {
         Goessener data = new Goessener();
-        // System.out.println(data.query(0).toString());
+        System.out.println(data.query(0).toString());
         System.out.println(data.query(1).toString());
         System.out.println(data.query(2).toString());
         System.out.println(data.query(3).toString());
         System.out.println(data.query(4).toString());
         assertThat(data.query(0).toString()).isEqualTo(
-            "[[@]:asy(.store.book.*.author)]"
+            "SELECT { .store.book.*.author } NESTEDBY [@]"
         );
         assertThat(data.query(1).toString()).isEqualTo(
-            "[[@]:asy(..author)]"
+            "SELECT { ..author } NESTEDBY [@]"
         );
         assertThat(data.query(2).toString()).isEqualTo(
-            "[[@]:asy(.store.*)]"
+            "SELECT { .store.* } NESTEDBY [@]"
         );
         assertThat(data.query(3).toString()).isEqualTo(
-            "[[@]:asy(.store..price)]"
+            "SELECT { .store..price } NESTEDBY [@]"
         );
         assertThat(data.query(4).toString()).isEqualTo(
-            "[[@]:asy(..book.{2,3})]"
+            "SELECT { ..book.{2,3} } NESTEDBY [@]"
         );
     }
 
@@ -37,6 +37,6 @@ public class PathCompilerTest {
     public void basic02_() {
         JsonArrayMulti data = new JsonArrayMulti();
         System.out.println(data.query(0).toString());
-        assertThat(data.query(0).toString()).isEqualTo("[[@]:asy(.embedded:asy(..count, ..difference))]");
+        assertThat(data.query(0).toString()).isEqualTo("SELECT { .embedded: SELECT { ..count, ..difference } } NESTEDBY [@]");
     }
 }
