@@ -22,70 +22,82 @@ public class Random implements DataSet {
         this.configuration = Configuration.defaultConfiguration();
         this.jsonPathQuery = new String[] {
             "$[*]..a",
-            "$[*]..a..a",
-            "$[*]..a..a..a",
-            "$[*]..a..a..a..a",
-            "$[*]..a..a..a..a..a",
-            "$[*]..a..a..a..a..a..a",
-            "$[*]..a..a..a..a..a..a..a",
-            "$[*]..a..a..a..a..a..a..a..a"
+            "$[*]..a..b",
+            "$[*]..a..b..c",
+            "$[*]..a..b..c..d",
+            "$[*]..a..b..c..d..e",
+            "$[*]..a..b..c..d..e..f",
+            "$[*]..a..b..c..d..e..f..g",
+            "$[*]..a..b..c..d..e..f..g..h"
         };
 
         this.tplQuery = new StructureList[] {
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 1; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 2; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 3; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 4; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
+                addStep(StructureRelation.AD, "d");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 5; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
+                addStep(StructureRelation.AD, "d");
+                addStep(StructureRelation.AD, "e");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 6; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
+                addStep(StructureRelation.AD, "d");
+                addStep(StructureRelation.AD, "e");
+                addStep(StructureRelation.AD, "f");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 7; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
+                addStep(StructureRelation.AD, "d");
+                addStep(StructureRelation.AD, "e");
+                addStep(StructureRelation.AD, "f");
+                addStep(StructureRelation.AD, "g");
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addStep(StructureRelation.PC, "*");
-                for (int i = 0; i < 8; i++) {
-                    addStep(StructureRelation.AD, "a");
-                }
+                addStep(StructureRelation.AD, "a");
+                addStep(StructureRelation.AD, "b");
+                addStep(StructureRelation.AD, "c");
+                addStep(StructureRelation.AD, "d");
+                addStep(StructureRelation.AD, "e");
+                addStep(StructureRelation.AD, "f");
+                addStep(StructureRelation.AD, "g");
+                addStep(StructureRelation.AD, "h");
                 enter().exit();
             }}.build(),
         };

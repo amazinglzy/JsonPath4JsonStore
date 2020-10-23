@@ -9,7 +9,7 @@ def parse_input():
         description="Random JSON Dataset Generator"
     )
 
-    parser.add_argument("--size", default=20, type=int,
+    parser.add_argument("--size", default=30, type=int,
                         help="The Size of Data Item")
     parser.add_argument("--average-atomic-value-length", default=5, type=int,
                         help="The Average Atomic Value Length")
@@ -52,7 +52,7 @@ def generate(level, params):
 def generate_special(level, params):
     if level == params["max_level"]:
         return generate_atomic_value(params["average_atomic_value_length"])
-    return {"a": generate_special(level+1, params)}
+    return {chr(ord("a") + level): generate_special(level+1, params)}
 
 if __name__ == '__main__':
     data = []

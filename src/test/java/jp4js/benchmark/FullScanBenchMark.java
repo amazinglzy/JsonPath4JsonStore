@@ -20,7 +20,7 @@ public class FullScanBenchMark {
         FullScanAdapter adapter = new FullScanAdapter();
         adapter.index(random.data(), random.configuration());
 
-        System.out.println("Finish Index, Press Enter to Continue");
+        System.out.print("Finish Index, Press Enter to Continue");
         scan.nextLine();
 
         for (int i = 0; i < random.querySize(); i ++) {
