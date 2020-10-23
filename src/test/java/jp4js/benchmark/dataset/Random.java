@@ -10,7 +10,6 @@ import com.jayway.jsonpath.Configuration;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureListBuilder;
 import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
 
 public class Random implements DataSet {
     private Object data;

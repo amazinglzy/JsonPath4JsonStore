@@ -8,7 +8,7 @@ import jp4js.benchmark.dataset.Random;
 
 public class FullScanBenchMark {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in); String line;
+        Scanner scan = new Scanner(System.in);
 
         Random random = new Random();
         try {
@@ -21,10 +21,17 @@ public class FullScanBenchMark {
         adapter.index(random.data(), random.configuration());
 
         System.out.println("Finish Index, Press Enter to Continue");
-        line = scan.nextLine();
+        scan.nextLine();
 
         for (int i = 0; i < random.querySize(); i ++) {
-            System.out.println(adapter.query(random.tplQuery(i)));
+            long start = System.currentTimeMillis();
+            int results = adapter.query(random.tplQuery(i));
+            int num = 10;
+            for (int j = 0; j < num - 1; j ++) {
+                adapter.query(random.tplQuery(i));
+            }
+            long interval = System.currentTimeMillis() - start;
+            System.out.printf("%d %d\n", results, interval / num);
         }
         scan.close();
     }
