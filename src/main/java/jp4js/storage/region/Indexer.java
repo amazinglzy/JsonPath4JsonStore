@@ -1,6 +1,5 @@
 package jp4js.storage.region;
 
-import jp4js.utils.Configuration;
 import jp4js.utils.algebra.Trans;
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar.DMapping;
@@ -12,6 +11,9 @@ import jp4js.storage.region.node.SingularNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jayway.jsonpath.Configuration;
+
 import java.util.Comparator;
 import java.util.HashMap;
 

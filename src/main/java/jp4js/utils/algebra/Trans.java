@@ -4,13 +4,14 @@ import jp4js.algebra.tpl.Template;
 import jp4js.algebra.tpl.ListTemplate;
 import jp4js.algebra.tpl.AtomicTemplate;
 import jp4js.algebra.tpl.DHeader;
-import jp4js.utils.Configuration;
 import jp4js.utils.Utils;
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
 import jp4js.algebra.op.structure.StructureList;
+
+import com.jayway.jsonpath.Configuration;
 
 public class Trans {
     public static DHeader fromSL(StructureList lst) {

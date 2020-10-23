@@ -9,7 +9,7 @@ def parse_input():
         description="Random JSON Dataset Generator"
     )
 
-    parser.add_argument("--size", default=50, type=int,
+    parser.add_argument("--size", default=20, type=int,
                         help="The Size of Data Item")
     parser.add_argument("--average-atomic-value-length", default=5, type=int,
                         help="The Average Atomic Value Length")

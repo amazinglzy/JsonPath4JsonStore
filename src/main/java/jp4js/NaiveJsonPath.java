@@ -2,12 +2,13 @@ package jp4js;
 
 import java.util.List;
 
+import com.jayway.jsonpath.Configuration;
+
 import jp4js.algebra.DType;
 import jp4js.algebra.Match;
 import jp4js.algebra.op.FullScan;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.tpl.DBody;
-import jp4js.utils.Configuration;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;
 

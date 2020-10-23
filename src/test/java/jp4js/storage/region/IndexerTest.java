@@ -5,13 +5,14 @@ import org.junit.Test;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.storage.region.node.RepeatableNode;
 import jp4js.storage.region.node.SingularNode;
-import jp4js.utils.Configuration;
 import jp4js.utils.iter.Iter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import com.jayway.jsonpath.Configuration;
 
 public class IndexerTest {
     @Test

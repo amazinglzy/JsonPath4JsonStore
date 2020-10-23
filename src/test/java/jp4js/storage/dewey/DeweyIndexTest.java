@@ -16,7 +16,6 @@ import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.data.XMarkSample;
-import jp4js.utils.Configuration;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.iter.CompareIter;
 import jp4js.utils.iter.Iter;
@@ -27,6 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.jayway.jsonpath.Configuration;
 
 
 
