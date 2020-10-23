@@ -24,7 +24,7 @@ public class TreeMataBenchMark {
         for (int i = 0; i < random.querySize(); i ++) {
             TplRunner runner = new TplRunner(adapter, random.tplQuery(i));
             runner.begin();
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 100; j++) {
                 runner.test();
             }
             runner.end();

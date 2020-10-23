@@ -29,21 +29,16 @@ public class NodeOrderedList implements Iterable<IndexNode> {
         this.nodes = new LinkedList<>() {{
             while (iter.valid()) {
                 IndexNode node = iter.read();
-                add(new IndexNode(node.indexes.subList(0, level), node.data));
+                add(node);
                 iter.next();
             }
         }};
     }
 
-    public NodeOrderedList(int level, Iterator<IndexNode> iter) {
+    public NodeOrderedList(int level, NodeOrderedList lst) {
         this.level = level;
         this.cmp = IndexNode.comparator(level);
-        this.nodes = new LinkedList<>() {{
-            while (iter.hasNext()) {
-                IndexNode node = iter.next();
-                add(new IndexNode(node.indexes.subList(0, level), node.data));
-            }
-        }};
+        this.nodes = lst.nodes;
     }
 
     public void addAll(NodeOrderedList other) {

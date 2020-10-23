@@ -190,7 +190,8 @@ public class DeweyIndex {
 
     private NodeOrderedList queryRepeatable(TreeNode n, StructureList lst, StructureSteps filter) {
         NodeOrderedList nodes = iterate(n, lst.steps().listIterator(), lst.elemType(), filter);
-        NodeOrderedList ret = new NodeOrderedList(filter.size(), nodes.iterator());
+        // NodeOrderedList ret = new NodeOrderedList(filter.size(), nodes.iterator());
+        NodeOrderedList ret = new NodeOrderedList(filter.size(), nodes);
         ret.shrink();
         return ret;
     }
