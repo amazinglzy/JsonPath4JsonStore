@@ -358,11 +358,12 @@ public class DeweyIndex {
     public static DeweyIndex build(DType.Instance ins) {
         TreeNode root = new TreeNode();
         build(ins, root, new LinkedList<>());
+        root.build();
         return new DeweyIndex(root);
     }
 
     public static void build(DType.Instance ins, TreeNode c, LinkedList<Integer> index) {
-        c.nodes.add(new IndexNode(new LinkedList<>(index), ins));
+        c.mutableNodes.add(new IndexNode(new LinkedList<>(index), ins));
         if (ins instanceof DList.Instance) {
             if (c.holder == null) {
                 c.holder = new TreeNode();
@@ -394,10 +395,21 @@ public class DeweyIndex {
         public TreeNode holder;
         public HashMap<String, TreeNode> childs;
         public ArrayList<IndexNode> nodes;
+        public LinkedList<IndexNode> mutableNodes;
 
         public TreeNode() {
             this.childs = new HashMap<>();
-            this.nodes = new ArrayList<>();
+            this.mutableNodes = new LinkedList<>();
+        }
+
+        public void build() {
+            this.nodes = new ArrayList<>(this.mutableNodes);
+            for (TreeNode node: childs.values()) {
+                node.build();
+            }
+            if (this.holder != null) {
+                this.holder.build();
+            }
         }
 
         @Override

@@ -2,11 +2,11 @@ package jp4js.benchmark;
 
 import java.io.IOException;
 
-import jp4js.benchmark.adapter.JaywayAdapter;
+import jp4js.benchmark.adapter.RegionScanAdatper;
 import jp4js.benchmark.dataset.Random;
-import jp4js.benchmark.runner.JaywayRunner;
+import jp4js.benchmark.runner.TplRunner;
 
-public class BenchMark {
+public class RegionScanBenchMark {
     public static void main(String args[]) {
         // run workdir in the project
         Random random = new Random();
@@ -16,20 +16,21 @@ public class BenchMark {
             System.out.println(e.toString());
         }
 
-        JaywayAdapter adapter = new JaywayAdapter();
+        RegionScanAdatper adapter = new RegionScanAdatper();
         adapter.index(random.data(), random.configuration());
 
         System.out.println("Load And Index Data");
 
         for (int i = 0; i < random.querySize(); i ++) {
-            JaywayRunner runner = new JaywayRunner(adapter, random.jsonPathQuery(i));
+            TplRunner runner = new TplRunner(adapter, random.tplQuery(i));
             runner.begin();
             for (int j = 0; j < 10; j++) {
                 runner.test();
             }
             runner.end();
 
-            System.out.println(runner.average());
+            System.out.println("Time: " + runner.average() + ", Results: " +
+                               runner.results().toString());
         }
     }
 }

@@ -4,6 +4,7 @@ package jp4js.algebra;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import jp4js.algebra.tpl.AtomicValue;
@@ -285,14 +286,14 @@ public class Scalar {
 
     public static class DList implements DType {
         public class Instance implements DType.Instance, Iterable<DType.Instance>, Comparable<DList.Instance> {
-            private final LinkedList<DType.Instance> data;
+            private final ArrayList<DType.Instance> data;
 
             public Instance() {
-                this.data = new LinkedList<>();
+                this.data = new ArrayList<>();
             }
 
             public Instance(LinkedList<DType.Instance> data) {
-                this.data = data;
+                this.data = new ArrayList<>(data);
             }
 
             public void add(DType.Instance item) {
