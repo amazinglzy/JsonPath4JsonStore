@@ -30,7 +30,7 @@ public class FullScan extends BaseScan {
         return new Match(Trans.fromSL(this.lst), dBody);
     }
 
-    public List<DBody> findMatch(DType.Instance ins, StructureList lst) throws MatchException  {
+    public List<DBody> findMatch(DType.Instance ins, StructureList lst) throws MatchException {
         if (lst == null) {
             return new LinkedList<>() {{ add(new AtomicValue(ins.type(), ins));}};
         }

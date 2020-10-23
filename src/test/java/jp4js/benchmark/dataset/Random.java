@@ -34,56 +34,56 @@ public class Random implements DataSet {
 
         this.tplQuery = new StructureList[] {
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 1; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 2; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 3; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 4; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 5; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 6; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 7; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
                 enter().exit();
             }}.build(),
             new StructureListBuilder() {{
-                addSteps(new StructureSteps(){{addStep(StructureRelation.PC, "*");}});
+                addStep(StructureRelation.PC, "*");
                 for (int i = 0; i < 8; i++) {
                     addStep(StructureRelation.AD, "a");
                 }
