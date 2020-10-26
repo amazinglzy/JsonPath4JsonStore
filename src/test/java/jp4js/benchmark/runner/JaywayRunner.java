@@ -1,12 +1,12 @@
 package jp4js.benchmark.runner;
 
-import jp4js.benchmark.adapter.JaywayAdapter;
+import jp4js.benchmark.adapter.JsonPathAdapter;
 
 public class JaywayRunner extends Runner {
-    private JaywayAdapter adapter;
+    private JsonPathAdapter adapter;
     private String query;
 
-    public JaywayRunner(JaywayAdapter adapter, String query) {
+    public JaywayRunner(JsonPathAdapter adapter, String query) {
         this.adapter = adapter;
         this.query = query;
     }
