@@ -88,6 +88,9 @@ public class NodeOrderedList implements Iterable<IndexNode> {
     }
 
     public void crossProduct(NodeOrderedList nested) {
+        if (nested == null || nested.nodes == null) {
+            return;
+        }
         if (this.nodes == null) {
             this.nodes = new LinkedList<>();
             for (IndexNode node: nested) {
@@ -160,6 +163,9 @@ public class NodeOrderedList implements Iterable<IndexNode> {
     }
 
     public void shrink() {
+        if (this.nodes == null) {
+            return;
+        }
         LinkedList<IndexNode> replace = new LinkedList<>();
         ListIterator<IndexNode> iter = this.nodes.listIterator();
         while (iter.hasNext()) {
@@ -189,6 +195,10 @@ public class NodeOrderedList implements Iterable<IndexNode> {
 
     @Override
     public Iterator<IndexNode> iterator() {
-        return this.nodes.iterator();
+        if (this.nodes != null) {
+            return this.nodes.iterator();
+        } else {
+            return new LinkedList<IndexNode>().iterator();
+        }
     }
 }
