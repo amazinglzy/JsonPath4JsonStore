@@ -52,4 +52,24 @@ public class StructureListBuilderTest {
         System.out.println(lst.toString());
         assertThat(lst.toString()).isEqualTo("SELECT { ..a..a: SELECT {  } } NESTEDBY [.*]");
     }
+
+    @Test
+    public void basic04_() {
+        StructureList lst = new StructureListBuilder() {{
+                addSteps(new StructureSteps() {{
+                    addStep(StructureRelation.PC, "open_auctions"); addStep(StructureRelation.PC, "*"); 
+                }});
+                addStep(StructureRelation.PC, "reserve");
+                enter().exit();
+                enter()
+                    .addSteps(new StructureSteps() {{
+                        addStep(StructureRelation.PC, "bidder");
+                        addStep(StructureRelation.PC, "*");
+                        addStep(StructureRelation.PC, "personref");
+                    }})
+                .exit();
+            }}.build();
+        System.out.println(lst.toString());
+        assertThat(lst.toString()).isEqualTo("SELECT { .reserve: SELECT {  }, @: SELECT {  } NESTEDBY [.bidder.*.personref] } NESTEDBY [.open_auctions.*]");
+    }
 }
