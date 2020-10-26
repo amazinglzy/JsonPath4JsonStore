@@ -374,7 +374,7 @@ public class DeweyIndex {
             for (int i = 0; i < lst.size(); ++ i) {
                 index.add(i);
                 build(lst.get(i), c.holder, index);
-                index.pop();
+                index.removeLast();
             }
 
             return;

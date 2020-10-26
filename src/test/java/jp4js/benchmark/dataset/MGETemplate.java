@@ -47,10 +47,6 @@ public class MGETemplate implements DataSet {
                 enter().exit();
                 addStep(StructureRelation.PC, "参数名");
                 enter().exit();
-                addStep(StructureRelation.PC, "参数值");
-                enter().exit();
-                addStep(StructureRelation.PC, "单位");
-                enter().exit();
             }}.build(),
             new StructureListBuilder() {{
                 addSteps(new StructureSteps() {{

@@ -4,6 +4,7 @@ package jp4js.storage.dewey;
 import jp4js.algebra.DType;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.op.structure.StructureListBuilder;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.tpl.AtomicValue;
@@ -23,6 +24,9 @@ import jp4js.utils.iter.Iter;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -175,6 +179,45 @@ public class DeweyIndexTest {
         assertThat(results.toString()).isEqualTo(
             "[[(\"United States\"), (\"United States\"), (\"Denmark\"), (\"Uzbekistan\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\"), (\"United States\")]]"
         );
+    }
+
+    @Test
+    public void basic11_MGETemplateSample() {
+        ClassLoader loader = getClass().getClassLoader();
+        File mgeFile = new File(loader.getResource("mge_sample.json").getFile());
+        String json;
+        try {
+            json = new String(Files.readAllBytes(mgeFile.toPath()));
+        } catch (IOException e) {
+            assert(false);
+            return;
+        }
+
+        Configuration configuration = Configuration.defaultConfiguration();
+        DType.Instance ins = Trans.fromJSON(
+            configuration.jsonProvider().parse(json), 
+            configuration);
+        
+        DeweyIndex index = DeweyIndex.build(ins);
+
+        StructureList lst = new StructureListBuilder() {{
+            addSteps(new StructureSteps() {{
+                addStep(StructureRelation.PC, "*");
+                addStep(StructureRelation.PC, "content");
+                addStep(StructureRelation.PC, "数据收集与审核"); 
+                addStep(StructureRelation.PC, "*"); 
+            }});
+            addStep(StructureRelation.PC, "数据收集人员");
+            enter().exit();
+            addStep(StructureRelation.PC, "数据审核人员");
+            enter().exit();
+        }}.build();
+        
+        System.out.println(lst.toString());
+        assertThat(lst.toString()).isEqualTo("SELECT { .数据收集人员: SELECT {  }, .数据审核人员: SELECT {  } } NESTEDBY [.*.content.数据收集与审核.*]");
+        List<DBody> res = index.query(lst);
+        System.out.println(res.toString());
+        assertThat(res.toString()).isEqualTo("[[(\"Bin Xu\", \"Haiqing Yin\"), (\"LALALA\", \"Haiqing Yin\")]]");
     }
 
 

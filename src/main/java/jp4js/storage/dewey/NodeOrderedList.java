@@ -53,7 +53,7 @@ public class NodeOrderedList implements Iterable<IndexNode> {
         if (this.nodes == null) {
             this.nodes = new LinkedList<>() {{
                 for (IndexNode node: other.nodes) {
-                    add(new IndexNode(node.indexes.subList(0, level), node.data));
+                    add(new IndexNode(node.indexes, node.data));
                 }
             }};
             return;
@@ -96,7 +96,7 @@ public class NodeOrderedList implements Iterable<IndexNode> {
             for (IndexNode node: nested) {
                 Tuple t = new Tuple(1);
                 t.put(0, node.data);
-                this.nodes.add(new IndexNode(node.indexes.subList(0, level), t));
+                this.nodes.add(new IndexNode(node.indexes, t));
             }
         } else {
             LinkedList<IndexNode> other = new LinkedList<>();
@@ -150,7 +150,7 @@ public class NodeOrderedList implements Iterable<IndexNode> {
                                 t.put(i, baseTuple.get(i));
                             }
                             t.put(baseTuple.size(), addNode.data);
-                            other.add(new IndexNode(baseNode.indexes.subList(0, level), t));
+                            other.add(new IndexNode(baseNode.indexes, t));
                         }
                     }
                     baseBuffer.clear();
@@ -183,7 +183,7 @@ public class NodeOrderedList implements Iterable<IndexNode> {
 
             replace.add(
                 new IndexNode(
-                    first.indexes.subList(0, this.level),
+                    first.indexes,
                     new ListTuple(data)
                 )
             );
