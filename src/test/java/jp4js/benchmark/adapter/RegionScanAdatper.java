@@ -3,6 +3,7 @@ package jp4js.benchmark.adapter;
 import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.TplValidator;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.Indexer;
@@ -27,7 +28,7 @@ public class RegionScanAdatper implements TplAdapter {
             TplValidator match = scan.open();
             // assert(match.isValid());
             return match.body().size();
-        } catch (RegionScan.MatchException e) {
+        } catch (MatchException e) {
             e.printStackTrace();
             return -1;
         }

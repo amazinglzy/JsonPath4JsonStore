@@ -2,6 +2,7 @@ package jp4js.algebra.operator;
 
 import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
@@ -33,7 +34,7 @@ public class FullScanTest {
                         suite.res()[i]
                     );
                 }
-            } catch (FullScan.MatchException e) {
+            } catch (MatchException e) {
                 e.printStackTrace();
             }
         }
@@ -56,7 +57,7 @@ public class FullScanTest {
             assertThat(match.body().toString()).isEqualTo(
                 "[[(\"Nigel Rees\"), (\"Evelyn Waugh\"), (\"Herman Melville\"), (\"J. R. R. Tolkien\")]]"
             );
-        } catch (FullScan.MatchException e) {
+        } catch (MatchException e) {
             assertFalse(e.toString(), true);
         }
     }

@@ -5,6 +5,7 @@ import com.jayway.jsonpath.Configuration;
 import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.operator.FullScan;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.utils.algebra.Trans;
 
@@ -26,7 +27,7 @@ public class FullScanAdapter implements TplAdapter {
             TplValidator match = split.open();
             // assert(match.isValid());
             return match.body().size();
-        } catch (FullScan.MatchException e) {
+        } catch (MatchException e) {
             e.printStackTrace();
             return -1;
         }

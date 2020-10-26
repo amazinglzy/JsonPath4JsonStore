@@ -5,6 +5,7 @@ import java.util.List;
 import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.TplValidator;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.storage.region.IndexContext;
@@ -33,7 +34,7 @@ public class IndexJsonPath implements JsonPath {
             TplValidator match = split.open();
             // assert(match.isValid());
             return match.body();
-        } catch (RegionScan.MatchException e) {
+        } catch (MatchException e) {
             e.printStackTrace();
         }
         return null;

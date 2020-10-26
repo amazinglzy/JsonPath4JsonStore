@@ -7,6 +7,7 @@ import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.algebra.operator.structure.StructureRelation;
 import jp4js.algebra.operator.structure.StructureSteps;
@@ -16,7 +17,7 @@ import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.algebra.Trans;
 
-public class FullScan extends BaseScan {
+public class FullScan {
 
     private Domain.Instance data;
     private StructureList lst;

@@ -9,7 +9,7 @@ import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.data.XMarkSample;
 import jp4js.algebra.TplValidator;
-import jp4js.algebra.operator.FullScan;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class ScanTest {
                         suite.res()[i]
                     );
                 }
-            } catch (FullScan.MatchException e) {
+            } catch (MatchException e) {
                 e.printStackTrace();
             }
         }

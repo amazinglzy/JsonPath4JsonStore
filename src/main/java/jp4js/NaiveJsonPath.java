@@ -7,6 +7,7 @@ import com.jayway.jsonpath.Configuration;
 import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.operator.FullScan;
+import jp4js.algebra.operator.exception.MatchException;
 import jp4js.algebra.operator.structure.StructureList;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.utils.algebra.Trans;
@@ -33,7 +34,7 @@ public class NaiveJsonPath implements JsonPath {
             TplValidator match = split.open();
             // assert(match.isValid());
             return match.body();
-        } catch (FullScan.MatchException e) {
+        } catch (MatchException e) {
             e.printStackTrace();
         }
         return null;
