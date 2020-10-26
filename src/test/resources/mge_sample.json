@@ -1,0 +1,157 @@
+[
+    {
+        "meta": {
+            "标题": "FGH96 about yield strength",
+            "材料分类": "镍基高温合金",
+            "DOI": "10.12110/mater.NKRDP.20191202.ds.5de45d33ac2cb630055014a0",
+            "数据摘要": "Yield strength test of FGH96",
+            "关键词": "FGH96, , Ni-based, superalloys, , Mechanical, property, , Yield, strength",
+            "提交者": "姜雪",
+            "创建时间": "2019-12-01 03:39:43",
+            "来源": "MGE-SOURCE_HEADER v1 010 01 #",
+            "引用": "Xiaotao Liu, Hanhui Ding, Chuan Yang. Tensile Property and Fracture Mechanisms of Hot Extruded Nickel Base Superalloy FGH4096. 2015:4.",
+            "审核人": "N/A",
+            "Reviewer's Institution": "N/A",
+            "其他信息": "project: 2016YFB0700500; subject: 2016YFB0700503"
+        },
+        "content": {
+            "材料牌号": "FGH96",
+            "材料类型": "Ni-based superalloys",
+            "化学成分": [
+                {
+                    "化学元素": "Ni",
+                    "比例": "58.44",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Co",
+                    "比例": "12.12",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Mo",
+                    "比例": "2.38",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Cr",
+                    "比例": "17.5",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "W",
+                    "比例": "0.75",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Al",
+                    "比例": "4.35",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Ti",
+                    "比例": "3.98",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "Nb",
+                    "比例": "0.3",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "C",
+                    "比例": "0.15",
+                    "单位": "at.%"
+                },
+                {
+                    "化学元素": "B",
+                    "比例": "0.01",
+                    "单位": "at.%"
+                }
+            ],
+            "性能信息": [
+                {
+                    "性能类别": "Mechanical property",
+                    "性能名称": "Yield strength",
+                    "性能值": "955",
+                    "单位": "MPa"
+                }
+            ],
+            "实验条件": [
+                {
+                    "条件名称": "Solution treatment",
+                    "参数名": "Solution temperature",
+                    "参数值": "1150",
+                    "单位": "℃"
+                },
+                {
+                    "条件名称": "Solution treatment",
+                    "参数名": "Solution time",
+                    "参数值": "4",
+                    "单位": "h"
+                },
+                {
+                    "条件名称": "Solution treatment",
+                    "参数名": "Solution cooling",
+                    "参数值": "Oil quenching"
+                },
+                {
+                    "条件名称": "First aging treatment",
+                    "参数名": "First aging temperature",
+                    "参数值": "760",
+                    "单位": "℃"
+                },
+                {
+                    "条件名称": "First aging treatment",
+                    "参数名": "First aging time",
+                    "参数值": "12",
+                    "单位": "h"
+                },
+                {
+                    "条件名称": "First aging treatment",
+                    "参数名": "First aging cooling",
+                    "参数值": "Air cooling"
+                },
+                {
+                    "条件名称": "Test condition",
+                    "参数名": "Test temperature",
+                    "参数值": "700",
+                    "单位": "℃"
+                }
+            ],
+            "数据收集与审核": [
+                {
+                    "数据收集人员": "Bin Xu",
+                    "数据审核人员": "Haiqing Yin"
+                }
+            ]
+        }
+    },
+    {
+        "meta": {
+            "标题": "镍基高温合金—图像特征识别与检索模板",
+            "材料分类": "镍基高温合金",
+            "数据摘要": "在准确识别图像特征的前提下，基体内第二相和氧化物厚度随氧化时间的变化过程。",
+            "关键词": "图像特征检索, 第二相, 氧化物厚度",
+            "提交者": "孟凡帝",
+            "创建时间": "2020-10-18 14:10:02",
+            "来源": "MGE-SOURCE_HEADER v1 0000 10 #",
+            "审核人": "N/A",
+            "Reviewer's Institution": "N/A",
+            "其他信息": "project: 2017YFB0702300; subject: 2017YFB0702303"
+        },
+        "content": {
+            "基体/涂层材料": "K38G/NiCrAlY涂层",
+            "基体材料牌号": "K38G",
+            "基体材料类型": "镍基高温合金",
+            "涂层材料类型": "镍基高温合金(退火态)",
+            "图像特征采集数据库": {},
+            "图像特征检索": {
+                "结果": [
+                    "2782599t200h-037.20201018220831.jpg"
+                ],
+                "备注": "t200h-037.jpg"
+            }
+        }
+    }
+]

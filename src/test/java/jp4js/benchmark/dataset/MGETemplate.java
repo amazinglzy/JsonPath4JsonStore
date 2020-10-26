@@ -27,6 +27,7 @@ public class MGETemplate implements DataSet {
             new StructureListBuilder() {{
                 addSteps(new StructureSteps() {{
                     addStep(StructureRelation.PC, "*");
+                    addStep(StructureRelation.PC, "content");
                     addStep(StructureRelation.PC, "数据收集与审核"); 
                     addStep(StructureRelation.PC, "*"); 
                 }});
@@ -38,6 +39,7 @@ public class MGETemplate implements DataSet {
             new StructureListBuilder() {{
                 addSteps(new StructureSteps() {{
                     addStep(StructureRelation.PC, "*"); 
+                    addStep(StructureRelation.PC, "content");
                     addStep(StructureRelation.PC, "实验条件");
                     addStep(StructureRelation.PC, "*"); 
                 }});
@@ -53,6 +55,7 @@ public class MGETemplate implements DataSet {
             new StructureListBuilder() {{
                 addSteps(new StructureSteps() {{
                     addStep(StructureRelation.PC, "*");
+                    addStep(StructureRelation.PC, "content");
                 }});
                 addStep(StructureRelation.AD, "化学元素");
                 enter().exit();

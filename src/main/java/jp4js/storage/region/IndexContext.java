@@ -81,7 +81,11 @@ public class IndexContext {
 
     public class LevelAllIterator extends RangeIter<IndexNode> {
         public LevelAllIterator(int level) {
-            this.nodes = IndexContext.this.levelAllNodes.get(level);
+            if (level >= IndexContext.this.levelAllNodes.size()) {
+                this.nodes = new ArrayList<>();
+            } else {
+                this.nodes = IndexContext.this.levelAllNodes.get(level);
+            }
             this.rangeL = 0;
             this.rangeR = this.nodes.size();
             this.idx = 0;
@@ -90,7 +94,16 @@ public class IndexContext {
 
     public class LevelTagIterator extends RangeIter<SingularNode> {
         public LevelTagIterator(int level, String tag) {
-            this.nodes = IndexContext.this.levelTagSingularNodes.get(tag).get(level);
+            if (!IndexContext.this.levelTagSingularNodes.containsKey(tag)) {
+                this.nodes = new ArrayList<>();
+            } else {
+                ArrayList<ArrayList<SingularNode>> levelled = IndexContext.this.levelTagSingularNodes.get(tag);
+                if (level >= levelled.size()) {
+                    this.nodes = new ArrayList<>();
+                } else {
+                    this.nodes = IndexContext.this.levelTagSingularNodes.get(tag).get(level);
+                }
+            }
             this.rangeL = 0;
             this.rangeR = this.nodes.size();
             this.idx = 0;
