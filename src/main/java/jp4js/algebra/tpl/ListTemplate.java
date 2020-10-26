@@ -1,21 +1,21 @@
 package jp4js.algebra.tpl;
 
-public class ListTemplate implements DHeader {
-    private DHeader header;
+public class ListTemplate implements Template {
+    private Template header;
 
     public ListTemplate() {
 
     }
 
-    public ListTemplate(DHeader header) {
+    public ListTemplate(Template header) {
         this.header = header;
     }
 
-    public void setHeader(DHeader header) {
+    public void setHeader(Template header) {
         this.header = header;
     }
 
-    public DHeader getHeader() {
+    public Template getHeader() {
         return this.header;
     }
 

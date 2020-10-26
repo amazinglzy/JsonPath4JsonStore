@@ -3,13 +3,13 @@ package jp4js.algebra;
 import java.util.LinkedList;
 
 import jp4js.algebra.tpl.NestedData;
-import jp4js.algebra.tpl.DHeader;
-import jp4js.algebra.tpl.DHeaderBuilder;
+import jp4js.algebra.tpl.Template;
+import jp4js.algebra.tpl.TemplateBuilder;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 
 public class DSample {
-    public static final DHeader flatRel0, nestedRel0, nestedRel1;
+    public static final Template flatRel0, nestedRel0, nestedRel1;
     public static final NestedData[] flatRel0_bodys, nestedRel0_bodys;
     static {
         /*
@@ -32,7 +32,7 @@ public class DSample {
         exit()
 
         */
-        flatRel0 = new DHeaderBuilder()
+        flatRel0 = new TemplateBuilder()
             .put("age", Scalar.dInt)
             .put("name", Scalar.dString)
             .build();
@@ -59,7 +59,7 @@ public class DSample {
             }})
         };
         
-        nestedRel0 = new DHeaderBuilder()
+        nestedRel0 = new TemplateBuilder()
             .put("age", Scalar.dInt)
             .put("name", Scalar.dString)
             .enter("courses", 1)
@@ -86,7 +86,7 @@ public class DSample {
             }})
         };
 
-        nestedRel1 = new DHeaderBuilder()
+        nestedRel1 = new TemplateBuilder()
             .enter("customer", 1)
                 .put("name.first.[str]", Scalar.dString)
                 .put("name.last.[str]", Scalar.dString)

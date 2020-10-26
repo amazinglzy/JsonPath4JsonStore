@@ -2,7 +2,7 @@ package jp4js.algebra.tpl;
 
 import jp4js.algebra.Domain;
 
-public class AtomicTemplate implements DHeader {
+public class AtomicTemplate implements Template {
     private Domain elemType;
 
     public AtomicTemplate(Domain elemType) {

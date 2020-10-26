@@ -1,9 +1,9 @@
 package jp4js.utils.algebra;
 
-import jp4js.algebra.tpl.Template;
+import jp4js.algebra.tpl.DictTemplate;
 import jp4js.algebra.tpl.ListTemplate;
 import jp4js.algebra.tpl.AtomicTemplate;
-import jp4js.algebra.tpl.DHeader;
+import jp4js.algebra.tpl.Template;
 import jp4js.utils.Utils;
 import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
@@ -14,8 +14,8 @@ import jp4js.algebra.op.structure.StructureList;
 import com.jayway.jsonpath.Configuration;
 
 public class Trans {
-    public static DHeader fromSL(StructureList lst) {
-        Template ret = new Template();
+    public static Template fromSL(StructureList lst) {
+        DictTemplate ret = new DictTemplate();
         for (StructureList.StructureItem item: lst) {
             String fieldname = item.steps.toString();
             StructureList nestedLst = item.lst;

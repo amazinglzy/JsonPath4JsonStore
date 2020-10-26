@@ -5,27 +5,27 @@ import java.util.LinkedList;
 
 import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.tpl.ListTemplate;
-import jp4js.algebra.tpl.DHeader;
+import jp4js.algebra.tpl.Template;
 
 import jp4js.algebra.tpl.AtomicTemplate;
 import jp4js.algebra.tpl.AtomicValue;
-import jp4js.algebra.tpl.Template;
+import jp4js.algebra.tpl.DictTemplate;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.Utils;
 
 
 public class TplValidator {
-    private DHeader template;
+    private Template template;
     private List<NestedData> documentSet;
     private boolean valid;
 
-    public TplValidator(DHeader template, NestedData documentSet) {
+    public TplValidator(Template template, NestedData documentSet) {
         this.template = template;
         this.documentSet = new LinkedList<>() {{add(documentSet);}};
     }
 
-    public TplValidator(DHeader template, List<NestedData> documentSet) {
+    public TplValidator(Template template, List<NestedData> documentSet) {
         this.template = template;
         this.documentSet = documentSet;
     }
@@ -34,7 +34,7 @@ public class TplValidator {
         return this.valid;
     }
 
-    public DHeader header() {
+    public Template header() {
         return this.template;
     }
 
@@ -46,7 +46,7 @@ public class TplValidator {
         this.valid = tryMatch(this.template, this.documentSet);
     }
 
-    private boolean tryMatch(DHeader header, List<NestedData> documentSet) {
+    private boolean tryMatch(Template header, List<NestedData> documentSet) {
         Utils.isTrue(documentSet != null, "documentset must not be null");
         if (documentSet.size() == 0) {
             return true;
@@ -63,15 +63,15 @@ public class TplValidator {
         return true;
     }
 
-    private boolean tryMatch(DHeader header, NestedData document) {
+    private boolean tryMatch(Template header, NestedData document) {
         if (header instanceof ListTemplate) {
             if (!matchList((ListTemplate)header, document)) {
                 return false;
             }
         }
 
-        if (header instanceof Template) {
-            if (!matchComplex((Template)header, document)) {
+        if (header instanceof DictTemplate) {
+            if (!matchComplex((DictTemplate)header, document)) {
                 return false;
             }
         }
@@ -106,7 +106,7 @@ public class TplValidator {
         return true;
     }
 
-    private boolean matchComplex(Template template, NestedData documentSet) {
+    private boolean matchComplex(DictTemplate template, NestedData documentSet) {
         if (!(documentSet instanceof Tuple)) {
             return false;
         }

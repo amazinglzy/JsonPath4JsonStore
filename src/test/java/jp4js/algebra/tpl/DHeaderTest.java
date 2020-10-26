@@ -11,7 +11,7 @@ public class DHeaderTest {
 
     @Test
     public void testBasicUsageCreation01() {
-        DHeader rel = new DHeaderBuilder()
+        Template rel = new TemplateBuilder()
             .put("field1", Scalar.dString)
             .put("field2", Scalar.dString)
             .put("field3", Scalar.dString)
