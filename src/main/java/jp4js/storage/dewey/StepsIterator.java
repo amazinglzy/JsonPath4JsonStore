@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.utils.iter.Iter;
 
 public class StepsIterator implements Iter<IndexNode> {

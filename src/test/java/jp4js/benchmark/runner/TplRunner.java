@@ -3,7 +3,7 @@ package jp4js.benchmark.runner;
 import java.util.LinkedList;
 import java.util.List;
 
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 import jp4js.benchmark.adapter.TplAdapter;
 
 public class TplRunner extends Runner {

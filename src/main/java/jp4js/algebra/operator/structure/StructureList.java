@@ -1,4 +1,4 @@
-package jp4js.algebra.op.structure;
+package jp4js.algebra.operator.structure;
 
 import java.util.Iterator;
 import java.util.List;

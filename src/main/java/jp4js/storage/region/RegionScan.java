@@ -3,16 +3,16 @@ package jp4js.storage.region;
 import java.util.LinkedList;
 import java.util.List;
 
-import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureRelation;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.TplValidator;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.Utils;
-import jp4js.algebra.op.BaseScan;
+import jp4js.algebra.operator.BaseScan;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 

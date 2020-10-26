@@ -2,9 +2,9 @@ package jp4js.query;
 
 import jp4js.query.parser.JsonPathBaseVisitor;
 import jp4js.query.parser.JsonPathParser;
-import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureRelation;
+import jp4js.algebra.operator.structure.StructureSteps;
 
 
 public class PathParser extends JsonPathBaseVisitor<StructureList> {

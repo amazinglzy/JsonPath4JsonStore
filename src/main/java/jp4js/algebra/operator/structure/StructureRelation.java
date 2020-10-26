@@ -1,4 +1,4 @@
-package jp4js.algebra.op.structure;
+package jp4js.algebra.operator.structure;
 
 public enum StructureRelation {
     PC, AD

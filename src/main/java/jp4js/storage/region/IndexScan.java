@@ -1,12 +1,12 @@
 package jp4js.storage.region;
 
-import jp4js.algebra.op.structure.StructureSteps; 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import jp4js.storage.region.node.RepeatableNode;
 import jp4js.storage.region.node.SingularNode;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.storage.region.node.IndexNode;
 
 

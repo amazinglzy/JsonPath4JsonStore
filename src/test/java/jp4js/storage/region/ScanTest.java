@@ -9,8 +9,8 @@ import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.data.XMarkSample;
 import jp4js.algebra.TplValidator;
-import jp4js.algebra.op.FullScan;
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.FullScan;
+import jp4js.algebra.operator.structure.StructureList;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

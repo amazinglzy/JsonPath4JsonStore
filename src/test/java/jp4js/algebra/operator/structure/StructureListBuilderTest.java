@@ -1,4 +1,4 @@
-package jp4js.algebra.op.structure;
+package jp4js.algebra.operator.structure;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;

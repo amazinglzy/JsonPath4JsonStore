@@ -9,7 +9,7 @@ import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 
 import com.jayway.jsonpath.Configuration;
 

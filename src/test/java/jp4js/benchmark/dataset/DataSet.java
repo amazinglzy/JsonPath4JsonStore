@@ -2,7 +2,7 @@ package jp4js.benchmark.dataset;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 
 public interface DataSet {
     Object data();

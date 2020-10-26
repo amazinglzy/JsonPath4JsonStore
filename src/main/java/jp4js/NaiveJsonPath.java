@@ -6,8 +6,8 @@ import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
-import jp4js.algebra.op.FullScan;
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.FullScan;
+import jp4js.algebra.operator.structure.StructureList;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;

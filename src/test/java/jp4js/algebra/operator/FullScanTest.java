@@ -1,8 +1,8 @@
-package jp4js.algebra.op;
+package jp4js.algebra.operator;
 
 import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
 import jp4js.data.JsonArray;

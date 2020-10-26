@@ -1,6 +1,6 @@
 package jp4js.query;
 
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 import jp4js.query.parser.JsonPathBaseVisitor;
 import jp4js.query.parser.JsonPathParser;
 

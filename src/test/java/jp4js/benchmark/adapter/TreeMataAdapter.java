@@ -5,7 +5,7 @@ import java.util.List;
 import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.Domain;
-import jp4js.algebra.op.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureList;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.storage.dewey.DeweyIndex;
 import jp4js.utils.algebra.Trans;

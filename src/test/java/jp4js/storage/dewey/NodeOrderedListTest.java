@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import jp4js.algebra.Scalar;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.utils.iter.Iter;
 
 public class NodeOrderedListTest {

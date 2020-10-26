@@ -1,4 +1,4 @@
-package jp4js.algebra.op;
+package jp4js.algebra.operator;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,9 +7,9 @@ import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
-import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureRelation;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.tpl.ListTuple;

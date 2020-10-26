@@ -1,4 +1,4 @@
-package jp4js.algebra.op;
+package jp4js.algebra.operator;
 
 public class BaseScan {
     public class MatchException extends Exception {

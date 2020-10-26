@@ -7,10 +7,10 @@ import java.io.InputStream;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.op.structure.StructureListBuilder;
-import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureListBuilder;
+import jp4js.algebra.operator.structure.StructureRelation;
+import jp4js.algebra.operator.structure.StructureSteps;
 
 public class XMarkStructure implements DataSet {
     private Object data;

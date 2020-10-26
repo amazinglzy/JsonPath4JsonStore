@@ -3,10 +3,10 @@ package jp4js.storage.dewey;
 
 import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
-import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.op.structure.StructureListBuilder;
-import jp4js.algebra.op.structure.StructureRelation;
-import jp4js.algebra.op.structure.StructureSteps;
+import jp4js.algebra.operator.structure.StructureList;
+import jp4js.algebra.operator.structure.StructureListBuilder;
+import jp4js.algebra.operator.structure.StructureRelation;
+import jp4js.algebra.operator.structure.StructureSteps;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.NestedData;
 import jp4js.data.BaseDataSuite;

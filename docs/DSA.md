@@ -1,14 +1,34 @@
 Template:
-* TAtomic
-* TRelatoin
-* TNested
 
-Values:
-* VAtomic
-* VTuple
-* VList
+* AtomicTemplate
+* DictTemplate
+* NestedListTemplate
 
-StructureList:
-* SAtomic
-* SRelation
-* SNested
+
+NestedData:
+
+* AtomicValue
+* Tuple
+* a Nested List of AtomicValue
+* a Nested List of Tuple
+
+
+QueryPlan:
+
+* JSONProjectionScan
+
+    - FullScan
+    - RegionIndexScan
+    - TreeMataIndexScan
+
+* Projection
+
+    - ProjectionImpl
+
+* Selection
+
+    - SelectionImpl
+
+* Join
+
+    - HashJoin
