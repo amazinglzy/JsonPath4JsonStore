@@ -1,8 +1,8 @@
 package jp4js.algebra;
 
-public interface DType {
+public interface Domain {
     public interface Instance {
-        public DType type();
+        public Domain type();
     }
 
 }

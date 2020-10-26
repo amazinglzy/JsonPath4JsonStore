@@ -1,21 +1,21 @@
 package jp4js.algebra.tpl;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 
 public class AtomicValue implements DBody {
-    private DType.Instance data;
-    private DType type;
+    private Domain.Instance data;
+    private Domain type;
 
-    public AtomicValue(DType type, DType.Instance data) {
+    public AtomicValue(Domain type, Domain.Instance data) {
         this.type = type;
         this.data = data;
     }
 
-    public DType.Instance data() {
+    public Domain.Instance data() {
         return this.data;
     }
 
-    public DType type() {
+    public Domain type() {
         return this.type;
     }
     

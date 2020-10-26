@@ -1,6 +1,6 @@
 package jp4js.algebra.tpl;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.utils.Utils;
 
 import java.util.Deque;
@@ -33,7 +33,7 @@ public class DHeaderBuilder {
         }
     }
 
-    public DHeaderBuilder put(String fieldname, DType type) {
+    public DHeaderBuilder put(String fieldname, Domain type) {
         DHeader header = this.headerPath.peek();
         Utils.isTrue(header instanceof Template, "Must be Template not ListTemplate");
         Template tpl = (Template)header;

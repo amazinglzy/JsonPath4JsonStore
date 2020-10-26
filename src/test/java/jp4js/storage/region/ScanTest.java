@@ -8,7 +8,7 @@ import jp4js.data.JsonPathWebsite;
 import jp4js.data.NestedFieldname;
 import jp4js.data.NestedSameFieldname;
 import jp4js.data.XMarkSample;
-import jp4js.algebra.Match;
+import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.FullScan;
 import jp4js.algebra.op.structure.StructureList;
 
@@ -22,7 +22,7 @@ public class ScanTest {
             StructureList lst = suite.query(i);
             RegionScan split = new RegionScan(indexContext, lst);
             try {
-                Match match = split.open(); match.match();
+                TplValidator match = split.open(); match.match();
                 assertThat(match.isValid()).isTrue();
                 System.out.println(match.header().toString());
                 System.out.println(match.body().toString());

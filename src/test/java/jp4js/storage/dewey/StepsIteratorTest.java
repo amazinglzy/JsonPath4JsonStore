@@ -1,6 +1,6 @@
 package jp4js.storage.dewey;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
@@ -35,13 +35,13 @@ public class StepsIteratorTest {
 
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDInt(2),
                     Scalar.createDInt(4)
                 )
             ),
-            (IndexNode node, DType.Instance ins) -> {
+            (IndexNode node, Domain.Instance ins) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(ins);
@@ -61,7 +61,7 @@ public class StepsIteratorTest {
 
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDInt(3),
                     Scalar.createDInt(4),
@@ -69,7 +69,7 @@ public class StepsIteratorTest {
                     Scalar.createDInt(6)
                 )
             ),
-            (IndexNode node, DType.Instance ins) -> {
+            (IndexNode node, Domain.Instance ins) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(ins);
@@ -91,12 +91,12 @@ public class StepsIteratorTest {
 
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDInt(4)
                 )
             ),
-            (IndexNode node, DType.Instance ins) -> {
+            (IndexNode node, Domain.Instance ins) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(ins);
@@ -114,7 +114,7 @@ public class StepsIteratorTest {
 
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDInt(1),
                     Scalar.createDInt(2),
@@ -124,7 +124,7 @@ public class StepsIteratorTest {
                     Scalar.createDInt(6)
                 )
             ),
-            (IndexNode node, DType.Instance ins) -> {
+            (IndexNode node, Domain.Instance ins) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(ins);

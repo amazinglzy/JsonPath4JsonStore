@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
 import jp4js.algebra.op.structure.StructureList;
@@ -356,14 +356,14 @@ public class DeweyIndex {
         this.root = root;
     }
 
-    public static DeweyIndex build(DType.Instance ins) {
+    public static DeweyIndex build(Domain.Instance ins) {
         TreeNode root = new TreeNode();
         build(ins, root, new LinkedList<>());
         root.build();
         return new DeweyIndex(root);
     }
 
-    public static void build(DType.Instance ins, TreeNode c, LinkedList<Integer> index) {
+    public static void build(Domain.Instance ins, TreeNode c, LinkedList<Integer> index) {
         c.mutableNodes.add(new IndexNode(new LinkedList<>(index), ins));
         if (ins instanceof DList.Instance) {
             if (c.holder == null) {

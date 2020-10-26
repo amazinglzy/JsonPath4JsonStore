@@ -9,7 +9,7 @@ import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.DBody;
-import jp4js.algebra.Match;
+import jp4js.algebra.TplValidator;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.Utils;
 import jp4js.algebra.op.BaseScan;
@@ -26,11 +26,11 @@ public class RegionScan extends BaseScan {
         this.lst = lst;
     }
 
-    public Match open() throws MatchException {
+    public TplValidator open() throws MatchException {
         List<DBody> dBody = this.findMatch(
             this.indexContext.rootNode(), this.lst
         );
-        return new Match(Trans.fromSL(this.lst), dBody);
+        return new TplValidator(Trans.fromSL(this.lst), dBody);
     }
 
     public List<DBody> findMatch(IndexNode u, StructureList lst) throws MatchException {

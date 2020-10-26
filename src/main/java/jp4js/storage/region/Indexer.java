@@ -1,7 +1,7 @@
 package jp4js.storage.region;
 
 import jp4js.utils.algebra.Trans;
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar.DMapping;
 import jp4js.algebra.Scalar.DList;
 import jp4js.storage.region.node.IndexNode;
@@ -36,11 +36,11 @@ public class Indexer {
     }
 
     public static IndexContext index(Object json, Configuration configuration) {
-        DType.Instance ins = Trans.fromJSON(json, configuration);
+        Domain.Instance ins = Trans.fromJSON(json, configuration);
         return index(ins);
     }
 
-    public static IndexContext index(DType.Instance ins) {
+    public static IndexContext index(Domain.Instance ins) {
         ArrayList<IndexNode> allNodes = new ArrayList<>();
         HashMap<String, ArrayList<SingularNode>> singularNodes = new HashMap<>();
         ArrayList<ArrayList<SingularNode>> levelSingularNodes = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Indexer {
     }
 
     private static IndexNode iterateJsonObject(
-            String key, String path, DType.Instance mapping, Timestamp timestamp,
+            String key, String path, Domain.Instance mapping, Timestamp timestamp,
             int level, ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
             ArrayList<ArrayList<SingularNode>> levelSingularNodes,
             ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes,
@@ -96,7 +96,7 @@ public class Indexer {
         return node;
     }
 
-    private static IndexNode iterateJsonArray(String key, long index, String path, DType.Instance ins, Timestamp timestamp,
+    private static IndexNode iterateJsonArray(String key, long index, String path, Domain.Instance ins, Timestamp timestamp,
             int level, 
             ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
             ArrayList<ArrayList<SingularNode>> levelSingularNodes,
@@ -123,7 +123,7 @@ public class Indexer {
         return node;
     }
 
-    private static void iterateJson(String key, String path, DType.Instance ins, Timestamp timestamp, int level,
+    private static void iterateJson(String key, String path, Domain.Instance ins, Timestamp timestamp, int level,
             ArrayList<IndexNode> allNodes, HashMap<String, ArrayList<SingularNode>> singularNodes,
             ArrayList<ArrayList<SingularNode>> levelSingularNodes,
             ArrayList<ArrayList<RepeatableNode>> levelRepeatableNodes,
@@ -150,7 +150,7 @@ public class Indexer {
             }
         } else if (ins instanceof DList.Instance) {
             long index = 0;
-            for (DType.Instance item : (DList.Instance) ins) {
+            for (Domain.Instance item : (DList.Instance) ins) {
                 iterateJsonArray(key, index, path + "[" + String.valueOf(index) + "]", item, timestamp, level + 1,
                     allNodes, singularNodes, levelSingularNodes, levelRepeatableNodes, levelAllNodes, levelTagSingularNodes);
                 index++;

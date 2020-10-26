@@ -1,9 +1,9 @@
 package jp4js.algebra.tpl;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 
 public class Tuple implements DBody {
-    private final DType.Instance data;
+    private final Domain.Instance data;
     private final DBody[] tuple;
 
     public Tuple(int size) {
@@ -11,7 +11,7 @@ public class Tuple implements DBody {
         this.tuple = new DBody[size];
     }
 
-    public Tuple(DType.Instance data) {
+    public Tuple(Domain.Instance data) {
         this.data = data;
         this.tuple = null;
     }
@@ -37,7 +37,7 @@ public class Tuple implements DBody {
         return this.data != null;
     }
 
-    public DType.Instance data() {
+    public Domain.Instance data() {
         return this.data;
     }
 

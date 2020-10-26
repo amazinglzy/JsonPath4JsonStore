@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.tpl.AtomicValue;
 import jp4js.algebra.tpl.DBody;
 
@@ -12,7 +12,7 @@ public class IndexNode {
     public List<Integer> indexes;
     public DBody data;
 
-    public IndexNode(List<Integer> indexes, DType.Instance value) {
+    public IndexNode(List<Integer> indexes, Domain.Instance value) {
         this.indexes = indexes;
         this.data = new AtomicValue(value.type(), value);
     }

@@ -2,15 +2,15 @@ package jp4js.storage.region.node;
 
 import java.util.Comparator;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 
 public class IndexNode implements Comparable<IndexNode> {
     public String name;
-    public DType.Instance value;
+    public Domain.Instance value;
     public long first_visit, last_visit;
     public int level;
 
-    public IndexNode(String name, long firstVisit, long lastVisit, int level, DType.Instance value) {
+    public IndexNode(String name, long firstVisit, long lastVisit, int level, Domain.Instance value) {
         this.name = name;
         this.value = value;
         this.first_visit = firstVisit;

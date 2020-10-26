@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.DType;
-import jp4js.algebra.Match;
+import jp4js.algebra.Domain;
+import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.FullScan;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.tpl.DBody;
@@ -14,7 +14,7 @@ import jp4js.utils.query.PathCompiler;
 
 public class NaiveJsonPath implements JsonPath {
     private static Configuration configuration = Configuration.defaultConfiguration();
-    private DType.Instance instance;
+    private Domain.Instance instance;
 
     public NaiveJsonPath() {}
 
@@ -30,7 +30,7 @@ public class NaiveJsonPath implements JsonPath {
         StructureList lst = PathCompiler.fromString(query);
         FullScan split = new FullScan(this.instance, lst);
         try {
-            Match match = split.open();
+            TplValidator match = split.open();
             // assert(match.isValid());
             return match.body();
         } catch (FullScan.MatchException e) {

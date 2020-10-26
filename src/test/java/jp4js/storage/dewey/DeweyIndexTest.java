@@ -1,7 +1,7 @@
 package jp4js.storage.dewey;
 
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureListBuilder;
@@ -43,7 +43,7 @@ public class DeweyIndexTest {
         Configuration configuration = Configuration.defaultConfiguration();
         Object json = configuration.jsonProvider().parse(s);
 
-        DType.Instance ins = Trans.fromJSON(json, configuration);
+        Domain.Instance ins = Trans.fromJSON(json, configuration);
         basicIndex = DeweyIndex.build(ins);
     }
     
@@ -58,12 +58,12 @@ public class DeweyIndexTest {
 
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDInt(1)
                 )
             ),
-            (IndexNode node, DType.Instance val) -> {
+            (IndexNode node, Domain.Instance val) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(val);
@@ -81,7 +81,7 @@ public class DeweyIndexTest {
         Iter<IndexNode> iter = basicIndex.query(steps);
         CompareIter.assertEqual(
             iter,
-            new LinkedList<DType.Instance>(
+            new LinkedList<Domain.Instance>(
                 Arrays.asList(
                     Scalar.createDListValues(
                         Arrays.asList(
@@ -93,7 +93,7 @@ public class DeweyIndexTest {
                     Scalar.createDInt(8)
                 )
             ),
-            (IndexNode node, DType.Instance val) -> {
+            (IndexNode node, Domain.Instance val) -> {
                 if (node.data instanceof AtomicValue) {
                     AtomicValue av = (AtomicValue)node.data;
                     return av.data().equals(val);
@@ -107,7 +107,7 @@ public class DeweyIndexTest {
     @Test
     public void basic03_DataSuite_Sample() {
         Goessener suite = new Goessener();
-        DType.Instance instance = suite.instance();
+        Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(0);
         List<DBody> results = index.query(lst);
@@ -145,7 +145,7 @@ public class DeweyIndexTest {
     @Test
     public void basic08_IncorrectResult_NestedFieldname() {
         NestedFieldname suite = new NestedFieldname();
-        DType.Instance instance = suite.instance();
+        Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(1);
         List<DBody> results = index.query(lst);
@@ -169,7 +169,7 @@ public class DeweyIndexTest {
     @Test
     public void basic10_IncorrectResult_XMarkSample() {
         XMarkSample suite = new XMarkSample();
-        DType.Instance instance = suite.instance();
+        Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(1);
         List<DBody> results = index.query(lst);
@@ -194,7 +194,7 @@ public class DeweyIndexTest {
         }
 
         Configuration configuration = Configuration.defaultConfiguration();
-        DType.Instance ins = Trans.fromJSON(
+        Domain.Instance ins = Trans.fromJSON(
             configuration.jsonProvider().parse(json), 
             configuration);
         

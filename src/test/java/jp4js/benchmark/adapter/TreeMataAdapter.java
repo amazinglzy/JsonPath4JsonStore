@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.tpl.DBody;
 import jp4js.storage.dewey.DeweyIndex;
@@ -19,7 +19,7 @@ public class TreeMataAdapter implements TplAdapter {
 
     @Override
     public void index(Object json, Configuration configuration) {
-        DType.Instance instance = Trans.fromJSON(json, configuration);
+        Domain.Instance instance = Trans.fromJSON(json, configuration);
         this.index = DeweyIndex.build(instance);
     }
 

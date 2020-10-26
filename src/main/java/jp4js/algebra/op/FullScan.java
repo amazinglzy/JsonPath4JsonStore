@@ -3,8 +3,8 @@ package jp4js.algebra.op;
 import java.util.LinkedList;
 import java.util.List;
 
-import jp4js.algebra.DType;
-import jp4js.algebra.Match;
+import jp4js.algebra.Domain;
+import jp4js.algebra.TplValidator;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
 import jp4js.algebra.op.structure.StructureList;
@@ -18,19 +18,19 @@ import jp4js.utils.algebra.Trans;
 
 public class FullScan extends BaseScan {
 
-    private DType.Instance data;
+    private Domain.Instance data;
     private StructureList lst;
-    public FullScan(DType.Instance data, StructureList lst) {
+    public FullScan(Domain.Instance data, StructureList lst) {
         this.data = data;
         this.lst = lst;
     }
 
-    public Match open() throws MatchException {
+    public TplValidator open() throws MatchException {
         List<DBody> dBody = this.findMatch(data, lst);
-        return new Match(Trans.fromSL(this.lst), dBody);
+        return new TplValidator(Trans.fromSL(this.lst), dBody);
     }
 
-    public List<DBody> findMatch(DType.Instance ins, StructureList lst) throws MatchException {
+    public List<DBody> findMatch(Domain.Instance ins, StructureList lst) throws MatchException {
         if (lst == null) {
             return new LinkedList<>() {{ add(new AtomicValue(ins.type(), ins));}};
         }
@@ -42,10 +42,10 @@ public class FullScan extends BaseScan {
         } 
     }
 
-    public List<DBody> findRepeatable(DType.Instance ins, StructureList lst) throws MatchException {
+    public List<DBody> findRepeatable(Domain.Instance ins, StructureList lst) throws MatchException {
         List<DBody> bodyData = new LinkedList<>();
-        List<DType.Instance> elems = iterateInstance(ins, lst.steps(), 0);
-        for (DType.Instance subins: elems) {
+        List<Domain.Instance> elems = iterateInstance(ins, lst.steps(), 0);
+        for (Domain.Instance subins: elems) {
             List<DBody> item = findMatch(subins, lst.elemType());
             if (item != null) {
                 bodyData.addAll(item);
@@ -54,7 +54,7 @@ public class FullScan extends BaseScan {
         return new LinkedList<>(){{ add(new ListTuple(bodyData)); }};
     }
 
-    public List<DBody> find(DType.Instance ins, StructureList lst) throws MatchException {
+    public List<DBody> find(Domain.Instance ins, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
             return new LinkedList<DBody>() {{
                 add(new AtomicValue(ins.type(), ins));
@@ -65,10 +65,10 @@ public class FullScan extends BaseScan {
         ret.add(new Tuple(lst.size()));
         int index = 0;
         for (StructureList.StructureItem item: lst) {
-            List<DType.Instance> candidates = iterateInstance(ins, item.steps, 0);
+            List<Domain.Instance> candidates = iterateInstance(ins, item.steps, 0);
             List<Tuple> update = new LinkedList<>();
             List<DBody> childRet = new LinkedList<>();
-            for (DType.Instance candidate: candidates) {
+            for (Domain.Instance candidate: candidates) {
                 List<DBody> cells = findMatch(candidate, item.lst);
                 childRet.addAll(cells);
             }
@@ -92,7 +92,7 @@ public class FullScan extends BaseScan {
         return fret;
     }
 
-    public List<DType.Instance> iterateInstance(DType.Instance ins, StructureSteps steps, int currentStep) {
+    public List<Domain.Instance> iterateInstance(Domain.Instance ins, StructureSteps steps, int currentStep) {
         if (currentStep >= steps.size()) {
             return new LinkedList<>() {{
                 add(ins);
@@ -131,13 +131,13 @@ public class FullScan extends BaseScan {
                     StructureSteps.PropertyStep pstep = (StructureSteps.PropertyStep)step;
                     String fieldname = pstep.fieldname;
                     if (fieldname == "*") {
-                        for (DType.Instance insElem: lstIns) {
+                        for (Domain.Instance insElem: lstIns) {
                             addAll(iterateInstance(insElem, steps, currentStep+1));
                         }
                     }
 
                     if (rel == StructureRelation.AD) {
-                        for (DType.Instance insElem: lstIns) {
+                        for (Domain.Instance insElem: lstIns) {
                             addAll(iterateInstance(insElem, steps, currentStep));
                         }
                     }

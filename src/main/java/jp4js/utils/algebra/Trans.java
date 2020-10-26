@@ -5,7 +5,7 @@ import jp4js.algebra.tpl.ListTemplate;
 import jp4js.algebra.tpl.AtomicTemplate;
 import jp4js.algebra.tpl.DHeader;
 import jp4js.utils.Utils;
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.Scalar;
 import jp4js.algebra.Scalar.DList;
 import jp4js.algebra.Scalar.DMapping;
@@ -29,7 +29,7 @@ public class Trans {
         return new ListTemplate(ret);
     }
 
-    public static DType.Instance fromJSON(Object json, Configuration configuration) {
+    public static Domain.Instance fromJSON(Object json, Configuration configuration) {
         if (configuration.jsonProvider().isMap(json)) {
             DMapping.Instance ret = Scalar.createDMapping();
             for (String fieldname: configuration.jsonProvider().getPropertyKeys(json)) {

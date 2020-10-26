@@ -38,7 +38,7 @@ public class Scalar {
         return dList.create();
     }
 
-    public static <T extends DType.Instance> DList.Instance createDListValues(List<T> data) {
+    public static <T extends Domain.Instance> DList.Instance createDListValues(List<T> data) {
         DList.Instance ret = dList.create();
         for (T val: data) {
             ret.add(val);
@@ -47,32 +47,32 @@ public class Scalar {
     }
     
     public static AtomicValue createAtomicString(String data) {
-        DType.Instance ins = dString.create(data);
+        Domain.Instance ins = dString.create(data);
         return new AtomicValue(dString, ins);
     }
 
     public static AtomicValue createAtomicInt(int data) {
-        DType.Instance ins = dInt.create(data);
+        Domain.Instance ins = dInt.create(data);
         return new AtomicValue(dInt, ins);
     }
 
     public static AtomicValue createAtomicDouble(double data) {
-        DType.Instance ins = dDouble.create(data);
+        Domain.Instance ins = dDouble.create(data);
         return new AtomicValue(dDouble, ins);
     }
 
     public static AtomicValue createAtomicMapping() {
-        DType.Instance ins = dMapping.create();
+        Domain.Instance ins = dMapping.create();
         return new AtomicValue(dMapping, ins);
     }
 
     public static AtomicValue createAtomicList() {
-        DType.Instance ins = dList.create();
+        Domain.Instance ins = dList.create();
         return new AtomicValue(dList, ins);
     }
 
-    public static class DString implements DType {
-        public class Instance implements DType.Instance, Comparable<DString.Instance> {
+    public static class DString implements Domain {
+        public class Instance implements Domain.Instance, Comparable<DString.Instance> {
             private final String data;
 
             public Instance(String data) {
@@ -121,8 +121,8 @@ public class Scalar {
         }
     }
 
-    public static class DInt implements DType {
-        public class Instance implements DType.Instance, Comparable<DInt.Instance> {
+    public static class DInt implements Domain {
+        public class Instance implements Domain.Instance, Comparable<DInt.Instance> {
             private final int data;
 
             public Instance(int data) {
@@ -171,8 +171,8 @@ public class Scalar {
         }
     }
 
-    public static class DDouble implements DType {
-        public class Instance implements DType.Instance, Comparable<DDouble.Instance> {
+    public static class DDouble implements Domain {
+        public class Instance implements Domain.Instance, Comparable<DDouble.Instance> {
             private final double data;
 
             public Instance(double data) {
@@ -224,23 +224,23 @@ public class Scalar {
 
     }
 
-    public static class DMapping implements DType {
-        public class Instance implements DType.Instance, Iterable<String>, Comparable<DMapping.Instance> {
-            private final TreeMap<String, DType.Instance> data;
+    public static class DMapping implements Domain {
+        public class Instance implements Domain.Instance, Iterable<String>, Comparable<DMapping.Instance> {
+            private final TreeMap<String, Domain.Instance> data;
 
             public Instance() {
                 this.data = new TreeMap<>();
             }
 
-            public Instance(TreeMap<String, DType.Instance> data) {
+            public Instance(TreeMap<String, Domain.Instance> data) {
                 this.data = data;
             }
 
-            public void put(String field, DType.Instance data) {
+            public void put(String field, Domain.Instance data) {
                 this.data.put(field, data);
             }
 
-            public DType.Instance get(String field) {
+            public Domain.Instance get(String field) {
                 return this.data.get(field);
             }
 
@@ -284,31 +284,31 @@ public class Scalar {
         }
     }
 
-    public static class DList implements DType {
-        public class Instance implements DType.Instance, Iterable<DType.Instance>, Comparable<DList.Instance> {
-            private final ArrayList<DType.Instance> data;
+    public static class DList implements Domain {
+        public class Instance implements Domain.Instance, Iterable<Domain.Instance>, Comparable<DList.Instance> {
+            private final ArrayList<Domain.Instance> data;
 
             public Instance() {
                 this.data = new ArrayList<>();
             }
 
-            public Instance(LinkedList<DType.Instance> data) {
+            public Instance(LinkedList<Domain.Instance> data) {
                 this.data = new ArrayList<>(data);
             }
 
-            public void add(DType.Instance item) {
+            public void add(Domain.Instance item) {
                 this.data.add(item);
             }
 
-            public Iterator<DType.Instance> iterator() {
+            public Iterator<Domain.Instance> iterator() {
                 return this.data.iterator();
             }
 
-            public DType.Instance get(int index) {
+            public Domain.Instance get(int index) {
                 return this.data.get(index);
             }
 
-            public List<DType.Instance> data() {
+            public List<Domain.Instance> data() {
                 return this.data;
             }
 

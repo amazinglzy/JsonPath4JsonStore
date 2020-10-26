@@ -1,15 +1,15 @@
 package jp4js.algebra.tpl;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 
 public class AtomicTemplate implements DHeader {
-    private DType elemType;
+    private Domain elemType;
 
-    public AtomicTemplate(DType elemType) {
+    public AtomicTemplate(Domain elemType) {
         this.elemType = elemType;
     }
 
-    public DType elemType() {
+    public Domain elemType() {
         return this.elemType;
     }
 

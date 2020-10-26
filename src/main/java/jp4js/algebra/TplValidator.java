@@ -15,17 +15,17 @@ import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.Utils;
 
 
-public class Match {
+public class TplValidator {
     private DHeader template;
     private List<DBody> documentSet;
     private boolean valid;
 
-    public Match(DHeader template, DBody documentSet) {
+    public TplValidator(DHeader template, DBody documentSet) {
         this.template = template;
         this.documentSet = new LinkedList<>() {{add(documentSet);}};
     }
 
-    public Match(DHeader template, List<DBody> documentSet) {
+    public TplValidator(DHeader template, List<DBody> documentSet) {
         this.template = template;
         this.documentSet = documentSet;
     }

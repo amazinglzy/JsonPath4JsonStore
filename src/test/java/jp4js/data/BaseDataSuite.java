@@ -2,7 +2,7 @@ package jp4js.data;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.DType;
+import jp4js.algebra.Domain;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;
@@ -20,7 +20,7 @@ public abstract class BaseDataSuite {
         return configuration().jsonProvider().parse(data());
     }
 
-    public DType.Instance instance() {
+    public Domain.Instance instance() {
         return Trans.fromJSON(
             configuration().jsonProvider().parse(data()), 
             configuration());

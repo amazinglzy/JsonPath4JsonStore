@@ -1,7 +1,7 @@
 package jp4js.algebra.op;
 
-import jp4js.algebra.DType;
-import jp4js.algebra.Match;
+import jp4js.algebra.Domain;
+import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
@@ -23,7 +23,7 @@ public class FullScanTest {
             StructureList lst = suite.query(i);
             FullScan split = new FullScan(suite.instance(), lst);
             try {
-                Match match = split.open();
+                TplValidator match = split.open();
                 match.match();
                 assertThat(match.isValid()).isTrue();
                 System.out.println(match.header().toString());
@@ -41,11 +41,11 @@ public class FullScanTest {
 
     @Test
     public void basic01_() {
-        DType.Instance instance = new Goessener().instance();
+        Domain.Instance instance = new Goessener().instance();
 
         FullScan split = new FullScan(instance, new Goessener().query(0));
         try {
-            Match match = split.open();
+            TplValidator match = split.open();
             match.match();
             assertThat(match.isValid()).isTrue();
             System.out.println(match.header().toString());

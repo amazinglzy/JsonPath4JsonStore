@@ -2,7 +2,7 @@ package jp4js.benchmark.adapter;
 
 import com.jayway.jsonpath.Configuration;
 
-import jp4js.algebra.Match;
+import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.structure.StructureList;
 import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.Indexer;
@@ -24,7 +24,7 @@ public class RegionScanAdatper implements TplAdapter {
     public int query(StructureList lst) {
         RegionScan scan = new RegionScan(this.indexContext, lst);
         try {
-            Match match = scan.open();
+            TplValidator match = scan.open();
             // assert(match.isValid());
             return match.body().size();
         } catch (RegionScan.MatchException e) {
