@@ -6,7 +6,7 @@ import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.storage.region.IndexContext;
 import jp4js.storage.region.Indexer;
 import jp4js.storage.region.RegionScan;
@@ -26,7 +26,7 @@ public class IndexJsonPath implements JsonPath {
     }
     
     @Override
-    public List<DBody> query(String query) {
+    public List<NestedData> query(String query) {
         StructureList lst = PathCompiler.fromString(query);
         RegionScan split = new RegionScan(this.indexContext, lst);
         try {

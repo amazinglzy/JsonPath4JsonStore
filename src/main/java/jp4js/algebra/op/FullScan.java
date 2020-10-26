@@ -11,7 +11,7 @@ import jp4js.algebra.op.structure.StructureList;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.tpl.AtomicValue;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.algebra.Trans;
@@ -26,11 +26,11 @@ public class FullScan extends BaseScan {
     }
 
     public TplValidator open() throws MatchException {
-        List<DBody> dBody = this.findMatch(data, lst);
+        List<NestedData> dBody = this.findMatch(data, lst);
         return new TplValidator(Trans.fromSL(this.lst), dBody);
     }
 
-    public List<DBody> findMatch(Domain.Instance ins, StructureList lst) throws MatchException {
+    public List<NestedData> findMatch(Domain.Instance ins, StructureList lst) throws MatchException {
         if (lst == null) {
             return new LinkedList<>() {{ add(new AtomicValue(ins.type(), ins));}};
         }
@@ -42,11 +42,11 @@ public class FullScan extends BaseScan {
         } 
     }
 
-    public List<DBody> findRepeatable(Domain.Instance ins, StructureList lst) throws MatchException {
-        List<DBody> bodyData = new LinkedList<>();
+    public List<NestedData> findRepeatable(Domain.Instance ins, StructureList lst) throws MatchException {
+        List<NestedData> bodyData = new LinkedList<>();
         List<Domain.Instance> elems = iterateInstance(ins, lst.steps(), 0);
         for (Domain.Instance subins: elems) {
-            List<DBody> item = findMatch(subins, lst.elemType());
+            List<NestedData> item = findMatch(subins, lst.elemType());
             if (item != null) {
                 bodyData.addAll(item);
             }
@@ -54,9 +54,9 @@ public class FullScan extends BaseScan {
         return new LinkedList<>(){{ add(new ListTuple(bodyData)); }};
     }
 
-    public List<DBody> find(Domain.Instance ins, StructureList lst) throws MatchException {
+    public List<NestedData> find(Domain.Instance ins, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
-            return new LinkedList<DBody>() {{
+            return new LinkedList<NestedData>() {{
                 add(new AtomicValue(ins.type(), ins));
             }};
         }
@@ -67,13 +67,13 @@ public class FullScan extends BaseScan {
         for (StructureList.StructureItem item: lst) {
             List<Domain.Instance> candidates = iterateInstance(ins, item.steps, 0);
             List<Tuple> update = new LinkedList<>();
-            List<DBody> childRet = new LinkedList<>();
+            List<NestedData> childRet = new LinkedList<>();
             for (Domain.Instance candidate: candidates) {
-                List<DBody> cells = findMatch(candidate, item.lst);
+                List<NestedData> cells = findMatch(candidate, item.lst);
                 childRet.addAll(cells);
             }
             for (Tuple row : ret) {
-                for (DBody cell: childRet) {
+                for (NestedData cell: childRet) {
                     Tuple newRow = new Tuple(lst.size());
                     for (int i = 0; i < index; i++) {
                         newRow.put(i, row.get(i));
@@ -87,7 +87,7 @@ public class FullScan extends BaseScan {
             index ++;
         }
 
-        LinkedList<DBody> fret = new LinkedList<>();
+        LinkedList<NestedData> fret = new LinkedList<>();
         fret.addAll(ret);
         return fret;
     }

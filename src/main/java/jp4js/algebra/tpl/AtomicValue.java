@@ -2,7 +2,7 @@ package jp4js.algebra.tpl;
 
 import jp4js.algebra.Domain;
 
-public class AtomicValue implements DBody {
+public class AtomicValue implements NestedData {
     private Domain.Instance data;
     private Domain type;
 

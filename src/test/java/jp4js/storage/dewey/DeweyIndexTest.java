@@ -8,7 +8,7 @@ import jp4js.algebra.op.structure.StructureListBuilder;
 import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.tpl.AtomicValue;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.data.BaseDataSuite;
 import jp4js.data.Goessener;
 import jp4js.data.JsonArray;
@@ -110,7 +110,7 @@ public class DeweyIndexTest {
         Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(0);
-        List<DBody> results = index.query(lst);
+        List<NestedData> results = index.query(lst);
 
         assertThat(results.toString()).isEqualTo(
             "[[(\"Nigel Rees\"), (\"Evelyn Waugh\"), (\"Herman Melville\"), (\"J. R. R. Tolkien\")]]"
@@ -148,7 +148,7 @@ public class DeweyIndexTest {
         Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(1);
-        List<DBody> results = index.query(lst);
+        List<NestedData> results = index.query(lst);
 
         assertThat(results.toString()).isEqualTo(
             "[[([3]), (\"field2-field1\")]]"
@@ -172,7 +172,7 @@ public class DeweyIndexTest {
         Domain.Instance instance = suite.instance();
         DeweyIndex index = DeweyIndex.build(instance);
         StructureList lst = suite.query(1);
-        List<DBody> results = index.query(lst);
+        List<NestedData> results = index.query(lst);
 
         System.out.println(results.toString());
 
@@ -215,7 +215,7 @@ public class DeweyIndexTest {
         
         System.out.println(lst.toString());
         assertThat(lst.toString()).isEqualTo("SELECT { .数据收集人员: SELECT {  }, .数据审核人员: SELECT {  } } NESTEDBY [.*.content.数据收集与审核.*]");
-        List<DBody> res = index.query(lst);
+        List<NestedData> res = index.query(lst);
         System.out.println(res.toString());
         assertThat(res.toString()).isEqualTo("[[(\"Bin Xu\", \"Haiqing Yin\"), (\"LALALA\", \"Haiqing Yin\")]]");
     }
@@ -225,7 +225,7 @@ public class DeweyIndexTest {
         DeweyIndex index = DeweyIndex.build(suite.instance());
         for (int i = 0; i < suite.querySize(); ++ i) {
             StructureList lst = suite.query(i);
-            List<DBody> results = index.query(lst);
+            List<NestedData> results = index.query(lst);
             System.out.println(results.toString());
             System.out.println(suite.res()[i]);
 

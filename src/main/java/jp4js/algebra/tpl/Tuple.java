@@ -2,13 +2,13 @@ package jp4js.algebra.tpl;
 
 import jp4js.algebra.Domain;
 
-public class Tuple implements DBody {
+public class Tuple implements NestedData {
     private final Domain.Instance data;
-    private final DBody[] tuple;
+    private final NestedData[] tuple;
 
     public Tuple(int size) {
         this.data = null;
-        this.tuple = new DBody[size];
+        this.tuple = new NestedData[size];
     }
 
     public Tuple(Domain.Instance data) {
@@ -16,12 +16,12 @@ public class Tuple implements DBody {
         this.tuple = null;
     }
 
-    public Tuple(DBody[] tuple) {
+    public Tuple(NestedData[] tuple) {
         this.data = null;
         this.tuple = tuple;
     }
 
-    public DBody get(int i) {
+    public NestedData get(int i) {
         return this.tuple[i];
     }
 
@@ -29,7 +29,7 @@ public class Tuple implements DBody {
         return i < this.tuple.length;
     }
 
-    public void put(int i, DBody value) {
+    public void put(int i, NestedData value) {
         this.tuple[i] = value;
     }
 

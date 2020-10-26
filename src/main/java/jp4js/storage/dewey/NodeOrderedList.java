@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.tpl.ListTuple;
 import jp4js.algebra.tpl.Tuple;
 import jp4js.utils.iter.Iter;
@@ -170,7 +170,7 @@ public class NodeOrderedList implements Iterable<IndexNode> {
         ListIterator<IndexNode> iter = this.nodes.listIterator();
         while (iter.hasNext()) {
             IndexNode first = iter.next();
-            List<DBody> data = new LinkedList<DBody>() {{ add(first.data); }};
+            List<NestedData> data = new LinkedList<NestedData>() {{ add(first.data); }};
             while (iter.hasNext()) {
                 IndexNode next = iter.next();
                 if (this.cmp.compare(first, next) == 0) {

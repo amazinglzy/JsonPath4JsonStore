@@ -4,19 +4,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CrossListTuple implements DBody {
-    private List<List<DBody>> data;
-    private List<DBody> actualData;
+public class CrossListTuple implements NestedData {
+    private List<List<NestedData>> data;
+    private List<NestedData> actualData;
 
     public CrossListTuple() {
         this.data = new LinkedList<>();
     }
 
-    public void add(List<DBody> col) {
+    public void add(List<NestedData> col) {
         this.data.add(col);
     }
 
-    public Iterator<DBody> actual() {
+    public Iterator<NestedData> actual() {
         this.actualData = new LinkedList<>() {{
             for (Tuple t: expand(data.iterator())) {
                 add(t);
@@ -25,12 +25,12 @@ public class CrossListTuple implements DBody {
         return this.actualData.iterator();
     }
 
-    private List<Tuple> expand(Iterator<List<DBody>> colIter) {
+    private List<Tuple> expand(Iterator<List<NestedData>> colIter) {
         List<Tuple> ret = new LinkedList<>();
-        List<DBody> col = colIter.next();
+        List<NestedData> col = colIter.next();
         if (colIter.hasNext()) {
             List<Tuple> right = expand(colIter);
-            for (DBody val: col) {
+            for (NestedData val: col) {
                 for (Tuple r: right) {
                     Tuple t = new Tuple(r.size() + 1);
                     t.put(0, val);
@@ -41,7 +41,7 @@ public class CrossListTuple implements DBody {
                 }
             }
         } else {
-            for (DBody val: col) {
+            for (NestedData val: col) {
                 Tuple t = new Tuple(1);
                 t.put(0, val);
                 ret.add(t);

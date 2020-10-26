@@ -6,7 +6,7 @@ import com.jayway.jsonpath.Configuration;
 
 import jp4js.algebra.Domain;
 import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.storage.dewey.DeweyIndex;
 import jp4js.utils.algebra.Trans;
 
@@ -25,7 +25,7 @@ public class TreeMataAdapter implements TplAdapter {
 
     @Override
     public int query(StructureList lst) {
-        List<DBody> res = this.index.query(lst);
+        List<NestedData> res = this.index.query(lst);
         return res.size();
     }
 }

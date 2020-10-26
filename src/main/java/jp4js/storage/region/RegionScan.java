@@ -8,7 +8,7 @@ import jp4js.algebra.op.structure.StructureRelation;
 import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.storage.region.node.IndexNode;
 import jp4js.algebra.tpl.AtomicValue;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.algebra.TplValidator;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.Utils;
@@ -27,13 +27,13 @@ public class RegionScan extends BaseScan {
     }
 
     public TplValidator open() throws MatchException {
-        List<DBody> dBody = this.findMatch(
+        List<NestedData> dBody = this.findMatch(
             this.indexContext.rootNode(), this.lst
         );
         return new TplValidator(Trans.fromSL(this.lst), dBody);
     }
 
-    public List<DBody> findMatch(IndexNode u, StructureList lst) throws MatchException {
+    public List<NestedData> findMatch(IndexNode u, StructureList lst) throws MatchException {
         if (lst == null) {
             return new LinkedList<>() {{ add(new AtomicValue(u.value.type(), u.value));}};
         }
@@ -44,13 +44,13 @@ public class RegionScan extends BaseScan {
         }
     }
 
-    public List<DBody> findRepeatable(IndexNode u, StructureList lst) throws MatchException {
-        List<DBody> bodyData = new LinkedList<>();
+    public List<NestedData> findRepeatable(IndexNode u, StructureList lst) throws MatchException {
+        List<NestedData> bodyData = new LinkedList<>();
         List<IndexNode> elems = iterateNode(
             new LinkedList<>(){{add(u);}}, 
             lst.steps(), 0);
         for (IndexNode node: elems) {
-            List<DBody> item = findMatch(node, lst.elemType());
+            List<NestedData> item = findMatch(node, lst.elemType());
             if (item != null) {
                 bodyData.addAll(item);
             }
@@ -58,7 +58,7 @@ public class RegionScan extends BaseScan {
         return new LinkedList<>(){{ add(new ListTuple(bodyData)); }};
     }
 
-    public List<DBody> find(IndexNode u, StructureList lst) throws MatchException {
+    public List<NestedData> find(IndexNode u, StructureList lst) throws MatchException {
         if (lst.size() == 0) {
             return new LinkedList<>() {{
                 add(new AtomicValue(u.value.type(), u.value));
@@ -72,13 +72,13 @@ public class RegionScan extends BaseScan {
             List<IndexNode> candidates = iterateNode(
                 new LinkedList<>(){{add(u);}}, item.steps, 0);
             List<Tuple> update = new LinkedList<>();
-            List<DBody> childRet = new LinkedList<>();
+            List<NestedData> childRet = new LinkedList<>();
             for (IndexNode candidate: candidates) {
-                List<DBody> cells = findMatch(candidate, item.lst);
+                List<NestedData> cells = findMatch(candidate, item.lst);
                 childRet.addAll(cells);
             }
             for (Tuple row: ret) {
-                for (DBody cell: childRet) {
+                for (NestedData cell: childRet) {
                     Tuple newRow = new Tuple(lst.size());
                     for (int i = 0; i < index; i++) {
                         newRow.put(i, row.get(i));
@@ -91,7 +91,7 @@ public class RegionScan extends BaseScan {
             index ++;
         }
 
-        LinkedList<DBody> fret = new LinkedList<>();
+        LinkedList<NestedData> fret = new LinkedList<>();
         fret.addAll(ret);
         return fret;
     }

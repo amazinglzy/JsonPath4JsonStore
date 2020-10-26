@@ -32,7 +32,7 @@ public class DHeaderTest {
             new LinkedList<>() {{
                 add(
                     new Tuple(
-                        new DBody[] {
+                        new NestedData[] {
                             new Tuple(Scalar.createDInt(20)),
                             new Tuple(Scalar.createDString("Alice"))
                         }
@@ -40,7 +40,7 @@ public class DHeaderTest {
                 );
                 add(
                     new Tuple(
-                        new DBody[] {
+                        new NestedData[] {
                             new Tuple(Scalar.createDInt(10)),
                             new Tuple(Scalar.createDString("Alice"))
                         }
@@ -60,18 +60,18 @@ public class DHeaderTest {
             new LinkedList<>() {{
                 add(
                     new Tuple(
-                        new DBody[] {
+                        new NestedData[] {
                             new Tuple(Scalar.createDInt(23)),
                             new ListTuple(
                                 new LinkedList<>() {{
                                     add(new Tuple(
-                                        new DBody[]{
+                                        new NestedData[]{
                                             new Tuple(Scalar.createDString("English")),
                                             new Tuple(Scalar.createDInt(100))
                                         }
                                     ));
                                     add(new Tuple(
-                                        new DBody[]{
+                                        new NestedData[]{
                                             new Tuple(Scalar.createDString("Chinese")),
                                             new Tuple(Scalar.createDInt(10))
                                         }

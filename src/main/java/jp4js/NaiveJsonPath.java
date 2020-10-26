@@ -8,7 +8,7 @@ import jp4js.algebra.Domain;
 import jp4js.algebra.TplValidator;
 import jp4js.algebra.op.FullScan;
 import jp4js.algebra.op.structure.StructureList;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.utils.algebra.Trans;
 import jp4js.utils.query.PathCompiler;
 
@@ -26,7 +26,7 @@ public class NaiveJsonPath implements JsonPath {
     }
 
     @Override
-    public List<DBody> query(String query) {
+    public List<NestedData> query(String query) {
         StructureList lst = PathCompiler.fromString(query);
         FullScan split = new FullScan(this.instance, lst);
         try {

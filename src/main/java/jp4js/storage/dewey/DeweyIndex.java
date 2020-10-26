@@ -15,7 +15,7 @@ import jp4js.algebra.op.structure.StructureSteps;
 import jp4js.algebra.op.structure.StructureSteps.IndexStep;
 import jp4js.algebra.op.structure.StructureSteps.PropertyStep;
 import jp4js.algebra.op.structure.StructureSteps.Step;
-import jp4js.algebra.tpl.DBody;
+import jp4js.algebra.tpl.NestedData;
 import jp4js.utils.Utils;
 import jp4js.utils.iter.EmptyIter;
 import jp4js.utils.iter.Iter;
@@ -36,7 +36,7 @@ public class DeweyIndex {
         return ret;
     }
 
-    public List<DBody> query(StructureList lst) {
+    public List<NestedData> query(StructureList lst) {
         StructureSteps filter = new StructureSteps();
         NodeOrderedList data = query(this.root, lst, filter);
         return new LinkedList<>() {{
