@@ -1,5 +1,7 @@
 package jp4js.benchmark.runner;
 
+import java.util.List;
+
 public abstract class Runner {
     private long begin;
     private long end;
@@ -24,4 +26,5 @@ public abstract class Runner {
     }
 
     public abstract void doTest();
+    public abstract List<Integer> results();
 }
