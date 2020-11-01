@@ -97,6 +97,15 @@ public class IndexScan {
         return new LinkedList<>() {{
             RegionIterator<SingularNode> iter = indexContext.new SingularIterator(step.fieldname);
             for (IndexNode node: sortedNodes) {
+                if (iter.valid()) {
+                    IndexNode inode = iter.read();
+                    if (node.last_visit < inode.first_visit) {
+                        continue;
+                    }
+                } else {
+                    break;
+                }
+
                 iter.seek(node.first_visit);
                 while (iter.valid()) {
                     IndexNode inode = iter.read();
@@ -104,7 +113,9 @@ public class IndexScan {
                     if (inode.first_visit > node.last_visit) {
                         break;
                     } else {
-                        if (node.first_visit <= inode.first_visit && inode.last_visit<= node.last_visit) {
+                        if (node.first_visit <= inode.first_visit &&
+                            inode.last_visit<= node.last_visit &&
+                            node.level < inode.level) {
                             add(inode);
                         }
                     }

@@ -73,4 +73,25 @@ public class ScanTest {
     public void basic7_DataSuiteSSplit_XMarkSample() {
         forDataSuiteSSplit(new XMarkSample());
     }
+
+    @Test
+    public void basic08_Incorrect_XMarkSample() {
+        XMarkSample dataset = new XMarkSample();
+
+        IndexContext indexContext = Indexer.index(dataset.instance());
+        StructureList lst = dataset.query(4);
+        RegionScan scan = new RegionScan(indexContext, lst);
+
+        try {
+            TplValidator match = scan.open(); match.match();
+            assertThat(match.isValid()).isTrue();
+            System.out.println(match.header().toString());
+            System.out.println(match.body().toString());
+            assertThat(match.body().toString()).isEqualTo(
+                dataset.res()[4]
+            );
+        } catch (MatchException e) {
+            e.printStackTrace();
+        }
+    }
 }

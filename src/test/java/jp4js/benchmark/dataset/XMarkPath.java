@@ -24,7 +24,7 @@ public class XMarkPath implements DataSet {
             "$.open_auctions[*].bidder[0].increase",
             "$.people[*].id",
             "$.region[*].items[*].description",
-            "$.people..interst",
+            "$.people..interest",
             "$.region..location",
             "$.region..parlist..parlist"
         };
