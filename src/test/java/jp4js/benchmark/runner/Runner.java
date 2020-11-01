@@ -6,6 +6,7 @@ public abstract class Runner {
     private int tests;
 
     public void begin() {
+        this.tests = 0;
         this.begin = System.currentTimeMillis();
     }
 

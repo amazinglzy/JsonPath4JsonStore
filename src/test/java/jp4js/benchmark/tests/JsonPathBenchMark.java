@@ -33,7 +33,7 @@ public abstract class JsonPathBenchMark {
         scan.nextLine();
         scan.close();
 
-        recorder.record(5);
+        recorder.record(20);
         try {
             recorder.save(filename());
         } catch (IOException e) {

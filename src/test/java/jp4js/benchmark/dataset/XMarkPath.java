@@ -34,7 +34,7 @@ public class XMarkPath implements DataSet {
                 addStep(StructureRelation.PC, "open_auctions");
                 addStep(StructureRelation.PC, "*");
                 addStep(StructureRelation.PC, "bidder");
-                addStep(StructureRelation.PC, "*");
+                addStep(0, 1);
                 addStep(StructureRelation.PC, "increase");
                 enter().exit();
             }}.build(),
